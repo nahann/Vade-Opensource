@@ -132,4 +132,26 @@ export default class Util {
     }
   }
 
-  asy
+  async resolveModRole(guildID: string) {
+    const guildData2 = await Guild.findOne({ Guild: guildID });
+    const guild = this.client.guilds.cache.get(guildID);
+    if (guild && guildData2) {
+      const role = guild.roles.cache.get(guildData2.ModRole);
+      if (role) return role.id;
+    }
+    return null;
+  }
+
+  async resolveAdminRole(guildID: string) {
+    const guildData2 = await Guild.findOne({ Guild: guildID });
+    const guild = this.client.guilds.cache.get(guildID);
+    if (guild && guildData2) {
+      const role = guild.roles.cache.get(guildData2.AdminRole);
+      if (role) return role.id;
+    }
+    return null;
+  }
+
+
+  
+}
