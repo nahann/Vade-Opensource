@@ -22,7 +22,7 @@ export const run: RunFunction = async (client, message: Message) => {
     .slice(prefix.length)
     .trim()
     .split(/\s+/);
-  const cmd: string = args.shift();
+  const cmd: string = args.shift().toLowerCase();
   const command: Command =
     client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
   if (!command) return;
@@ -65,7 +65,7 @@ export const run: RunFunction = async (client, message: Message) => {
     const checkPremium = await client.utils.checkPremium(message.guild.ownerID);
     const checkOwner = client.utils.checkOwner(message.author.id);
     if (command.premiumOnly && !checkPremium) {
-      return message.channel.send(`You need Vade Premium to run this Command!`);
+      return message.channel.send(`The Guild owner must have Vade Premium in order for you to run this Command!`);
     }
 
     if (command.devOnly && !checkOwner) {

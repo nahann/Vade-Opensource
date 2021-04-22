@@ -31,3 +31,4 @@ export const run: RunFunction = async (client, message, args) => {
 export const name: string = "base64";
 export const category: string = "Utility";
 export const usage: string = "!base64 <Text to encode>.";
+export const premiumOnly: boolean = true;

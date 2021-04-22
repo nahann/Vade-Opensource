@@ -16,6 +16,7 @@ import Constants from "../interfaces/Constants";
 import Util from "../interfaces/Util";
 import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
+import Lottery from '../../Assets/Economy/Lottery';
 
 const globPromise = promisify(glob);
 
@@ -47,6 +48,7 @@ class Bot extends Client {
     this.config = config;
     this.login(config.token);
     Mongo();
+    Lottery(this)
     const commandFiles: string[] = await globPromise(
       `${__dirname}/../commands/**/*{.ts,.js}`
     );

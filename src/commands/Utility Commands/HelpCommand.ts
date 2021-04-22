@@ -10,13 +10,45 @@ export const run: RunFunction = async (client, message, args) => {
   const checkOrCross = (bool) =>
     bool ? constants.emojis.check : constants.emojis.x;
 
+    const prefix = await client.utils.resolvePrefix(message.guild.id);
+    const totalCommands = client.commands.size;
+    const allCategories = [
+      ...new Set(client.commands.map((cmd) => cmd.category)),
+    ];
+
+    if(!args.length) {
+
+      const mainEmbed = new client.embed()
+      .setDescription([
+        `Available Categories for: **${message.guild.name}**`,
+        `Prefix: ** ${prefix} **`,
+        `Total Commands: **${totalCommands}**`,
+        `\u200B`,
+        `[Support Server](https://discord.gg/FwBUBzBkYt)`,
+      ]);
+
+
+      for (const category of allCategories) {
+        mainEmbed.addField(
+          `**${client.utils.capitalise(category)} [${
+            client.commands.filter((cmd) => cmd.category === category).size
+          }]**`,
+          `${prefix}help ${client.utils.capitalise(category)}`,
+          true
+        );
+      }
+
+      return message.channel.send(mainEmbed)
+
+          }
+
   const input = args.join(' ');
-  const allCategories = [
-    ...new Set(client.commands.map((cmd) => cmd.category)),
-  ];
+ 
   const allCommands = client.commands
     .map((cmd) => [cmd.name, ...(cmd.aliases || [])])
     .flat();
+
+    
 
   // = Array of all Command names and Categories
   const result = new FuzzySearch(allCategories.concat(allCommands), {

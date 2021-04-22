@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
 export interface IGuild extends mongoose.Document {
-  pot: Number;
-  entires: string[];
+  pot: number;
+  entries: string[];
 }
 
 const lotterySchema = new mongoose.Schema({
   pot: Number,
-  entires: [String],
+  entries: [String],
 });
 
 const lottery = mongoose.model<IGuild>('economy-lotter', lotterySchema);

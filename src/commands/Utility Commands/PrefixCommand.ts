@@ -12,10 +12,6 @@ export const run: RunFunction = async (client, message, args) => {
         (GuildConfig as any)?.prefix || "ts!"
       }\``
     );
-  if (!message.member.permissions.has("ADMINISTRATOR"))
-    return message.channel.send(
-      `You are missing the \`ADMINISTRATOR\ Permission that is required for this action.`
-    );
   if (args[0].length > 4)
     return message.channel.send(`The max length for Prefixes is 4 characters.`);
 
@@ -44,3 +40,4 @@ export const run: RunFunction = async (client, message, args) => {
 export const name: string = "prefix";
 export const category: string = "Utility";
 export const aliases: string[] = ["setprefix", "sprefix"];
+export const userPerms: string[] = ['ADMINISTRATOR'];

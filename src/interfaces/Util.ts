@@ -16,14 +16,13 @@ export default class Util {
     if (check) return true;
     return false;
   }
-
-  checkOwner(user: string) {
-    if (!this.client.owners.includes(user)) return false;
-    return true;
-  }
+  
+  checkOwner(user: string) { 
+    return this.client.owners.includes(user); 
+  } 
 
   async getMember(message: Message, toFind: string = "", msg: boolean) {
-    toFind = toFind.toLowerCase();
+    toFind = toFind.toLowerCase(); 
 
     let target = message.guild.members.cache.get(toFind);
 
@@ -47,7 +46,7 @@ export default class Util {
     if (!target && msg) {
       message.channel.send({
         embed: {
-          description: "Im Sorry! I couldn't locate that User!",
+          description: "I'm sorry! I couldn't locate that user!",
           color: "RED",
         },
       });
@@ -59,10 +58,13 @@ export default class Util {
   async resolvePrefix(guildID: string) {
     const guildData = await Guild.findOne({ guildID });
     const guild = this.client.guilds.cache.get(guildID);
+
     if (guild && guildData) {
       const prefix = guildData.prefix;
+      
       if (prefix) return prefix;
     }
+
     return "!";
   }
 
@@ -200,5 +202,16 @@ export default class Util {
       } else throw new TypeError(`Invalid flag format: '${arg}'`);
     });
     return res;
+  }
+
+
+  getRoles(s, guild) {
+    if(/^[0-9]+$/.test(s)) return guild.roles.cache.get(s);
+    else if(/^<@&[0-9]+>$/.test(s)) {
+      const id = s.substring(3, s.length -1);
+      return guild.roles.cache.get(id);
+    }
+
+    return guild.roles.cache.find(x => x.name.toLowerCase() === s.toLowerCase());
   }
 }

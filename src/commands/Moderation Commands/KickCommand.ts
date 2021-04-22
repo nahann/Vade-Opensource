@@ -232,6 +232,6 @@ DEFAULT:
 export const name: string = "kick";
 export const category: string = "Moderation";
 export const usage: string = "!kick <user(s)> <Optional flags>.";
-export const botPerms: string[] = ["MANAGE_MESSAGES", "MANAGE_CHANNEL"];
-export const userPerms: string[] = ["MANAGE_MESSAGES"];
+export const botPerms: string[] = ["KICK_MEMBERS", "MANAGE_CHANNEL"];
+export const userPerms: string[] = ["KICK_MEMBERS"];
 export const modCommand: boolean = true;
