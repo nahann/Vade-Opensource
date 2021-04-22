@@ -1,6 +1,6 @@
-import { Command } from '../interfaces/Command';
-import { Event } from '../interfaces/Event';
-import consola, { Consola } from 'consola';
+import { Command } from "../interfaces/Command";
+import { Event } from "../interfaces/Event";
+import consola, { Consola } from "consola";
 import {
   Client,
   MessageEmbedOptions,
@@ -8,14 +8,14 @@ import {
   MessageEmbed,
   Intents,
   Collection,
-} from 'discord.js';
-import glob from 'glob';
-import { promisify } from 'util';
-import { Config } from '../interfaces/Config';
-import Constants from '../interfaces/Constants';
-import Util from '../interfaces/Util';
-import Mongo from '../interfaces/Database';
-import EmbedConstruction from '../Classes/MainBotEmbed';
+} from "discord.js";
+import glob from "glob";
+import { promisify } from "util";
+import { Config } from "../interfaces/Config";
+import Constants from "../interfaces/Constants";
+import Util from "../interfaces/Util";
+import Mongo from "../interfaces/Database";
+import EmbedConstruction from "../Classes/MainBotEmbed";
 
 const globPromise = promisify(glob);
 
@@ -30,7 +30,7 @@ class Bot extends Client {
   public cooldowns: Collection<string, number> = new Collection();
   public config: Config;
   public constants: typeof Constants = Constants;
-  public owners: string[] = ['473858248353513472'];
+  public owners: string[] = ["473858248353513472"];
   public version: string = "v9.5.5";
 
   public constructor() {
@@ -54,9 +54,9 @@ class Bot extends Client {
       const file: Command = await import(value);
       this.commands.set(file.name, {
         cooldown: 3000,
-        description: 'No description set',
-        category: 'Miscellaneous',
-        usage: 'No usage set',
+        description: "No description found.",
+        category: "Miscellaneous",
+        usage: `!${file.name}`,
         premiumOnly: false,
         devOnly: false,
         ...file,

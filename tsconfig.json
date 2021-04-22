@@ -14,5 +14,5 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "index.ts", "src/Classes/MessageClass.js"]
+  "include": ["src/**/*.ts", "index.ts", "src/Classes/MessageClass.js", "Assets/Economy/Lottery.ts"]
 }

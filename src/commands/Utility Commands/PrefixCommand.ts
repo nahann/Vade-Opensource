@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import GuildConfigSchema from "../../../models/guild";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const run: RunFunction = async (client, message, args) => {
   const GuildConfig = await GuildConfigSchema.findOne({
@@ -19,20 +19,23 @@ export const run: RunFunction = async (client, message, args) => {
   if (args[0].length > 4)
     return message.channel.send(`The max length for Prefixes is 4 characters.`);
 
-    if(!GuildConfig) {
-      const newSchema = new GuildConfigSchema({
-        _id: mongoose.Types.ObjectId(),
-        guildID: message.guild.id,
-        guildName: message.guild.name,
-        prefix: args[0].toLowerCase(),
-      });
+  if (!GuildConfig) {
+    const newSchema = new GuildConfigSchema({
+      _id: mongoose.Types.ObjectId(),
+      guildID: message.guild.id,
+      guildName: message.guild.name,
+      prefix: args[0].toLowerCase(),
+    });
 
-      await newSchema.save();
-      return message.channel.send(
-        `Successfully updated your prefix. It is now \`${args[0].toLowerCase()}\``
-      );
-    }
-    await GuildConfigSchema.updateOne({ guildID: message.guild.id,  prefix: args[0].toLowerCase() });
+    await newSchema.save();
+    return message.channel.send(
+      `Successfully updated your prefix. It is now \`${args[0].toLowerCase()}\``
+    );
+  }
+  await GuildConfigSchema.updateOne({
+    guildID: message.guild.id,
+    prefix: args[0].toLowerCase(),
+  });
   return message.channel.send(
     `Successfully updated your prefix. It is now \`${args[0].toLowerCase()}\``
   );
@@ -40,4 +43,4 @@ export const run: RunFunction = async (client, message, args) => {
 
 export const name: string = "prefix";
 export const category: string = "Utility";
-export const aliases: string[] = ['setprefix', 'sprefix'];
+export const aliases: string[] = ["setprefix", "sprefix"];

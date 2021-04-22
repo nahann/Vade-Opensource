@@ -24,3 +24,4 @@ export const name: string = "work";
 export const category: string = "Economy";
 export const cooldown: number = 30000;
 export const premiumOnly: boolean = true;
+export const description: string = "Work and earn yourself some Coins!";

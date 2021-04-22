@@ -4,166 +4,121 @@ import FuzzySearch from 'fuse.js';
 import { Paginate } from '@the-nerd-cave/paginate';
 import paginationEmbed from 'discord.js-pagination';
 import { Collection } from 'discord.js';
+import { inspect } from 'util';
 
 export const run: RunFunction = async (client, message, args) => {
-  let ThisOne;
+  const checkOrCross = (bool) =>
+    bool ? constants.emojis.check : constants.emojis.x;
 
-  const command = args.join(' ');
-  const totalCommands = client.commands.size;
-  const checkOrCross = (bool) => (bool ? '`✔️`' : '`❌`');
+  const input = args.join(' ');
+  const allCategories = [
+    ...new Set(client.commands.map((cmd) => cmd.category)),
+  ];
+  const allCommands = client.commands
+    .map((cmd) => [cmd.name, ...(cmd.aliases || [])])
+    .flat();
 
-  let prefix = await client.utils.resolvePrefix(message.guild.id);
+  // = Array of all Command names and Categories
+  const result = new FuzzySearch(allCategories.concat(allCommands), {
+    isCaseSensitive: false,
+    includeScore: false,
+    shouldSort: true,
+    includeMatches: true,
+    findAllMatches: false,
+    minMatchCharLength: 1,
+    location: 0,
+    threshold: 0.6,
+    distance: 100,
+    useExtendedSearch: false,
+    ignoreLocation: false,
+    ignoreFieldNorm: false,
+  }).search(input);
 
-  const allCategories: string[] = client.utils.removeDuplicates(
-    client.commands.map((cmd) => cmd.category)
-  );
+  const [match] = result;
 
-  const embed = new client.embed()
-    .setColor('#00f2ff')
-    .setAuthor(
-      `${message.guild.name} Help Menu`,
-      message.guild.iconURL({
-        dynamic: true,
-      })
+  const noMatchEmbed = new client.embed()
+    .setDescription(
+      `No match found for that input. Please try an input closer to one of the command/category names.`
     )
-    .setThumbnail(client.user.displayAvatarURL())
-    .setFooter(
-      `Requested by ${message.author.username}`,
-      message.author.displayAvatarURL({
-        dynamic: true,
-      })
-    )
-    .setTimestamp();
+    .setErrorColor();
 
+  if (!match) {
+    return noMatchEmbed;
+  }
 
-  if (command) {
-    const cmd =
-      client.commands.get(command.toLowerCase()) ||
-      client.commands.get(client.aliases.get(command.toLowerCase()));
+  const { item } = match;
 
-    if (!cmd) {
-      const search = new FuzzySearch(allCategories, {
-        isCaseSensitive: false,
-        includeScore: false,
-        shouldSort: true,
-        includeMatches: true,
-        findAllMatches: false,
-        minMatchCharLength: 1,
-        location: 0,
-        threshold: 0.6,
-        distance: 100,
-        useExtendedSearch: false,
-        ignoreLocation: false,
-        ignoreFieldNorm: false,
-      });
+  if (allCategories.includes(item)) {
+    // what are we doing lol
 
-      console.log(search)
-
-      const findings = search
-        .search(command)
-        .map((x) => x)
-        .map((x) => x);
-
-       ThisOne: <string> = findings ? findings[0] : null};
-        console.log(findings)
-      if (ThisOne && allCategories.includes(ThisOne.item)) {
-        // finds the category
-        const commands = client.commands
-          .filter((cmd) => cmd.category === ThisOne.item)
-          .map(
-            (command) =>
-              `**${client.utils.capitalise(command.name)}**\n${
-                command.description
-              }\n`
-          );
-
-        if (commands) {
-          const pages = new Paginate(commands, 8).getPaginatedArray();
-
-          const embeds = pages.map((page, index) => {
-            return new client.embed()
-              .setTitle(`${client.utils.capitalise(ThisOne.item)}'s Help Menu`)
-              .setDescription(
-                page ||
-                  `No more Commands to be listed on page ${
-                    index === 0 ? 1 : index + 1
-                  }`
-              )
-              .setMainColor()
-              .setTimestamp();
-          });
-
-          let emojiList = ['◀️', '▶️'];
-          return paginationEmbed(message, embeds, emojiList, 60 * 1000);
-        }
-
-        return message.channel.send(`Invalid Command named. \`${command}\``);
-      }
-    }
-
-    try {
-      embed
-        .setAuthor(
-          `${client.utils.capitalise(cmd.name)} Command Help`,
-          client.user.displayAvatarURL()
-        )
-        .setDescription([
-          `**❯** Aliases: **${
-            cmd.aliases.length
-              ? cmd.aliases.map((alias) => `\`${alias}\``).join(' ')
-              : 'No Aliases.'
-          }**`,
-          `**❯** Description: **${cmd.description}**`,
-          `**❯** Category: **${cmd.category}**`,
-          `**❯** Usage: **${cmd.usage}**`,
-          `**❯** Required Permissions: **${
-            cmd.userPerms.length
-              ? cmd.userPerms.map(client.utils.formatPerms).join(', ')
-              : 'No Permissions Needed.'
-          }**`,
-          `**❯** Moderator Command: ${checkOrCross(cmd.modCommand)}`,
-          `**❯** Administrator Command: ${checkOrCross(cmd.adminCommand)}`,
-          `**❯** [**Premium Command:**](https://vade-bot.com/premium) ${checkOrCross(
-            cmd.premiumOnly
-          )}`,
-        ]);
-    } catch {
-      return message.channel.send(
-        new client.embed()
-          .setDescription('That is not a vaild command/category!')
-          .setColor(constants.colours.error)
+    const commandsToPaginate = client.commands
+      .filter((cmd) => cmd.category === item)
+      .map(
+        (command) =>
+          `**${client.utils.capitalise(command.name)}**\n${
+            command.description
+          }\n`
       );
-    }
-    return message.channel.send(embed);
-  } else {
-    embed.setDescription([
-      `Available Categories for: **${message.guild.name}**`,
-      `Prefix: ** ${prefix} **`,
-      `Total Commands: **${totalCommands}**`,
-      `\u200B`,
-      `[Support Server](https://discord.gg/FwBUBzBkYt)`,
+
+    const pages = new Paginate(commandsToPaginate, 8).getPaginatedArray();
+
+    const embeds = pages.map((page, index) => {
+      return new client.embed()
+        .setTitle(`${client.utils.capitalise(item)}'s Help Menu`)
+        .setDescription(
+          page || `No more Commands to be listed on page ${index + 1}`
+        )
+        .setMainColor()
+        .setTimestamp();
+    });
+
+    let emojiList = ['◀️', '▶️'];
+    return paginationEmbed(message, embeds, emojiList, 60 * 1000);
+    // works
+  }
+
+  const command =
+    client.commands.get(item) ??
+    client.commands.find(({ aliases }) => aliases.includes(item));
+
+  if (!command) {
+    const noMatchEmbed2 = new client.embed()
+      .setDescription(
+        `No match found for that input. Please try an input closer to one of the command/category names.`
+      )
+      .setErrorColor();
+
+    return message.channel.send(noMatchEmbed2);
+  }
+
+  const commandEmbed = new client.embed()
+    .setMainColor()
+    .setTimestamp()
+    .setThumbnail(client.user.displayAvatarURL())
+    .setFooter(`Requested by ${message.author.tag}`)
+    .setDescription([
+      `**❯** Aliases: **${
+        // ah
+        command.aliases?.length
+          ? command.aliases.map((alias) => `\`${alias}\``).join(' ')
+          : 'No aliases.'
+      }**`,
+      `**❯** Description: **${command.description}**`,
+      `**❯** Category: **${command.category}**`,
+      `**❯** Usage: **${command.usage}**`,
+      `**❯** Required Permissions: **${
+        command.userPerms.length
+          ? command.userPerms.map(client.utils.formatPerms).join(', ')
+          : 'No Permissions Needed.'
+      }**`,
+      `**❯** Moderator Command: ${checkOrCross(command.modCommand)}`,
+      `**❯** Administrator Command: ${checkOrCross(command.adminCommand)}`,
+      `**❯** [**Premium Command:**](https://vade-bot.com/premium) ${checkOrCross(
+        command.premiumOnly
+      )}`,
     ]);
 
-    const availableCategories = await Promise.all(
-      allCategories.map((cat) => client.utils.categoryCheck(cat, message))
-    );
-
-    const categories = allCategories.filter(
-      (cat, idx) => availableCategories[idx]
-    );
-
-    for (const category of categories) {
-      embed.addField(
-        `**${client.utils.capitalise(category)} [${
-          client.commands.filter((cmd) => cmd.category === category).size
-        }]**`,
-        `${prefix}help ${client.utils.capitalise(category)}`,
-        true
-      );
-    }
-
-    return message.channel.send(embed);
-  }
+  return message.channel.send(commandEmbed);
 };
 
 export const name: string = 'help';

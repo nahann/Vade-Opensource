@@ -51,3 +51,5 @@ export const run: RunFunction = async (client, message) => {
 
 export const name: string = "hourly";
 export const category: string = "Economy";
+export const usage: string = "!hourly";
+export const description: string = "Collect your Hourly coins!";

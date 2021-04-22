@@ -1,7 +1,7 @@
-import { RunFunction } from '../../interfaces/Command';
-import { Collection } from 'discord.js';
-import ms from 'ms';
-import wordsToNumbers from 'words-to-numbers-ordinal';
+import { RunFunction } from "../../interfaces/Command";
+import { Collection } from "discord.js";
+import ms from "ms";
+import wordsToNumbers from "words-to-numbers-ordinal";
 
 const options: {
   [flag: string]: {
@@ -9,42 +9,42 @@ const options: {
     message: string;
   };
 } = {
-  '--user': {
-    alias: '-u',
+  "--user": {
+    alias: "-u",
     message: "Clear all of a user's messages",
   },
-  '--regex': {
-    alias: '-r',
-    message: 'Clear all messages that match the regex',
+  "--regex": {
+    alias: "-r",
+    message: "Clear all messages that match the regex",
   },
-  '--word': {
-    alias: '-w',
-    message: 'Clear all messages with a specific word',
+  "--word": {
+    alias: "-w",
+    message: "Clear all messages with a specific word",
   },
-  '--nuke': {
-    alias: '-n',
-    message: 'Nuke the channel',
+  "--nuke": {
+    alias: "-n",
+    message: "Nuke the channel",
   },
-  '--time': {
-    alias: '-t',
-    message: 'Clear all messages sent within the time specified',
+  "--time": {
+    alias: "-t",
+    message: "Clear all messages sent within the time specified",
   },
-  '--silent': {
-    alias: '-s',
-    message: 'Clears messages silently; does not display output',
+  "--silent": {
+    alias: "-s",
+    message: "Clears messages silently; does not display output",
   },
-  '--help': {
-    alias: '-h',
-    message: 'Displays this nice little help message',
+  "--help": {
+    alias: "-h",
+    message: "Displays this nice little help message",
   },
-  '--dev': {
-    alias: '-d',
-    message: 'For testing purposes; does not actually clear',
+  "--dev": {
+    alias: "-d",
+    message: "For testing purposes; does not actually clear",
   },
 };
 
 export const run: RunFunction = async (client, message, args) => {
-  if (message.channel.type === 'dm') return;
+  if (message.channel.type === "dm") return;
 
   const getFlags = client.utils.getFlags;
   const prefix = await client.utils.resolvePrefix(message.guild.id);
@@ -55,11 +55,11 @@ export const run: RunFunction = async (client, message, args) => {
     flags.map(({ flag }) => options[`--${flag}`]?.alias || `-${flag}`)
   );
 
-  const parsed = wordsToNumbers(args.join(' '));
+  const parsed = wordsToNumbers(args.join(" "));
   const amount = Math.max(
     Math.min(
       parseInt(args[0]) ||
-        (typeof parsed === 'string' ? parseInt(parsed!.toString()) : parsed) ||
+        (typeof parsed === "string" ? parseInt(parsed!.toString()) : parsed) ||
         0,
       100
     ),
@@ -70,8 +70,8 @@ export const run: RunFunction = async (client, message, args) => {
 
   for (const { flag, index } of flags) {
     switch (flag) {
-      case 'help':
-      case 'h':
+      case "help":
+      case "h":
         return message.channel.send(`
 \`\`\`
 ${prefix}${name}
@@ -80,18 +80,18 @@ SYNTAX:
 OPTIONS:${Object.keys(options)
           .map(
             (flag) =>
-              `\n        ${`${flag}, ${options[flag].alias}`.padEnd(16, ' ')}${
+              `\n        ${`${flag}, ${options[flag].alias}`.padEnd(16, " ")}${
                 options[flag].message
               }`
           )
-          .join('')}
+          .join("")}
 
 DEFAULT:
     Clears the specified amount of messages
 \`\`\`
 `);
-      case 'nuke':
-      case 'n': {
+      case "nuke":
+      case "n": {
         const channel = await message.channel.clone();
         await message.channel.delete();
         const nuked = await channel.send(
@@ -99,8 +99,8 @@ DEFAULT:
         );
         return nuked.delete({ timeout: 5000 });
       }
-      case 'user':
-      case 'u': {
+      case "user":
+      case "u": {
         if (!/\d{18}/.test(args[index + 1]))
           return message.channel.send(
             `A user is required when using the \`user\` flag.`
@@ -121,17 +121,17 @@ DEFAULT:
         const count = messages.size;
         await message.channel.bulkDelete(messages);
 
-        if (booleanFlags.has('-s')) return;
+        if (booleanFlags.has("-s")) return;
 
         const done = await message.channel.send(
-          `**${count}** message${count !== 1 ? 's' : ''} w${
-            count !== 1 ? 'ere' : 'as'
+          `**${count}** message${count !== 1 ? "s" : ""} w${
+            count !== 1 ? "ere" : "as"
           } deleted.`
         );
         return done.delete({ timeout: 5000 });
       }
-      case 'word':
-      case 'w': {
+      case "word":
+      case "w": {
         const word = args[index + 1];
 
         if (!word)
@@ -153,17 +153,17 @@ DEFAULT:
 
         await message.channel.bulkDelete(messages);
 
-        if (booleanFlags.has('-s')) return;
+        if (booleanFlags.has("-s")) return;
 
         const done = await message.channel.send(
-          `**${count}** message${count !== 1 ? 's' : ''} w${
-            count !== 1 ? 'ere' : 'as'
+          `**${count}** message${count !== 1 ? "s" : ""} w${
+            count !== 1 ? "ere" : "as"
           } deleted.`
         );
         return done.delete({ timeout: 5000 });
       }
-      case 'regex':
-      case 'r': {
+      case "regex":
+      case "r": {
         if (!args[index + 1])
           return message.channel.send(
             `A regex is required when using the \`regex\` flag.`
@@ -174,7 +174,7 @@ DEFAULT:
             `Regex must be between 3 and 12 characters long.`
           );
 
-        const regex = new RegExp(args[index + 1] || '');
+        const regex = new RegExp(args[index + 1] || "");
 
         const messages = new Collection(
           Array.from(
@@ -190,17 +190,17 @@ DEFAULT:
 
         await message.channel.bulkDelete(messages);
 
-        if (booleanFlags.has('-s')) return;
+        if (booleanFlags.has("-s")) return;
 
         const done = await message.channel.send(
-          `**${count}** message${count !== 1 ? 's' : ''} w${
-            count !== 1 ? 'ere' : 'as'
+          `**${count}** message${count !== 1 ? "s" : ""} w${
+            count !== 1 ? "ere" : "as"
           } deleted.`
         );
         return done.delete({ timeout: 5000 });
       }
-      case 'time':
-      case 't': {
+      case "time":
+      case "t": {
         if (!args[index + 1])
           return message.channel.send(
             `A time is required when using the \`time\` flag.`
@@ -224,11 +224,11 @@ DEFAULT:
 
         await message.channel.bulkDelete(messages);
 
-        if (booleanFlags.has('-s')) return;
+        if (booleanFlags.has("-s")) return;
 
         const done = await message.channel.send(
-          `**${count}** message${count !== 1 ? 's' : ''} w${
-            count !== 1 ? 'ere' : 'as'
+          `**${count}** message${count !== 1 ? "s" : ""} w${
+            count !== 1 ? "ere" : "as"
           } deleted.`
         );
         return done.delete({ timeout: 5000 });
@@ -236,22 +236,22 @@ DEFAULT:
     }
   }
 
-  if (!booleanFlags.has('-d')) await message.channel.bulkDelete(amount);
+  if (!booleanFlags.has("-d")) await message.channel.bulkDelete(amount);
 
-  if (booleanFlags.has('-s')) return;
+  if (booleanFlags.has("-s")) return;
 
   const done = await message.channel.send(
-    `**${amount}** message${amount !== 1 ? 's' : ''} w${
-      amount !== 1 ? 'ere' : 'as'
+    `**${amount}** message${amount !== 1 ? "s" : ""} w${
+      amount !== 1 ? "ere" : "as"
     } deleted.`
   );
   return done.delete({ timeout: 5000 });
 };
 
-export const name: string = 'clear';
-export const usage: string = '!clear <Amount to clear> <Optional flags>.';
-export const alises: string[] = ['purge', 'clr'];
-export const category: string = 'Moderation';
-export const botPerms: string[] = ['MANAGE_MESSAGES', 'MANAGE_CHANNEL'];
-export const userPerms: string[] = ['MANAGE_MESSAGES'];
+export const name: string = "clear";
+export const usage: string = "!clear <Amount to clear> <Optional flags>.";
+export const alises: string[] = ["purge", "clr"];
+export const category: string = "Moderation";
+export const botPerms: string[] = ["MANAGE_MESSAGES", "MANAGE_CHANNEL"];
+export const userPerms: string[] = ["MANAGE_MESSAGES"];
 export const modCommand: boolean = true;

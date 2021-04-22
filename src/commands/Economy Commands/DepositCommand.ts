@@ -31,3 +31,4 @@ export const aliases: string[] = ["dep"];
 export const category: string = "Economy";
 export const cooldown: number = 15000;
 export const usage: string = "!deposit <Amount>";
+export const description: string = "Deposit money from your Wallet into your Bank.";

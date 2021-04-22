@@ -5,3 +5,5 @@ export const run: RunFunction = async (client, message, args) => {};
 
 export const name: string = "leaderboard";
 export const category: string = "Economy";
+export const usage: string = "!leaderboard";
+export const description: string = "View the Economy leaderboard!";

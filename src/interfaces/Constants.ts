@@ -22,6 +22,10 @@ export default {
     green: "#00C09A",
     cream: "#ffdab9",
   },
+  emojis: {
+    check: "<:vade_check:834423303711227966>",
+    x: "<:vade_x:834428827795062873>",
+  },
   perms: {
     admin: "ADMINISTRATOR",
     mod: "MANAGE_MESSAGES",

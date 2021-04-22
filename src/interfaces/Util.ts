@@ -71,23 +71,24 @@ export default class Util {
   }
 
   capitalise(string: string) {
-    if(string) return string
-      .split(' ')
-      .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
-      .join(' ');
+    if (string)
+      return string
+        .split(" ")
+        .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
+        .join(" ");
   }
 
   formatPerms(perm: string) {
     return perm
       .toLowerCase()
       .replace(/(^|"|_)(\S)/g, (s) => s.toUpperCase())
-      .replace(/_/g, ' ')
-      .replace(/Guild/g, 'Server')
-      .replace(/Use Vad/g, 'Use Voice Activity');
+      .replace(/_/g, " ")
+      .replace(/Guild/g, "Server")
+      .replace(/Use Vad/g, "Use Voice Activity");
   }
 
   async categoryCheck(category: string, message: Message) {
-      if(message.channel.type === 'dm') return;
+    if (message.channel.type === "dm") return;
     category = category?.toLowerCase();
     const modRoleData = await this.resolveModRole(message.guild.id);
     const adminRoleData = await this.resolveAdminRole(message.guild.id);
@@ -165,41 +166,39 @@ export default class Util {
     const set = new Set();
     const res: { flag: string; index: number }[] = [];
     args.forEach((arg, index) => {
-        if (!/^--?\w+$/.test(arg)) return;
+      if (!/^--?\w+$/.test(arg)) return;
 
-        if (/^-\w+$/.test(arg)) {
-            const flags = arg
-                .slice(1)
-                .split("")
-                .map((flag) => {
-                    if (set.has(flag)) return;
-
-                    set.add(flag);
-
-                    return {
-                        flag,
-                        index,
-                    };
-                })
-                .filter(($) => !!$);
-
-            //@ts-ignore
-            res.push(...flags);
-        } else if (/^--\w+$/.test(arg)) {
-            const flag = arg.slice(2);
-
+      if (/^-\w+$/.test(arg)) {
+        const flags = arg
+          .slice(1)
+          .split("")
+          .map((flag) => {
             if (set.has(flag)) return;
 
             set.add(flag);
 
-            res.push({
-                flag,
-                index,
-            });
-        } else throw new TypeError(`Invalid flag format: '${arg}'`);
+            return {
+              flag,
+              index,
+            };
+          })
+          .filter(($) => !!$);
+
+        //@ts-ignore
+        res.push(...flags);
+      } else if (/^--\w+$/.test(arg)) {
+        const flag = arg.slice(2);
+
+        if (set.has(flag)) return;
+
+        set.add(flag);
+
+        res.push({
+          flag,
+          index,
+        });
+      } else throw new TypeError(`Invalid flag format: '${arg}'`);
     });
     return res;
-}
-
-  
+  }
 }
