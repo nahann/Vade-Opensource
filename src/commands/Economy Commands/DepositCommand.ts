@@ -28,6 +28,6 @@ export const run: RunFunction = async (client, message, args) => {
 
 export const name: string = "deposit";
 export const aliases: string[] = ["dep"];
-export const category: string = "economy";
+export const category: string = "Economy";
 export const cooldown: number = 15000;
 export const usage: string = "!deposit <Amount>";

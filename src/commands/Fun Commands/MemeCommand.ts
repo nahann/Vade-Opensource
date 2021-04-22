@@ -15,5 +15,5 @@ export const run: RunFunction = async (client, message, args) => {
 };
 
 export const name: string = "meme";
-export const category: string = "fun";
+export const category: string = "Fun";
 export const cooldown: number = 5000;

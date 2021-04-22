@@ -6,11 +6,11 @@ import GuildConfigSchema from "../../../models/guild";
 
 export const run: RunFunction = async (client, message: Message) => {
   const GuildConfig = await GuildConfigSchema.findOne({
-    Guild: message.guild.id,
+    guildID: message.guild.id,
   });
   let prefix: string = "ts!";
-  if ((GuildConfig as any)?.Prefix) {
-    prefix = (GuildConfig as any).Prefix;
+  if ((GuildConfig as any)?.prefix) {
+    prefix = (GuildConfig as any).prefix;
   }
   if (
     message.author.bot ||

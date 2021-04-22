@@ -49,5 +49,5 @@ export const run: RunFunction = async (client, message, args) => {
 };
 
 export const name: string = "premium";
-export const category: string = "developer";
+export const category: string = "Development";
 export const devOnly: boolean = true;

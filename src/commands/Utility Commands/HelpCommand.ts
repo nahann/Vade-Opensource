@@ -1,18 +1,20 @@
-import { RunFunction, Command } from '../../interfaces/Command';
+import { RunFunction } from '../../interfaces/Command';
 import constants from '../../interfaces/Constants';
-import { FuzzySearch } from 'fuse-djs-v1rtuai';
+import FuzzySearch from 'fuse.js';
 import { Paginate } from '@the-nerd-cave/paginate';
-import { paginationEmbed } from 'discord.js-pagination';
+import paginationEmbed from 'discord.js-pagination';
 import { Collection } from 'discord.js';
 
 export const run: RunFunction = async (client, message, args) => {
+  let ThisOne;
+
   const command = args.join(' ');
   const totalCommands = client.commands.size;
   const checkOrCross = (bool) => (bool ? '`✔️`' : '`❌`');
 
   let prefix = await client.utils.resolvePrefix(message.guild.id);
 
-  const allCategories: Collection<string[]> = client.utils.removeDuplicates(
+  const allCategories: string[] = client.utils.removeDuplicates(
     client.commands.map((cmd) => cmd.category)
   );
 
@@ -33,13 +35,14 @@ export const run: RunFunction = async (client, message, args) => {
     )
     .setTimestamp();
 
+
   if (command) {
     const cmd =
       client.commands.get(command.toLowerCase()) ||
       client.commands.get(client.aliases.get(command.toLowerCase()));
 
     if (!cmd) {
-      const search = new FuzzySearch(allCategories, [''], {
+      const search = new FuzzySearch(allCategories, {
         isCaseSensitive: false,
         includeScore: false,
         shouldSort: true,
@@ -54,13 +57,15 @@ export const run: RunFunction = async (client, message, args) => {
         ignoreFieldNorm: false,
       });
 
-      let findings = search
-        .run(command)
+      console.log(search)
+
+      const findings = search
+        .search(command)
         .map((x) => x)
         .map((x) => x);
 
-      let ThisOne: Collection<string, string> = findings ? findings[0] : null;
-
+       ThisOne: <string> = findings ? findings[0] : null};
+        console.log(findings)
       if (ThisOne && allCategories.includes(ThisOne.item)) {
         // finds the category
         const commands = client.commands
@@ -162,5 +167,5 @@ export const run: RunFunction = async (client, message, args) => {
 };
 
 export const name: string = 'help';
-export const category: string = 'info';
+export const category: string = 'Information';
 export const cooldown: number = 5000;

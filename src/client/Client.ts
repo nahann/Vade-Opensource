@@ -31,6 +31,7 @@ class Bot extends Client {
   public config: Config;
   public constants: typeof Constants = Constants;
   public owners: string[] = ['473858248353513472'];
+  public version: string = "v9.5.5";
 
   public constructor() {
     super({
@@ -54,6 +55,7 @@ class Bot extends Client {
       this.commands.set(file.name, {
         cooldown: 3000,
         description: 'No description set',
+        category: 'Miscellaneous',
         usage: 'No usage set',
         premiumOnly: false,
         devOnly: false,

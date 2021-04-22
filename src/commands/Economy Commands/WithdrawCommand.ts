@@ -24,6 +24,6 @@ export const run: RunFunction = async (client, message, args) => {
 };
 
 export const name: string = "withdraw";
-export const category: string = "economy";
+export const category: string = "Economy";
 export const aliases: string[] = ["with"];
 export const usage: string = "!withdraw <Amount>";

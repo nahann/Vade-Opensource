@@ -21,6 +21,6 @@ export const run: RunFunction = async (client, message, args) => {
 };
 
 export const name: string = "work";
-export const category: string = "economy";
+export const category: string = "Economy";
 export const cooldown: number = 30000;
 export const premiumOnly: boolean = true;
