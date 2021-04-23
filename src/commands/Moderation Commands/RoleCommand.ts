@@ -6,8 +6,6 @@ export const run: RunFunction = async(client, message, args) => {
     if(!mentioned_member) return;
 
     const roles = args.slice(1).join(" ").split(",");
-    console.log(roles)
-
 
     let add = [];
     let remove = [];

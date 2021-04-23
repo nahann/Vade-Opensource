@@ -1,8 +1,8 @@
 import { Bot } from "client/Client";
-import { GuildChannel, Message, TextChannel } from "discord.js";
+import { Guild, GuildChannel, Message, TextChannel } from "discord.js";
 
 import premium_schema from "../../models/premium_schema";
-import Guild from "../../models/guild";
+import guild_schema from "../../models/guild";
 import economy_schema from '../../models/economy';
 
 export default class Util {
@@ -57,7 +57,7 @@ export default class Util {
   }
 
   async resolvePrefix(guildID: string) {
-    const guildData = await Guild.findOne({ guildID });
+    const guildData = await guild_schema.findOne({ guildID });
     const guild = this.client.guilds.cache.get(guildID);
 
     if (guild && guildData) {
@@ -137,7 +137,7 @@ export default class Util {
   }
 
   async resolveModRole(guildID: string) {
-    const guildData2 = await Guild.findOne({ Guild: guildID });
+    const guildData2 = await guild_schema.findOne({ Guild: guildID });
     const guild = this.client.guilds.cache.get(guildID);
     if (guild && guildData2) {
       const role = guild.roles.cache.get(guildData2.ModRole);
@@ -147,7 +147,7 @@ export default class Util {
   }
 
   async resolveAdminRole(guildID: string) {
-    const guildData2 = await Guild.findOne({ Guild: guildID });
+    const guildData2 = await guild_schema.findOne({ Guild: guildID });
     const guild = this.client.guilds.cache.get(guildID);
     if (guild && guildData2) {
       const role = guild.roles.cache.get(guildData2.AdminRole);
@@ -206,7 +206,7 @@ export default class Util {
   }
 
 
-  getRoles(s, guild) {
+  getRoles(s: string, guild: Guild) {
     if(/^[0-9]+$/.test(s)) return guild.roles.cache.get(s);
     else if(/^<@&[0-9]+>$/.test(s)) {
       const id = s.substring(3, s.length -1);

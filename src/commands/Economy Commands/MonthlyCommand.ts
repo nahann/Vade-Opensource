@@ -13,10 +13,6 @@ export const run: RunFunction = async (client, message) => {
       await EconomySchema.findOneAndUpdate({
         User: message.author.id,
         $inc: { Wallet: 100000 },
-      });
-    if (Profile)
-      await EconomySchema.updateOne({
-        User: message.author.id,
         MonthlyTime: Date.now() + ms("30d"),
       });
 
@@ -29,13 +25,14 @@ export const run: RunFunction = async (client, message) => {
       });
 
       await newSchema.save();
+      return message.channel.send(
+        new client.embed()
+          .setTitle("Success!")
+          .setDescription(`I have given you your 100,000 monthly Coins!`)
+          .setMainColor()
+      );
     }
-    return message.channel.send(
-      new client.embed()
-        .setTitle("Success!")
-        .setDescription(`I have given you your 100,000 monthly Coins!`)
-        .setMainColor()
-    );
+    
   } else
     return message.channel.send(
       new client.embed()

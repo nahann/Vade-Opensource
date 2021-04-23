@@ -8,6 +8,9 @@ export const run: RunFunction = async (client, message, args) => {
     "Rocket Scientist",
     "Vade Developer",
     "Lead Vade Developer",
+    "Discord Employee",
+    "Discord Bug Hunter",
+    "Slave"
   ];
   const locateSchema = await EconomySchema.findOne({ User: message.author.id });
   const Job: string = Jobs[Math.floor(Math.random() * Jobs.length)];
