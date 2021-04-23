@@ -3,6 +3,7 @@ import { GuildChannel, Message, TextChannel } from "discord.js";
 
 import premium_schema from "../../models/premium_schema";
 import Guild from "../../models/guild";
+import economy_schema from '../../models/economy';
 
 export default class Util {
   public readonly client: Bot;
@@ -214,4 +215,28 @@ export default class Util {
 
     return guild.roles.cache.find(x => x.name.toLowerCase() === s.toLowerCase());
   }
+
+
+
+  async addBal(user: string, Coins: Number) {
+    if(!user) throw new TypeError(`No user property provided.`);
+    if(!Coins) throw new TypeError(`No Coins property provided.`);
+    const locate_schema = await economy_schema.findOne({ User: user });
+    if(locate_schema) {
+      await economy_schema.updateOne({
+        User: user,
+        $inc: { Wallet: Coins },
+      });
+    } else {
+      const newSchema = new economy_schema({
+        User: user,
+        Wallet: Coins,
+        Bank: 0,
+      });
+
+      await newSchema.save();
+    }
+  }
+
+
 }
