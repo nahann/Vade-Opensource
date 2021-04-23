@@ -3,9 +3,6 @@ import { Event } from "../interfaces/Event";
 import consola, { Consola } from "consola";
 import {
   Client,
-  MessageEmbedOptions,
-  Message,
-  MessageEmbed,
   Intents,
   Collection,
 } from "discord.js";
@@ -16,7 +13,7 @@ import Constants from "../interfaces/Constants";
 import Util from "../interfaces/Util";
 import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
-import Lottery from '../../Assets/Economy/Lottery';
+import Lottery from "../../Assets/Economy/Lottery";
 
 const globPromise = promisify(glob);
 
@@ -48,7 +45,7 @@ class Bot extends Client {
     this.config = config;
     this.login(config.token);
     Mongo();
-    Lottery(this)
+    Lottery(this);
     const commandFiles: string[] = await globPromise(
       `${__dirname}/../commands/**/*{.ts,.js}`
     );
@@ -61,6 +58,7 @@ class Bot extends Client {
         usage: `!${file.name}`,
         premiumOnly: false,
         devOnly: false,
+        guildOnly: false,
         ...file,
       });
       this.categories.add(file.category);
@@ -77,13 +75,6 @@ class Bot extends Client {
       this.on(file.name, file.run.bind(null, this));
     });
   }
-  // public embed(options: MessageEmbedOptions, message: Message): MessageEmbed {
-  //   return new MessageEmbed({ ...options }).setFooter(
-  //     `${message.author.tag} | ${this.user.username}`,
-  //     message.author.displayAvatarURL({ format: "png", dynamic: true })
-  //   )
-  //   .setColor(options.color || "#40e0d0");
-  // }
 }
 
 export { Bot };

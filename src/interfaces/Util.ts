@@ -1,13 +1,21 @@
-import { Bot } from "client/Client";
-import { Guild, GuildChannel, Message, TextChannel } from "discord.js";
+import { Bot } from 'client/Client';
+import {
+  Guild,
+  GuildChannel,
+  GuildMember,
+  Message,
+  TextChannel,
+  User,
+} from 'discord.js';
 
-import premium_schema from "../../models/premium_schema";
-import guild_schema from "../../models/guild";
+import premium_schema from '../../models/premium_schema';
+import guild_schema from '../../models/guild';
 import economy_schema from '../../models/economy';
 
 export default class Util {
   public readonly client: Bot;
-
+  private readonly yes: string[] = ['yes', 'si', 'yeah', 'ok', 'sure'];
+  private readonly no: string[] = ['no', 'nope', 'nada'];
   constructor(client: Bot) {
     this.client = client;
   }
@@ -17,13 +25,13 @@ export default class Util {
     if (check) return true;
     return false;
   }
-  
-  checkOwner(user: string) { 
-    return this.client.owners.includes(user); 
-  } 
 
-  async getMember(message: Message, toFind: string = "", msg: boolean) {
-    toFind = toFind.toLowerCase(); 
+  checkOwner(user: string) {
+    return this.client.owners.includes(user);
+  }
+
+  async getMember(message: Message, toFind: string = '', msg: boolean = false) {
+    toFind = toFind.toLowerCase();
 
     let target = message.guild.members.cache.get(toFind);
 
@@ -48,12 +56,46 @@ export default class Util {
       message.channel.send({
         embed: {
           description: "I'm sorry! I couldn't locate that user!",
-          color: "RED",
+          color: 'RED',
         },
       });
     }
 
     return target;
+  }
+
+  async verify(
+    channel: TextChannel,
+    user: User | GuildMember,
+    {
+      time = 30000,
+      extraYes = [],
+      extraNo = [],
+    }: { time?: number; extraYes?: string[]; extraNo?: string[] }
+  ) {
+    // refactoring magic by anthony#8577 (developer of the suggestions bot) - removing this comment is NOT allowed
+    const [yes, no] = [
+      [...this.yes, ...extraYes],
+      [...this.no, ...extraNo],
+    ];
+
+    const filter = (res: Message): boolean => {
+      const value = res.content.toLowerCase();
+      return (
+        (user ? res.author.id === user.id : true) &&
+        (yes.includes(value) || no.includes(value))
+      );
+    };
+
+    const verify = await channel.awaitMessages(filter, {
+      max: 1,
+      time,
+    });
+    if (!verify.size) return 0;
+    const choice = verify.first()?.content.toLowerCase();
+    if (yes.includes(choice)) return true;
+    if (no.includes(choice)) return false;
+    return false;
   }
 
   async resolvePrefix(guildID: string) {
@@ -62,11 +104,11 @@ export default class Util {
 
     if (guild && guildData) {
       const prefix = guildData.prefix;
-      
+
       if (prefix) return prefix;
     }
 
-    return "!";
+    return '!';
   }
 
   removeDuplicates<T>(arr: T[]) {
@@ -76,61 +118,61 @@ export default class Util {
   capitalise(string: string) {
     if (string)
       return string
-        .split(" ")
+        .split(' ')
         .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
-        .join(" ");
+        .join(' ');
   }
 
   formatPerms(perm: string) {
     return perm
       .toLowerCase()
       .replace(/(^|"|_)(\S)/g, (s) => s.toUpperCase())
-      .replace(/_/g, " ")
-      .replace(/Guild/g, "Server")
-      .replace(/Use Vad/g, "Use Voice Activity");
+      .replace(/_/g, ' ')
+      .replace(/Guild/g, 'Server')
+      .replace(/Use Vad/g, 'Use Voice Activity');
   }
 
   async categoryCheck(category: string, message: Message) {
-    if (message.channel.type === "dm") return;
+    if (message.channel.type === 'dm') return;
     category = category?.toLowerCase();
     const modRoleData = await this.resolveModRole(message.guild.id);
     const adminRoleData = await this.resolveAdminRole(message.guild.id);
     const ownerCheck = this.checkOwner(message.author.id);
     switch (category) {
-      case "development":
+      case 'development':
         return ownerCheck;
-      case "giveaways":
-        return message.member.hasPermission("MANAGE_MESSAGES");
-      case "reaction roles":
+      case 'giveaways':
+        return message.member.hasPermission('MANAGE_MESSAGES');
+      case 'reaction roles':
         return (
-          (message.member.hasPermission("MANAGE_MESSAGES") ||
+          (message.member.hasPermission('MANAGE_MESSAGES') ||
             message.member.roles.cache.has(modRoleData)) &&
           !ownerCheck
         );
-      case "moderation":
+      case 'moderation':
         return (
-          (message.member.hasPermission("MANAGE_MESSAGES") ||
+          (message.member.hasPermission('MANAGE_MESSAGES') ||
             message.member.roles.cache.has(modRoleData)) &&
           !ownerCheck
         );
-      case "administrative":
+      case 'administrative':
         return (
-          (message.member.hasPermission("BAN_MEMBERS") ||
+          (message.member.hasPermission('BAN_MEMBERS') ||
             message.member.roles.cache.has(adminRoleData)) &&
           !ownerCheck
         );
-      case "advertising":
+      case 'advertising':
         return (
-          (message.member.hasPermission("MANAGE_CHANNELS") ||
+          (message.member.hasPermission('MANAGE_CHANNELS') ||
             message.member.roles.cache.has(modRoleData)) &&
           !ownerCheck
         );
-      case "nsfw":
+      case 'nsfw':
         return message.channel?.nsfw && !ownerCheck;
-      case "tch":
-        return message.guild.id === "779760518428229632" && !ownerCheck;
-      case "roblox":
-        return message.member.hasPermission("MANAGE_MESSAGES");
+      case 'tch':
+        return message.guild.id === '779760518428229632' && !ownerCheck;
+      case 'roblox':
+        return message.member.hasPermission('MANAGE_MESSAGES');
       default:
         return true;
     }
@@ -174,7 +216,7 @@ export default class Util {
       if (/^-\w+$/.test(arg)) {
         const flags = arg
           .slice(1)
-          .split("")
+          .split('')
           .map((flag) => {
             if (set.has(flag)) return;
 
@@ -205,24 +247,23 @@ export default class Util {
     return res;
   }
 
-
   getRoles(s: string, guild: Guild) {
-    if(/^[0-9]+$/.test(s)) return guild.roles.cache.get(s);
-    else if(/^<@&[0-9]+>$/.test(s)) {
-      const id = s.substring(3, s.length -1);
+    if (/^[0-9]+$/.test(s)) return guild.roles.cache.get(s);
+    else if (/^<@&[0-9]+>$/.test(s)) {
+      const id = s.substring(3, s.length - 1);
       return guild.roles.cache.get(id);
     }
 
-    return guild.roles.cache.find(x => x.name.toLowerCase() === s.toLowerCase());
+    return guild.roles.cache.find(
+      (x) => x.name.toLowerCase() === s.toLowerCase()
+    );
   }
 
-
-
   async addBal(user: string, Coins: Number) {
-    if(!user) throw new TypeError(`No user property provided.`);
-    if(!Coins) throw new TypeError(`No Coins property provided.`);
+    if (!user) throw new TypeError(`No user property provided.`);
+    if (!Coins) throw new TypeError(`No Coins property provided.`);
     const locate_schema = await economy_schema.findOne({ User: user });
-    if(locate_schema) {
+    if (locate_schema) {
       await economy_schema.updateOne({
         User: user,
         $inc: { Wallet: Coins },
@@ -237,6 +278,4 @@ export default class Util {
       await newSchema.save();
     }
   }
-
-
 }

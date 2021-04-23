@@ -22,5 +22,4 @@ export const run: RunFunction = async (client, message, args) => {
 
 export const name: string = "lottery";
 export const category: string = "Economy";
-export const description: string =
-  "Enter the lottery!";
+export const description: string = "Enter the lottery!";

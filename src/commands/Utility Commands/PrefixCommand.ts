@@ -40,4 +40,4 @@ export const run: RunFunction = async (client, message, args) => {
 export const name: string = "prefix";
 export const category: string = "Utility";
 export const aliases: string[] = ["setprefix", "sprefix"];
-export const userPerms: string[] = ['ADMINISTRATOR'];
+export const userPerms: string[] = ["ADMINISTRATOR"];

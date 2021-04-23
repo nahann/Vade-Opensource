@@ -22,4 +22,5 @@ export interface Command {
   modCommand?: boolean;
   adminCommand?: boolean;
   devOnly?: boolean;
+  guildOnly?: boolean;
 }

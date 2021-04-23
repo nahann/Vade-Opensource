@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export interface IGuild extends mongoose.Document {
   pot: number;
@@ -10,6 +10,6 @@ const lotterySchema = new mongoose.Schema({
   entries: [String],
 });
 
-const lottery = mongoose.model<IGuild>('economy-lotter', lotterySchema);
+const lottery = mongoose.model<IGuild>("economy-lotter", lotterySchema);
 
 export default lottery;

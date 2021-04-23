@@ -27,4 +27,5 @@ export const name: string = "withdraw";
 export const category: string = "Economy";
 export const aliases: string[] = ["with"];
 export const usage: string = "!withdraw <Amount>";
-export const description: string = "Withdraw money from your Bank into your Wallet!";
+export const description: string =
+  "Withdraw money from your Bank into your Wallet!";

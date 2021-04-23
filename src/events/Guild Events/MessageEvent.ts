@@ -65,7 +65,9 @@ export const run: RunFunction = async (client, message: Message) => {
     const checkPremium = await client.utils.checkPremium(message.guild.ownerID);
     const checkOwner = client.utils.checkOwner(message.author.id);
     if (command.premiumOnly && !checkPremium) {
-      return message.channel.send(`The Guild owner must have Vade Premium in order for you to run this Command!`);
+      return message.channel.send(
+        `The Guild owner must have Vade Premium in order for you to run this Command!`
+      );
     }
 
     if (command.devOnly && !checkOwner) {
@@ -85,7 +87,7 @@ export const run: RunFunction = async (client, message: Message) => {
   } catch (e) {
     message.channel.send(
       new client.embed()
-        .setTitle(`An unknown error occured!`)
+        .setTitle(`An error occured!`)
         .setDescription(`Error: ${e}`)
         .setErrorColor()
     );

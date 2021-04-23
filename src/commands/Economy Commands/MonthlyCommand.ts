@@ -32,7 +32,6 @@ export const run: RunFunction = async (client, message) => {
           .setMainColor()
       );
     }
-    
   } else
     return message.channel.send(
       new client.embed()

@@ -10,30 +10,26 @@ export const run: RunFunction = async (client, message, args) => {
     "Lead Vade Developer",
     "Discord Employee",
     "Discord Bug Hunter",
-    "Slave"
+    "Slave",
   ];
   const locateSchema = await EconomySchema.findOne({ User: message.author.id });
   const Job: string = Jobs[Math.floor(Math.random() * Jobs.length)];
   const Coins: number = Math.floor(Math.random() * 200);
-  
-  if(!locateSchema) {
 
+  if (!locateSchema) {
     const newSchema = new EconomySchema({
       User: message.author.id,
       Wallet: Coins,
       Bank: 0,
     });
 
-    await newSchema.save()
+    await newSchema.save();
 
     return message.channel.send(
       `You earnt **${Coins}** by working as a **${Job}**!`
     );
-
   }
-  
-  
-  
+
   await EconomySchema.updateOne({
     User: message.author.id,
     $inc: { Wallet: Coins },

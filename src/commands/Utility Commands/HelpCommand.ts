@@ -1,54 +1,48 @@
-import { RunFunction } from '../../interfaces/Command';
-import constants from '../../interfaces/Constants';
-import FuzzySearch from 'fuse.js';
-import { Paginate } from '@the-nerd-cave/paginate';
-import paginationEmbed from 'discord.js-pagination';
-import { Collection } from 'discord.js';
-import { inspect } from 'util';
+import { RunFunction } from "../../interfaces/Command";
+import constants from "../../interfaces/Constants";
+import FuzzySearch from "fuse.js";
+import { Paginate } from "@the-nerd-cave/paginate";
+import paginationEmbed from "discord.js-pagination";
+import { Collection } from "discord.js";
+import { inspect } from "util";
 
 export const run: RunFunction = async (client, message, args) => {
   const checkOrCross = (bool) =>
     bool ? constants.emojis.check : constants.emojis.x;
 
-    const prefix = await client.utils.resolvePrefix(message.guild.id);
-    const totalCommands = client.commands.size;
-    const allCategories = [
-      ...new Set(client.commands.map((cmd) => cmd.category)),
-    ];
+  const prefix = await client.utils.resolvePrefix(message.guild.id);
+  const totalCommands = client.commands.size;
+  const allCategories = [
+    ...new Set(client.commands.map((cmd) => cmd.category)),
+  ];
 
-    if(!args.length) {
+  if (!args.length) {
+    const mainEmbed = new client.embed().setDescription([
+      `Available Categories for: **${message.guild.name}**`,
+      `Prefix: ** ${prefix} **`,
+      `Total Commands: **${totalCommands}**`,
+      `\u200B`,
+      `[Support Server](https://discord.gg/FwBUBzBkYt)`,
+    ]);
 
-      const mainEmbed = new client.embed()
-      .setDescription([
-        `Available Categories for: **${message.guild.name}**`,
-        `Prefix: ** ${prefix} **`,
-        `Total Commands: **${totalCommands}**`,
-        `\u200B`,
-        `[Support Server](https://discord.gg/FwBUBzBkYt)`,
-      ]);
+    for (const category of allCategories) {
+      mainEmbed.addField(
+        `**${client.utils.capitalise(category)} [${
+          client.commands.filter((cmd) => cmd.category === category).size
+        }]**`,
+        `${prefix}help ${client.utils.capitalise(category)}`,
+        true
+      );
+    }
 
+    return message.channel.send(mainEmbed);
+  }
 
-      for (const category of allCategories) {
-        mainEmbed.addField(
-          `**${client.utils.capitalise(category)} [${
-            client.commands.filter((cmd) => cmd.category === category).size
-          }]**`,
-          `${prefix}help ${client.utils.capitalise(category)}`,
-          true
-        );
-      }
+  const input = args.join(" ");
 
-      return message.channel.send(mainEmbed)
-
-          }
-
-  const input = args.join(' ');
- 
   const allCommands = client.commands
     .map((cmd) => [cmd.name, ...(cmd.aliases || [])])
     .flat();
-
-    
 
   // = Array of all Command names and Categories
   const result = new FuzzySearch(allCategories.concat(allCommands), {
@@ -104,7 +98,7 @@ export const run: RunFunction = async (client, message, args) => {
         .setTimestamp();
     });
 
-    let emojiList = ['◀️', '▶️'];
+    let emojiList = ["◀️", "▶️"];
     return paginationEmbed(message, embeds, emojiList, 60 * 1000);
     // works
   }
@@ -132,16 +126,16 @@ export const run: RunFunction = async (client, message, args) => {
       `**❯** Aliases: **${
         // ah
         command.aliases?.length
-          ? command.aliases.map((alias) => `\`${alias}\``).join(' ')
-          : 'No aliases.'
+          ? command.aliases.map((alias) => `\`${alias}\``).join(" ")
+          : "No aliases."
       }**`,
       `**❯** Description: **${command.description}**`,
       `**❯** Category: **${command.category}**`,
       `**❯** Usage: **${command.usage}**`,
       `**❯** Required Permissions: **${
         command.userPerms.length
-          ? command.userPerms.map(client.utils.formatPerms).join(', ')
-          : 'No Permissions Needed.'
+          ? command.userPerms.map(client.utils.formatPerms).join(", ")
+          : "No Permissions Needed."
       }**`,
       `**❯** Moderator Command: ${checkOrCross(command.modCommand)}`,
       `**❯** Administrator Command: ${checkOrCross(command.adminCommand)}`,
@@ -153,6 +147,6 @@ export const run: RunFunction = async (client, message, args) => {
   return message.channel.send(commandEmbed);
 };
 
-export const name: string = 'help';
-export const category: string = 'Information';
+export const name: string = "help";
+export const category: string = "Information";
 export const cooldown: number = 5000;

@@ -37,9 +37,7 @@ const options: {
   },
 };
 
-export const run: RunFunction = async (client, message, args) => {
-
-};
+export const run: RunFunction = async (client, message, args) => {};
 
 export const name: string = "ban";
 export const category: string = "Moderation";
