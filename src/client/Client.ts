@@ -1,11 +1,7 @@
 import { Command } from "../interfaces/Command";
 import { Event } from "../interfaces/Event";
 import consola, { Consola } from "consola";
-import {
-  Client,
-  Intents,
-  Collection,
-} from "discord.js";
+import { Client, Intents, Collection } from "discord.js";
 import glob from "glob";
 import { promisify } from "util";
 import { Config } from "../interfaces/Config";

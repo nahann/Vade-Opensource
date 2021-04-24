@@ -1,4 +1,4 @@
-import { Bot } from 'client/Client';
+import { Bot } from "client/Client";
 import {
   Guild,
   GuildChannel,
@@ -6,16 +6,16 @@ import {
   Message,
   TextChannel,
   User,
-} from 'discord.js';
+} from "discord.js";
 
-import premium_schema from '../../models/premium_schema';
-import guild_schema from '../../models/guild';
-import economy_schema from '../../models/economy';
+import premium_schema from "../../models/premium_schema";
+import guild_schema from "../../models/guild";
+import economy_schema from "../../models/economy";
 
 export default class Util {
   public readonly client: Bot;
-  private readonly yes: string[] = ['yes', 'si', 'yeah', 'ok', 'sure'];
-  private readonly no: string[] = ['no', 'nope', 'nada'];
+  private readonly yes: string[] = ["yes", "si", "yeah", "ok", "sure"];
+  private readonly no: string[] = ["no", "nope", "nada"];
   constructor(client: Bot) {
     this.client = client;
   }
@@ -30,7 +30,7 @@ export default class Util {
     return this.client.owners.includes(user);
   }
 
-  async getMember(message: Message, toFind: string = '', msg: boolean = false) {
+  async getMember(message: Message, toFind: string = "", msg: boolean = false) {
     toFind = toFind.toLowerCase();
 
     let target = message.guild.members.cache.get(toFind);
@@ -56,7 +56,7 @@ export default class Util {
       message.channel.send({
         embed: {
           description: "I'm sorry! I couldn't locate that user!",
-          color: 'RED',
+          color: "RED",
         },
       });
     }
@@ -108,7 +108,7 @@ export default class Util {
       if (prefix) return prefix;
     }
 
-    return '!';
+    return "!";
   }
 
   removeDuplicates<T>(arr: T[]) {
@@ -118,61 +118,61 @@ export default class Util {
   capitalise(string: string) {
     if (string)
       return string
-        .split(' ')
+        .split(" ")
         .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
-        .join(' ');
+        .join(" ");
   }
 
   formatPerms(perm: string) {
     return perm
       .toLowerCase()
       .replace(/(^|"|_)(\S)/g, (s) => s.toUpperCase())
-      .replace(/_/g, ' ')
-      .replace(/Guild/g, 'Server')
-      .replace(/Use Vad/g, 'Use Voice Activity');
+      .replace(/_/g, " ")
+      .replace(/Guild/g, "Server")
+      .replace(/Use Vad/g, "Use Voice Activity");
   }
 
   async categoryCheck(category: string, message: Message) {
-    if (message.channel.type === 'dm') return;
+    if (message.channel.type === "dm") return;
     category = category?.toLowerCase();
     const modRoleData = await this.resolveModRole(message.guild.id);
     const adminRoleData = await this.resolveAdminRole(message.guild.id);
     const ownerCheck = this.checkOwner(message.author.id);
     switch (category) {
-      case 'development':
+      case "development":
         return ownerCheck;
-      case 'giveaways':
-        return message.member.hasPermission('MANAGE_MESSAGES');
-      case 'reaction roles':
+      case "giveaways":
+        return message.member.hasPermission("MANAGE_MESSAGES");
+      case "reaction roles":
         return (
-          (message.member.hasPermission('MANAGE_MESSAGES') ||
+          (message.member.hasPermission("MANAGE_MESSAGES") ||
             message.member.roles.cache.has(modRoleData)) &&
           !ownerCheck
         );
-      case 'moderation':
+      case "moderation":
         return (
-          (message.member.hasPermission('MANAGE_MESSAGES') ||
+          (message.member.hasPermission("MANAGE_MESSAGES") ||
             message.member.roles.cache.has(modRoleData)) &&
           !ownerCheck
         );
-      case 'administrative':
+      case "administrative":
         return (
-          (message.member.hasPermission('BAN_MEMBERS') ||
+          (message.member.hasPermission("BAN_MEMBERS") ||
             message.member.roles.cache.has(adminRoleData)) &&
           !ownerCheck
         );
-      case 'advertising':
+      case "advertising":
         return (
-          (message.member.hasPermission('MANAGE_CHANNELS') ||
+          (message.member.hasPermission("MANAGE_CHANNELS") ||
             message.member.roles.cache.has(modRoleData)) &&
           !ownerCheck
         );
-      case 'nsfw':
+      case "nsfw":
         return message.channel?.nsfw && !ownerCheck;
-      case 'tch':
-        return message.guild.id === '779760518428229632' && !ownerCheck;
-      case 'roblox':
-        return message.member.hasPermission('MANAGE_MESSAGES');
+      case "tch":
+        return message.guild.id === "779760518428229632" && !ownerCheck;
+      case "roblox":
+        return message.member.hasPermission("MANAGE_MESSAGES");
       default:
         return true;
     }
@@ -216,7 +216,7 @@ export default class Util {
       if (/^-\w+$/.test(arg)) {
         const flags = arg
           .slice(1)
-          .split('')
+          .split("")
           .map((flag) => {
             if (set.has(flag)) return;
 
