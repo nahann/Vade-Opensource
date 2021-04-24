@@ -1,6 +1,7 @@
 import { RunFunction } from "../../interfaces/Event";
 import findAutorole from "../../../models/autoroles";
-import { GuildMember } from "discord.js";
+import { GuildMember, TextChannel } from "discord.js";
+import Guild from '../../../models/guild';
 
 export const run: RunFunction = async (client, member: GuildMember) => {
   try {
@@ -32,5 +33,41 @@ export const run: RunFunction = async (client, member: GuildMember) => {
   } catch (e) {
     console.log(e);
   }
+
+
+  const locate_main_data = await Guild.findOne({ guildID: member.guild.id });
+  const type = (locate_main_data)?.welcomeType;
+  const welcome_channel = locate_main_data.welcomeChannel;
+  if(!welcome_channel) return;
+  const guildChannel = client.channels.cache.get(welcome_channel) as TextChannel;
+  if(!guildChannel) return;
+ 
+  switch(type) {
+
+    case "message": {
+
+      let msg;
+
+      msg = (locate_main_data)?.welcomeMessage;
+      if(msg) {
+        guildChannel.send(member, msg);
+
+      } else {
+        guildChannel.send(`${member}, welcome to the server!`);
+      }
+
+
+    }
+
+    case "image": {
+
+    }
+
+    default: 
+    return;
+  }
+  
+
+  
 };
 export const name: string = "guildMemberAdd";

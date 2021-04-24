@@ -259,6 +259,21 @@ export default class Util {
     );
   }
 
+  getChannels(s, guild) {
+    if (/^[0-9]+$/.test(s)) {
+      const channel = guild.channels.cache.get(s);
+      if (!channel || ['dm', 'voice', 'category', 'store', 'stage'].includes(channel.type)) return;
+      return channel;
+    } else if (/^<#[0-9]+>$/.test(s)) {
+      const id = s.substring(2, s.length - 1);
+      const channel = guild.channels.cache.get(id);
+      if (!channel || ['dm', 'voice', 'category', 'store'].includes(channel.type)) return;
+      return channel;
+    }
+
+    return guild.channels.cache.find(x => (x.type === 'text') && x.name.toLowerCase() === s);
+  }
+
   async addBal(user: string, Coins: Number) {
     if (!user) throw new TypeError(`No user property provided.`);
     if (!Coins) throw new TypeError(`No Coins property provided.`);
