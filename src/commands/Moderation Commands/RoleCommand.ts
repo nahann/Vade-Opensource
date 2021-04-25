@@ -2,14 +2,6 @@ import { PermissionString } from "discord.js";
 import { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {
-  // ?role @user Role,Role, || , Role
-  // If they have the role, it removes - Also removes if the role name starts with "-".
-  // If they do not have the role, it adds - Also adds if the role name starts with "+".
-  // ?role removeall @user. - Removes ALL the users roles.
-  // ?role set @user <List of roles to set the member>.
-  // ?role all <Role>. - Role every single member of the Guild that role. Delay of around 1 second per user, send an embed with an estimated length of time until complete.
-  // ?role bots <Role> - Role every single Bot in the Server that role. Delat of around 1 second per bot. Send an embed with an esitmated length of time until complete.
-  // ?role humans <Role> - Role every single Human in the Server that role. Delat of around 1 second per user. Send an embed with an esitmated length of time until complete.
   // ?role in <Inrole> <Role> - Role anyone that has the role specified the role specified. E.g ?role in Members Website Updates.
 
   const [sub, ...ctx] = args;
@@ -56,17 +48,73 @@ export const run: RunFunction = async (client, message, args) => {
 
       if (!role) return message.channel.send(`I could not find the role!`);
 
-      message.channel.send(`Adding roles to all members...`);
+      const msg = await message.channel.send(`Adding roles to all members...`);
 
       await Promise.all(
         message.guild.members.cache.map(async (member) => {
-          await member.roles.add(role);
+          try {
+            await member.roles.add(role);
+          } catch {}
 
           await new Promise((resolve, reject) => setTimeout(resolve, 1000));
         })
       );
 
-      return;
+      return msg.edit(`Added all roles successfully!`);
+    }
+
+    case "bots": {
+      const [id] = ctx;
+
+      const role =
+        message.guild.roles.cache.find(
+          ({ name }) => name.toLowerCase() === id.toLowerCase()
+        ) ??
+        (await message.guild.roles.fetch(id)) ??
+        message.mentions.roles.first();
+
+      if (!role) return message.channel.send(`I could not find the role!`);
+
+      const msg = await message.channel.send(`Adding roles to all bots..`);
+
+      await Promise.all(
+        message.guild.members.cache.filter(({ user: { bot } }) => bot).map(async (member) => {
+          try {
+            await member.roles.add(role);
+          } catch {}
+
+          await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+        })
+      );
+
+      return msg.edit(`Added all roles successfully!`);
+    }
+
+    case "humans": {
+      const [id] = ctx;
+
+      const role =
+        message.guild.roles.cache.find(
+          ({ name }) => name.toLowerCase() === id.toLowerCase()
+        ) ??
+        (await message.guild.roles.fetch(id)) ??
+        message.mentions.roles.first();
+
+      if (!role) return message.channel.send(`I could not find the role!`);
+
+      const msg = await message.channel.send(`Adding roles to all humans..`);
+
+      await Promise.all(
+        message.guild.members.cache.filter(({ user: { bot } }) => !bot).map(async (member) => {
+          try {
+            await member.roles.add(role);
+          } catch {}
+
+          await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+        })
+      );
+
+      return msg.edit(`Added all roles successfully!`);
     }
 
     default: {

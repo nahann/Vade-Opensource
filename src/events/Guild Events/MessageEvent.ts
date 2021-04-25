@@ -5,6 +5,28 @@ import ms from "ms";
 import GuildConfigSchema from "../../../models/guild";
 
 export const run: RunFunction = async (client, message: Message) => {
+
+  const prefixKey = 'prefix'
+
+  // for(const guild of client.guilds.cache) { 
+  //   const id = guild[0]
+  //   client.redis.get(`${id}-${prefixKey}`, async (err, result) => { 
+  //     if(err) return console.log(`ERROR: ` + err);
+  //     console.log(`ID: ` + id) 
+  //     if(!result) {            
+  //       const guildData = await GuildConfigSchema.findOne({ guildID: id }); 
+  //       console.log(`GUILDDATA: ` + guildData); // null lmao
+
+  //       const mongoDBPrefix = (guildData)?.prefix;
+  //       // so how do we save it to redis and make it expire after 30d?
+  //       console.log(`MONGOPREFIX: ` + mongoDBPrefix)
+  //       if (mongoDBPrefix) client.redis.set(`${id}-${prefixKey}`, mongoDBPrefix);
+  //     }
+      
+  //     console.log(`RESULT: ` + result); // n U l L
+  //   });
+  
+  // }
   const GuildConfig = await GuildConfigSchema.findOne({
     guildID: message.guild.id,
   });
