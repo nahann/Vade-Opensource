@@ -1,7 +1,7 @@
 import { Command } from "../interfaces/Command";
 import { Event } from "../interfaces/Event";
 import consola, { Consola } from "consola";
-import { Client, Intents, Collection } from "discord.js";
+import { Client, Intents, Collection } from "discord.js-light";
 import glob from "glob";
 import { promisify } from "util";
 import { Config } from "../interfaces/Config";
@@ -37,6 +37,12 @@ class Bot extends Client {
       messageCacheMaxSize: 200,
       messageEditHistoryMaxSize: 200,
       messageSweepInterval: 180,
+      cacheGuilds: true,
+      cacheChannels: false,
+      cacheOverwrites: false,
+      cacheRoles: false,
+      cacheEmojis: false,
+      cachePresences: false
     });
   }
 
