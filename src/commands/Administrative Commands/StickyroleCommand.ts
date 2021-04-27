@@ -45,12 +45,12 @@ import stickyroleSchema from '../../../models/GuildConfig/stickyroles';
     let newList;
     let roleID;
     if (args[1]) {
-        roleID = args[1].slice(3, args[1].length - 1);
-        if (!findRole.get(roleID))
-            return sendError('Please mention a valid role', message.channel);
+        const role = client.utils.getRoles(args[1], message.guild);
+            if(!role) return sendError('Please mention a valid role', message.channel);
+            const roleID = role.id;
         newList = await stickyroleSchema.findOne({
             guildID: message.guild.id,
-            blacklist: roleID,
+            blacklist: role.id,
         });
     }
 

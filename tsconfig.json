@@ -17,7 +17,7 @@
   "include": [
     "src/**/*.ts",
     "index.ts",
-    "src/Classes/MessageClass.js",
+    "src/Classes/MessageClass.ts",
     "Assets/Economy/Lottery.ts"
   ]
 }

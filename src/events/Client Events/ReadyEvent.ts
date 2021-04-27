@@ -1,8 +1,4 @@
 import { RunFunction } from "../../interfaces/Event";
-import guild_schema from '../../../models/GuildConfig/guild';
-import { RedisClient } from "redis";
-import { promisify } from "util";
-
 
 export const run: RunFunction = async (client) => {
 
@@ -32,11 +28,6 @@ export const run: RunFunction = async (client) => {
       }),
     15000
   );
-
-
- 
-
-
 
 
 
