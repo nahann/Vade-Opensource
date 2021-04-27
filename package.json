@@ -13,6 +13,7 @@
     "alpha-sort": "^5.0.0",
     "consola": "^2.15.3",
     "discord.js": "^12.5.1",
+    "discord.js-light": "^3.5.9",
     "discord.js-pagination": "^1.0.3",
     "fuse-djs-v1rtuai": "^1.1.1",
     "fuse.js": "^6.4.6",
