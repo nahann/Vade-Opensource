@@ -41,14 +41,10 @@ class Bot extends Client {
   }
 
   public async start(config: Config): Promise<void> {
-    await Mongo();
-
+    Mongo();
     this.config = config;
-    this.redis = await createRedisClient(); 
-    
-    await this.login(config.token); 
-    
-    await Lottery(this);
+    this.login(config.token); 
+    Lottery(this);
     
     const commandFiles: string[] = await globPromise(
       `${__dirname}/../commands/**/*{.ts,.js}`

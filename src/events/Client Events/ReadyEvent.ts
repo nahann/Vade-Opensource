@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Event";
-import guild_schema from '../../../models/guild';
+import guild_schema from '../../../models/GuildConfig/guild';
 import { RedisClient } from "redis";
 import { promisify } from "util";
 

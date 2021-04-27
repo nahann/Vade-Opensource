@@ -2,7 +2,7 @@ import { RunFunction } from "../../interfaces/Event";
 import { Message } from "discord.js";
 import { Command } from "interfaces/Command";
 import ms from "ms";
-import GuildConfigSchema from "../../../models/guild";
+import GuildConfigSchema from "../../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message: Message) => {
 

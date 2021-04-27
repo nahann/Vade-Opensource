@@ -9,6 +9,10 @@ export const run: RunFunction = async (client, message, args) => {
       client.emit("guildMemberAdd", message.member);
       message.channel.send(`Emitting....`);
     }
+    case "guildMemberRemove": {
+      client.emit("guildMemberRemove", message.member);
+      message.channel.send(`Emitting....`);
+    }
   }
 };
 export const name: string = "emit";

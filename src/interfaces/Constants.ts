@@ -21,6 +21,7 @@ export default {
     white: "#f9f9f6",
     green: "#00C09A",
     cream: "#ffdab9",
+    see_through: "#2f3136",
   },
   emojis: {
     check: "<:vade_check:834423303711227966>",

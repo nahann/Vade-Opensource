@@ -26,4 +26,7 @@ export default class EmbedHandler extends MessageEmbed {
   setBlankField() {
     return this.addField("\u200b", "\u200b");
   }
+  setClear() {
+    return this.setColor("#2f3136")
+  }
 }

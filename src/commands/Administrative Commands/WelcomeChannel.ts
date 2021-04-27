@@ -1,5 +1,5 @@
 import { RunFunction } from '../../interfaces/Command';
-import guild_data from '../../../models/guild';
+import guild_data from '../../../models/GuildConfig/guild';
 
    export const run: RunFunction = async(client, message, args) => {
 

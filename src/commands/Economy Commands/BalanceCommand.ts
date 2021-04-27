@@ -4,6 +4,7 @@ import EconomySchema from "../../../models/economy";
 
 export const run: RunFunction = async (client, message, args) => {
   let user: GuildMember = message.member;
+  const nf = Intl.NumberFormat()
   if (message.mentions.members.first()) user = message.mentions.members.first();
   if (args[9] && message.guild.members.cache.has(args[0]))
     user = message.guild.members.cache.get(args[0]);
@@ -12,8 +13,8 @@ export const run: RunFunction = async (client, message, args) => {
     new client.embed()
       .setTitle(`${user.user.tag}'s Balance`)
       .setDescription(
-        `Wallet: ${(Profile as any)?.Wallet || 0}\nBank: ${
-          (Profile as any)?.Bank || 0
+        `Wallet: ${nf.format((Profile as any)?.Wallet) || 0}\nBank: ${
+          nf.format((Profile as any)?.Bank) || 0
         }`
       )
       .setMainColor()

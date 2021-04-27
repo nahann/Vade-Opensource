@@ -1,7 +1,8 @@
 import { RunFunction } from "../../interfaces/Event";
 import findAutorole from "../../../models/autoroles";
 import { GuildMember, TextChannel } from "discord.js";
-import Guild from '../../../models/guild';
+import Guild from '../../../models/GuildConfig/guild';
+import findStickyRole from '../../../models/GuildConfig/stickyroles';
 
 export const run: RunFunction = async (client, member: GuildMember) => {
   try {
@@ -15,7 +16,7 @@ export const run: RunFunction = async (client, member: GuildMember) => {
       console.log(role);
       const findRole = client.utils.getRoles(role, member.guild);
       if (!member.guild.me.hasPermission("MANAGE_ROLES")) return;
-      if (findRole.position > member.guild.me.roles?.highest.position) return;
+      if (findRole && findRole.position > member.guild.me.roles?.highest.position) return;
       if (!findRole) {
         await findAutorole.findOneAndUpdate(
           {
@@ -33,6 +34,64 @@ export const run: RunFunction = async (client, member: GuildMember) => {
   } catch (e) {
     console.log(e);
   }
+
+  let fetchList = await findStickyRole.findOne({
+    guildID: member.guild.id,
+    roles: {
+        $elemMatch: {
+            userID: member.user.id,
+        },
+    },
+    enabled: true,
+});
+
+if(fetchList) {
+
+let getMember = fetchList.roles.find((u) => u.userID === member.user.id);
+const findRole = client.guilds.cache.get(member.guild.id).roles.cache;
+
+fetchList.blacklist.forEach(async (role) => {
+    if (!findRole.get(role)) {
+        await findStickyRole.findOneAndUpdate(
+            {
+                guildID: member.guild.id,
+            },
+            {
+                $pull: {
+                    blacklist: role,
+                },
+            }
+        );
+    }
+});
+
+let getRoles = getMember.userRoles.filter((role) => fetchList.blacklist.indexOf(role) < 0);
+if (!getRoles.length) return;
+
+getRoles.forEach((role) => {
+  console.log(`Working`)
+    if (!findRole.get(role) || findRole.get(role)?.position > member.guild.me.roles?.highest.position) return;
+    member.roles.add(role);
+});
+
+try {
+    await findStickyRole.findOneAndUpdate(
+        {
+            guildID: member.guild.id,
+        },
+        {
+            $pull: {
+                roles: {
+                    userID: member.user.id,
+                },
+            },
+        }
+    );
+} catch (e) {
+    console.error(e);
+}
+
+}
 
 
   const locate_main_data = await Guild.findOne({ guildID: member.guild.id });
@@ -63,9 +122,11 @@ export const run: RunFunction = async (client, member: GuildMember) => {
 
     }
 
-    default: 
-    return;
   }
+
+
+ 
+
   
 
   

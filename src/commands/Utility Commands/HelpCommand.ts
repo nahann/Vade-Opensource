@@ -23,7 +23,8 @@ export const run: RunFunction = async (client, message, args) => {
       `Total Commands: **${totalCommands}**`,
       `\u200B`,
       `[Support Server](https://discord.gg/FwBUBzBkYt)`,
-    ]);
+    ])
+    .setClear();
 
     for (const category of allCategories) {
       mainEmbed.addField(
@@ -94,7 +95,7 @@ export const run: RunFunction = async (client, message, args) => {
         .setDescription(
           page || `No more Commands to be listed on page ${index + 1}`
         )
-        .setMainColor()
+        .setClear()
         .setTimestamp();
     });
 
@@ -118,7 +119,7 @@ export const run: RunFunction = async (client, message, args) => {
   }
 
   const commandEmbed = new client.embed()
-    .setMainColor()
+     .setClear()
     .setTimestamp()
     .setThumbnail(client.user.displayAvatarURL())
     .setFooter(`Requested by ${message.author.tag}`)
@@ -133,7 +134,7 @@ export const run: RunFunction = async (client, message, args) => {
       `**❯** Category: **${command.category}**`,
       `**❯** Usage: **${command.usage}**`,
       `**❯** Required Permissions: **${
-        command.userPerms.length
+        command.userPerms?.length
           ? command.userPerms.map(client.utils.formatPerms).join(", ")
           : "No Permissions Needed."
       }**`,

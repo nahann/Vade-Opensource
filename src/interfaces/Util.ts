@@ -4,13 +4,15 @@ import {
   GuildChannel,
   GuildMember,
   Message,
+  MessageEmbed,
   TextChannel,
   User,
 } from "discord.js";
 
 import premium_schema from "../../models/premium_schema";
-import guild_schema from "../../models/guild";
+import guild_schema from "../../models/GuildConfig/guild";
 import economy_schema from "../../models/economy";
+import FuzzySearch from 'fuse.js';
 
 export default class Util {
   public readonly client: Bot;
@@ -254,12 +256,55 @@ export default class Util {
       return guild.roles.cache.get(id);
     }
 
-    return guild.roles.cache.find(
-      (x) => x.name.toLowerCase() === s.toLowerCase()
-    );
+    const allRoles = guild.roles.cache.map(m => m.name);
+
+    const result = new FuzzySearch(allRoles, {
+      isCaseSensitive: false,
+      includeScore: false,
+      shouldSort: true,
+      includeMatches: true,
+      findAllMatches: false,
+      minMatchCharLength: 1,
+      location: 0,
+      threshold: 0.6,
+      distance: 100,
+      useExtendedSearch: false,
+      ignoreLocation: false,
+      ignoreFieldNorm: false,
+    }).search(s);
+  
+    const [match] = result;
+
+    if(!match) return null;
+
+    const main = guild.roles.cache.find(m => m.name.toLowerCase() === match.item.toLowerCase());
+
+    return main;
   }
 
-  getChannels(s, guild) {
+  async sendError(text: string, channel: TextChannel, command: string = '') {
+    if(channel.type !== 'text') return;
+    let message: string;
+    if (!command) message = `Run !help [command] for extra help. | Vade`;
+    if (command) message = `Run !help ${command} for extra help. | Vade`;
+    let error = new MessageEmbed()
+      .setTitle("Error!")
+      .setDescription(text)
+      .setColor("be0325")
+      .setFooter(message);
+    await channel.send(error);
+  }
+
+  async succEmbed(text: string, channel: TextChannel) {
+    if(channel.type !== 'text') return;
+      let embed = new MessageEmbed()
+          .setColor(`#a1ee33`)
+          .setTitle('✅ Success!')
+          .setDescription(text);
+      channel.send(embed);
+  }
+
+  getChannels(s: string, guild: Guild) {
     if (/^[0-9]+$/.test(s)) {
       const channel = guild.channels.cache.get(s);
       if (!channel || ['dm', 'voice', 'category', 'store', 'stage'].includes(channel.type)) return;

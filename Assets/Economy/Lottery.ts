@@ -5,7 +5,6 @@ import { TextChannel } from "discord.js";
 
 export default main;
 
-// make this async fuck it
 async function main(client: Bot) {
   schedule.scheduleJob({ hour: 12, minute: 0 }, async () => {
     const lotteryChannel = client.channels.cache.get(
