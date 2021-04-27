@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@discordjs/collection@^0.1.6":
+"@discordjs/collection@0.1.6", "@discordjs/collection@^0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-0.1.6.tgz#9e9a7637f4e4e0688fd8b2b5c63133c91607682c"
   integrity sha512-utRNxnd9kSS2qhyivo9lMlt5qgAUasH2gb7BEOn6p0efFh24gjGomHzWKMAPn2hEReOPQZCJaRKoURwRotKucQ==
@@ -15,6 +15,11 @@
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
+
+"@extreme_hero/deeptype@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@extreme_hero/deeptype/-/deeptype-1.0.1.tgz#c63d41c41c9bbd5a6f157c49d4fdfdde76ae713b"
+  integrity sha512-xTwcSgwiZ7tqlD3vKSfAylqR2HHUKfYeqtlCe14pnDYTs2TInJrGKVaEer3BtlHU0zMk//0x53x/Ftojo7P00w==
 
 "@npmcli/move-file@^1.0.1":
   version "1.1.2"

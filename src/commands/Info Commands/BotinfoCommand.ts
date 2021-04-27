@@ -25,7 +25,7 @@ export const run: RunFunction = async (client, message, args) => {
         "Do MMMM YYYY HH:mm:ss"
       )}**`,
       `**❯** Node.js: **${process.version}**`,
-      `**❯** Discord.js: **${version}**`,
+      `**❯** Discord.js-light: **${version}**`,
     ])
     .setBlankField()
     .addField("__System__", [
