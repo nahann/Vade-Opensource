@@ -10,7 +10,7 @@ import Util from "../interfaces/Util";
 import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
 import Lottery from "../../Assets/Economy/Lottery";
-import createRedisClient from '../interfaces/Redis';
+import createRedisClient from "../interfaces/Redis";
 import { RedisClient } from "redis";
 
 const globPromise = promisify(glob);
@@ -42,16 +42,16 @@ class Bot extends Client {
       cacheOverwrites: false,
       cacheRoles: false,
       cacheEmojis: false,
-      cachePresences: false
+      cachePresences: false,
     });
   }
 
   public async start(config: Config): Promise<void> {
     Mongo();
     this.config = config;
-    this.login(config.token); 
+    this.login(config.token);
     Lottery(this);
-    
+
     const commandFiles: string[] = await globPromise(
       `${__dirname}/../commands/**/*{.ts,.js}`
     );
@@ -82,7 +82,6 @@ class Bot extends Client {
       const file: Event = await import(value);
       this.events.set(file.name, file);
       this.on(file.name, file.run.bind(null, this));
-
     });
   }
 }

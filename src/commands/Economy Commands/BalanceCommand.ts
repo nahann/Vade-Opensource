@@ -4,7 +4,7 @@ import EconomySchema from "../../../models/economy";
 
 export const run: RunFunction = async (client, message, args) => {
   let user: GuildMember = message.member;
-  const nf = Intl.NumberFormat()
+  const nf = Intl.NumberFormat();
   if (message.mentions.members.first()) user = message.mentions.members.first();
   if (args[9] && message.guild.members.cache.has(args[0]))
     user = message.guild.members.cache.get(args[0]);

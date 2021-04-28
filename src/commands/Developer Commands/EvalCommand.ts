@@ -1,10 +1,9 @@
-import { RunFunction } from '../../interfaces/Command';
-import { Type } from '@extreme_hero/deeptype';
-import { inspect } from 'util';
+import { RunFunction } from "../../interfaces/Command";
+import { Type } from "@extreme_hero/deeptype";
+import { inspect } from "util";
 
-   export const run: RunFunction = async(client, message, args) => {
-
-    const msg = message,
+export const run: RunFunction = async (client, message, args) => {
+  const msg = message,
     embed = new client.embed();
 
   let code = args.join(" ").replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
@@ -72,12 +71,9 @@ import { inspect } from 'util';
   embed.setDescription("No output.").addField("Information", info);
 
   return message.channel.send(embed);
-
-
-
-    }
-export const name: string = 'eval';
-export const category: string = 'Development';
-export const description: string = 'Execute code from a Command.';
-export const aliases: string[] = ['evaluate'];
+};
+export const name: string = "eval";
+export const category: string = "Development";
+export const description: string = "Execute code from a Command.";
+export const aliases: string[] = ["evaluate"];
 export const devOnly: boolean = true;

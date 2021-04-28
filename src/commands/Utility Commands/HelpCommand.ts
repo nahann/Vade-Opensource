@@ -17,14 +17,15 @@ export const run: RunFunction = async (client, message, args) => {
   ];
 
   if (!args.length) {
-    const mainEmbed = new client.embed().setDescription([
-      `Available Categories for: **${message.guild.name}**`,
-      `Prefix: ** ${prefix} **`,
-      `Total Commands: **${totalCommands}**`,
-      `\u200B`,
-      `[Support Server](https://discord.gg/FwBUBzBkYt)`,
-    ])
-    .setClear();
+    const mainEmbed = new client.embed()
+      .setDescription([
+        `Available Categories for: **${message.guild.name}**`,
+        `Prefix: ** ${prefix} **`,
+        `Total Commands: **${totalCommands}**`,
+        `\u200B`,
+        `[Support Server](https://discord.gg/FwBUBzBkYt)`,
+      ])
+      .setClear();
 
     for (const category of allCategories) {
       mainEmbed.addField(
@@ -119,7 +120,7 @@ export const run: RunFunction = async (client, message, args) => {
   }
 
   const commandEmbed = new client.embed()
-     .setClear()
+    .setClear()
     .setTimestamp()
     .setThumbnail(client.user.displayAvatarURL())
     .setFooter(`Requested by ${message.author.tag}`)

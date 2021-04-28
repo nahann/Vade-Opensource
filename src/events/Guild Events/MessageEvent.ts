@@ -5,7 +5,6 @@ import ms from "ms";
 import GuildConfigSchema from "../../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message: Message) => {
-
   const GuildConfig = await GuildConfigSchema.findOne({
     guildID: message.guild.id,
   });
@@ -13,32 +12,26 @@ export const run: RunFunction = async (client, message: Message) => {
   if ((GuildConfig as any)?.prefix) {
     prefix = (GuildConfig as any).prefix;
   }
-  if (
-    message.author.bot ||
-    !message.guild
-  )
-    return;
+  if (message.author.bot || !message.guild) return;
 
-    const suggestionChannelID = GuildConfig.Suggestion;
+  const suggestionChannelID = GuildConfig.Suggestion;
 
-    if(suggestionChannelID && message.channel.id === suggestionChannelID) {
-      const SuggestionEmbed = new client.embed()
+  if (suggestionChannelID && message.channel.id === suggestionChannelID) {
+    const SuggestionEmbed = new client.embed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setDescription(
         `${message.content}\n\n📊 Use the reactions below to vote!`
       )
-      .setFooter('Want to suggest something? Type it here!')
+      .setFooter("Want to suggest something? Type it here!")
       .setColor(3426654);
 
     message.delete();
     message.channel.send(SuggestionEmbed).then((message) => {
-      message.react('👍').then(() => message.react('👎'));
+      message.react("👍").then(() => message.react("👎"));
     });
+  }
 
-    }
-    
-    if(!message.content.toLowerCase().startsWith(prefix)) return;
-
+  if (!message.content.toLowerCase().startsWith(prefix)) return;
 
   const args: string[] = message.content
     .slice(prefix.length)
@@ -48,7 +41,6 @@ export const run: RunFunction = async (client, message: Message) => {
   const command: Command =
     client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
   if (command) {
-
     try {
       if (client.cooldowns.has(`${message.author.id}-${command.name}`))
         return message.channel.send(
@@ -71,7 +63,7 @@ export const run: RunFunction = async (client, message: Message) => {
           }
         }
       }
-  
+
       if (command.userPerms) {
         for (const perm of command.userPerms) {
           if (!message.member.permissions.has(perm)) {
@@ -84,21 +76,23 @@ export const run: RunFunction = async (client, message: Message) => {
           }
         }
       }
-  
-      const checkPremium = await client.utils.checkPremium(message.guild.ownerID);
+
+      const checkPremium = await client.utils.checkPremium(
+        message.guild.ownerID
+      );
       const checkOwner = client.utils.checkOwner(message.author.id);
       if (command.premiumOnly && !checkPremium) {
         return message.channel.send(
           `The Guild owner must have Vade Premium in order for you to run this Command!`
         );
       }
-  
+
       if (command.devOnly && !checkOwner) {
         return message.channel.send(
           `This Command requires you to be a Vade Developer!`
         );
       }
-  
+
       command.run(client, message, args);
       client.cooldowns.set(
         `${message.author.id}-${command.name}`,
@@ -116,8 +110,6 @@ export const run: RunFunction = async (client, message: Message) => {
       );
     }
   }
-
- 
 };
 
 export const name: string = "message";

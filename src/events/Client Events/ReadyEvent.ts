@@ -1,7 +1,6 @@
 import { RunFunction } from "../../interfaces/Event";
 
 export const run: RunFunction = async (client) => {
-
   client.logger.success(`${client.user.tag} is now online!`);
 
   const nf = Intl.NumberFormat();
@@ -28,9 +27,6 @@ export const run: RunFunction = async (client) => {
       }),
     15000
   );
-
-
-
 };
 
 export const name: string = "ready";

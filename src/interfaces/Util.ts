@@ -12,7 +12,7 @@ import {
 import premium_schema from "../../models/premium_schema";
 import guild_schema from "../../models/GuildConfig/guild";
 import economy_schema from "../../models/economy";
-import FuzzySearch from 'fuse.js';
+import FuzzySearch from "fuse.js";
 
 export default class Util {
   public readonly client: Bot;
@@ -256,7 +256,7 @@ export default class Util {
       return guild.roles.cache.get(id);
     }
 
-    const allRoles = guild.roles.cache.map(m => m.name);
+    const allRoles = guild.roles.cache.map((m) => m.name);
 
     const result = new FuzzySearch(allRoles, {
       isCaseSensitive: false,
@@ -272,18 +272,20 @@ export default class Util {
       ignoreLocation: false,
       ignoreFieldNorm: false,
     }).search(s);
-  
+
     const [match] = result;
 
-    if(!match) return null;
+    if (!match) return null;
 
-    const main = guild.roles.cache.find(m => m.name.toLowerCase() === match.item.toLowerCase());
+    const main = guild.roles.cache.find(
+      (m) => m.name.toLowerCase() === match.item.toLowerCase()
+    );
 
     return main;
   }
 
-  async sendError(text: string, channel: TextChannel, command: string = '') {
-    if(channel.type !== 'text') return;
+  async sendError(text: string, channel: TextChannel, command: string = "") {
+    if (channel.type !== "text") return;
     let message: string;
     if (!command) message = `Run !help [command] for extra help. | Vade`;
     if (command) message = `Run !help ${command} for extra help. | Vade`;
@@ -296,27 +298,37 @@ export default class Util {
   }
 
   async succEmbed(text: string, channel: TextChannel) {
-    if(channel.type !== 'text') return;
-      let embed = new MessageEmbed()
-          .setColor(`#a1ee33`)
-          .setTitle('✅ Success!')
-          .setDescription(text);
-      channel.send(embed);
+    if (channel.type !== "text") return;
+    let embed = new MessageEmbed()
+      .setColor(`#a1ee33`)
+      .setTitle("✅ Success!")
+      .setDescription(text);
+    channel.send(embed);
   }
 
   getChannels(s: string, guild: Guild) {
     if (/^[0-9]+$/.test(s)) {
       const channel = guild.channels.cache.get(s);
-      if (!channel || ['dm', 'voice', 'category', 'store', 'stage'].includes(channel.type)) return;
+      if (
+        !channel ||
+        ["dm", "voice", "category", "store", "stage"].includes(channel.type)
+      )
+        return;
       return channel;
     } else if (/^<#[0-9]+>$/.test(s)) {
       const id = s.substring(2, s.length - 1);
       const channel = guild.channels.cache.get(id);
-      if (!channel || ['dm', 'voice', 'category', 'store'].includes(channel.type)) return;
+      if (
+        !channel ||
+        ["dm", "voice", "category", "store"].includes(channel.type)
+      )
+        return;
       return channel;
     }
 
-    return guild.channels.cache.find(x => (x.type === 'text') && x.name.toLowerCase() === s);
+    return guild.channels.cache.find(
+      (x) => x.type === "text" && x.name.toLowerCase() === s
+    );
   }
 
   async addBal(user: string, Coins: Number) {

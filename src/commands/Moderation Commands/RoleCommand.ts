@@ -78,13 +78,15 @@ export const run: RunFunction = async (client, message, args) => {
       const msg = await message.channel.send(`Adding roles to all bots..`);
 
       await Promise.all(
-        message.guild.members.cache.filter(({ user: { bot } }) => bot).map(async (member) => {
-          try {
-            await member.roles.add(role);
-          } catch {}
+        message.guild.members.cache
+          .filter(({ user: { bot } }) => bot)
+          .map(async (member) => {
+            try {
+              await member.roles.add(role);
+            } catch {}
 
-          await new Promise((resolve, reject) => setTimeout(resolve, 1000));
-        })
+            await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+          })
       );
 
       return msg.edit(`Added all roles successfully!`);
@@ -105,13 +107,15 @@ export const run: RunFunction = async (client, message, args) => {
       const msg = await message.channel.send(`Adding roles to all humans..`);
 
       await Promise.all(
-        message.guild.members.cache.filter(({ user: { bot } }) => !bot).map(async (member) => {
-          try {
-            await member.roles.add(role);
-          } catch {}
+        message.guild.members.cache
+          .filter(({ user: { bot } }) => !bot)
+          .map(async (member) => {
+            try {
+              await member.roles.add(role);
+            } catch {}
 
-          await new Promise((resolve, reject) => setTimeout(resolve, 1000));
-        })
+            await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+          })
       );
 
       return msg.edit(`Added all roles successfully!`);

@@ -1,30 +1,30 @@
 import { RunFunction } from "../../interfaces/Command";
-import LotterySchema from '../../../models/lottery';
-import economy_schema from '../../../models/economy';
+import LotterySchema from "../../../models/lottery";
+import economy_schema from "../../../models/economy";
 
 export const run: RunFunction = async (client, message, args) => {
-
   const amountToEnter = 1000;
 
   const economy = await economy_schema.findOne({ User: message.author.id });
   let lottery = await LotterySchema.findOne();
 
- 
-  if(!lottery) {
+  if (!lottery) {
     lottery = await new LotterySchema({
       pot: 0,
       entries: [],
     }).save();
   }
 
-  if(lottery.entries.includes(message.author.id)) return message.channel.send(`You have already entered the lottery!`);
+  if (lottery.entries.includes(message.author.id))
+    return message.channel.send(`You have already entered the lottery!`);
 
-  if(!economy || economy.Wallet && economy.Wallet < amountToEnter) return message.channel.send(`You don't have enough to enter the lottery!`);
+  if (!economy || (economy.Wallet && economy.Wallet < amountToEnter))
+    return message.channel.send(`You don't have enough to enter the lottery!`);
 
   await message.channel.send(
     `Are you sure you would like to enter the lottery? This will remove 1,000 coins from your wallet.`
   );
-  
+
   try {
     const msg = await message.channel.awaitMessages(
       (m) => m.author.id === message.author.id,
@@ -32,7 +32,7 @@ export const run: RunFunction = async (client, message, args) => {
     );
     if (["yes", "y"].includes(msg.first().content.toLowerCase())) {
       await economy.updateOne({
-        $inc: { Wallet: -amountToEnter }
+        $inc: { Wallet: -amountToEnter },
       });
 
       await LotterySchema.findOneAndUpdate(
@@ -52,7 +52,6 @@ export const run: RunFunction = async (client, message, args) => {
   } catch (_) {
     message.channel.send("Time ran out.");
   }
-
 };
 
 export const name: string = "lottery";
