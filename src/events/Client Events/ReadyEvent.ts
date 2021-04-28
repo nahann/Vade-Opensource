@@ -4,7 +4,7 @@ import SlashCommandManager from "../../Classes/SlashCommandManager";
 export const run: RunFunction = async (client) => {
   const manager = new SlashCommandManager(client);
   
-  // make folder for slash commands - helper code: await manager.load(""); await manager.register(); await manager.listen();
+  await manager.load("./src/slash"); await manager.register(); await manager.listen();
   
   client.logger.success(`${client.user.tag} is now online!`);
 
