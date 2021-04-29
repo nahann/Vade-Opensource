@@ -24,3 +24,5 @@ export interface Command {
   devOnly?: boolean;
   guildOnly?: boolean;
 }
+
+export const client = Bot;

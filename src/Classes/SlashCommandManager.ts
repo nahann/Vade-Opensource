@@ -1,3 +1,4 @@
+import { Bot } from "client/Client";
 import { Client, Collection } from "discord.js";
 import { readdir, stat } from "fs/promises";
 import { join } from "path";
@@ -6,7 +7,7 @@ import { Interaction, SlashCommand, SlashCommandData, SlashCommandResponse } fro
 export default class SlashCommandManager {
     private commands?: Collection<string, SlashCommand>;
 
-    constructor(private client: Client) {}
+    constructor(private client: Bot) {}
 
     async load(path: string) {
         const directory = require.main?.path ? join(require.main.path, path) : path;

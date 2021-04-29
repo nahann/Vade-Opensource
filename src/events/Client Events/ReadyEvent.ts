@@ -15,7 +15,7 @@ export const run: RunFunction = async (client) => {
       return `${client.guilds.cache.size} servers!`;
     },
     get "1"() {
-      return `${client.channels.cache.size} channels!`;
+      return `discord.gg/vadebot | vade-bot.com`;
     },
     get "2"() {
       return `${nf.format(

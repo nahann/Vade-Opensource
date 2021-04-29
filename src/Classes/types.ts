@@ -1,3 +1,4 @@
+import { Bot } from "client/Client";
 import { Client, MessageEmbed } from "discord.js";
 
 export enum OptionType {
@@ -16,6 +17,8 @@ export interface Option {
     description: string;
     type: OptionType;
     required: boolean;
+    options?: Option[];
+    choices?: Choice[];
 }
 
 export interface Choice {
@@ -26,15 +29,15 @@ export interface Choice {
 export interface SlashCommandData {
     name: string;
     description: string;
-    options?: (Option & { type: OptionType.SUB_COMMAND_GROUP; options: Option[] } & { type: OptionType.STRING | OptionType.INTEGER; choices?: Choice[] })[];
+    options?: Option[];
 }
 
 export interface SlashCommand extends SlashCommandData {
-    execute: (client: Client, interaction: Interaction, methods: Methods) => Promise<unknown> | unknown;
+    execute: (client: Bot, interaction: Interaction, methods: Methods) => Promise<unknown> | unknown;
 }
 
 export interface Methods {
-    respond<T extends { content?: string; embeds?: MessageEmbed[] }>(
+    respond<T extends { content?: string; embeds?: object[] }>(
         content: T,
         options?: {
             tts?: boolean;
