@@ -16,6 +16,8 @@ import { RedisClient } from "redis";
 const globPromise = promisify(glob);
 
 class Bot extends Client {
+  private __instance__?: Bot;
+  
   public logger: Consola = consola;
   public commands: Collection<string, Command> = new Collection();
   public aliases: Collection<string, string> = new Collection();
@@ -44,6 +46,10 @@ class Bot extends Client {
       cacheEmojis: false,
       cachePresences: false,
     });
+    
+    if (Bot.__instance__) throw new Error("Another client was created.");
+    
+    Bot.__instance__ = this;
   }
 
   public async start(config: Config): Promise<void> {
@@ -83,6 +89,10 @@ class Bot extends Client {
       this.events.set(file.name, file);
       this.on(file.name, file.run.bind(null, this));
     });
+  }
+  
+  static get instance() {
+    return Bot.__instance__; 
   }
 }
 
