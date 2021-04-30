@@ -6,7 +6,7 @@ import { TextChannel } from "discord.js";
 export default main;
 
 async function main(client: Bot) {
-  schedule.scheduleJob({ hour: 12, minute: 0 }, async () => {
+  schedule.scheduleJob({ hour: 12, minute: 0 }, async () => { // Lottery
     const lotteryChannel = client.channels.cache.get(
       "833920140730171412"
     ) as TextChannel;
@@ -28,4 +28,6 @@ async function main(client: Bot) {
       await lotterySchema.findOneAndDelete();
     }
   });
+
+  
 }

@@ -5,6 +5,7 @@ import ms from "ms";
 import GuildConfigSchema from "../../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message: Message) => {
+  if (message.author.bot || !message.guild) return;
   const GuildConfig = await GuildConfigSchema.findOne({
     guildID: message.guild.id,
   });
@@ -12,7 +13,7 @@ export const run: RunFunction = async (client, message: Message) => {
   if ((GuildConfig as any)?.prefix) {
     prefix = (GuildConfig as any).prefix;
   }
-  if (message.author.bot || !message.guild) return;
+
 
   const suggestionChannelID = GuildConfig.Suggestion;
 

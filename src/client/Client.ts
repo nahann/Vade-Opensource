@@ -9,14 +9,14 @@ import Constants from "../interfaces/Constants";
 import Util from "../interfaces/Util";
 import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
-import Lottery from "../../Assets/Economy/Lottery";
+import Lottery from "../../Assets/Economy/Scheduled";
 import createRedisClient from "../interfaces/Redis";
 import { RedisClient } from "redis";
 
 const globPromise = promisify(glob);
 
 class Bot extends Client {
-  private __instance__?: Bot;
+  private static __instance__?: Bot;
   
   public logger: Consola = consola;
   public commands: Collection<string, Command> = new Collection();

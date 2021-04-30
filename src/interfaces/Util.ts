@@ -125,6 +125,10 @@ export default class Util {
         .join(" ");
   }
 
+  commands() {
+    return this.client.commands;
+  }
+
   formatPerms(perm: string) {
     return perm
       .toLowerCase()
