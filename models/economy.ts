@@ -10,6 +10,9 @@ interface IBank extends Document {
   WeeklyTime: number;
   MonthlyTime: number;
   JobSwitchTime: number;
+  Wage: number;
+  Worked: boolean;
+  LastPaid: number;
 }
 
 export const bankSchema = new Schema({
@@ -19,6 +22,18 @@ export const bankSchema = new Schema({
   },
   Job: {
     type: String,
+    required: false,
+  },
+  Wage: {
+    type: String,
+    required: false,
+  },
+  LastPaid: {
+    type: Number,
+    required: false,
+  },
+  Worked: {
+    type: Boolean,
     required: false,
   },
   Wallet: {

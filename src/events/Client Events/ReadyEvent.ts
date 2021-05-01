@@ -1,5 +1,6 @@
 import { RunFunction } from "../../interfaces/Event";
 import SlashCommandManager from "../../Classes/SlashCommandManager";
+import { GuildMember } from "discord.js";
 
 export const run: RunFunction = async (client) => {
   const manager = new SlashCommandManager(client);
@@ -24,6 +25,14 @@ export const run: RunFunction = async (client) => {
     },
   };
 
+
+  client.guilds.cache.forEach(async (guild) => {
+    if(guild.me.permissions.has("ADMINISTRATOR")) {
+      let invites = await guild.fetchInvites();
+      if(invites) client.invites.set(guild.id, invites);
+    }
+  });
+
   let i = 0;
   setInterval(
     () =>
@@ -32,6 +41,10 @@ export const run: RunFunction = async (client) => {
       }),
     15000
   );
+
+
+
+
 };
 
 export const name: string = "ready";

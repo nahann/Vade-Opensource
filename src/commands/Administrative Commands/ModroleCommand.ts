@@ -55,3 +55,5 @@ export const name: string = "modrole";
 export const category: string = "Administrative";
 export const description: string = "Configure the guilds moderator role.";
 export const aliases: string[] = ["mrole"];
+export const userPerms: string[] = ['MANAGE_GUILD'];
+export const botPerms: string[] = ['MANAGE_ROLES'];

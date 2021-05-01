@@ -2,41 +2,28 @@ import EconomySchema from "../../../models/economy";
 import { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {
-  const Jobs: string[] = [
-    "Programmer",
-    "Uber",
-    "Rocket Scientist",
-    "Vade Developer",
-    "Lead Vade Developer",
-    "Discord Employee",
-    "Discord Bug Hunter",
-    "Slave",
-  ];
+const Jobs = {
+  "Rocket Scientist": 10000,
+  "Programmer": 12000,
+  "Scientist": 5000,
+  "Cleaner": 2000,
+  "Beggar": 1000,
+  "Discord Moderator": 7500,
+  "Discord Bug Hunter": 5000,
+  "Model": 4500,
+  "Gamer": 2000
+
+}
   const locateSchema = await EconomySchema.findOne({ User: message.author.id });
-  const Job: string = Jobs[Math.floor(Math.random() * Jobs.length)];
-  const Coins: number = Math.floor(Math.random() * 200);
+  if(!locateSchema || !locateSchema.Job) return message.channel.send(`You currently do not have a job. You can select a job by doing \`!job\`.`);
+  if(locateSchema.Worked) return message.channel.send(`You have already worked your hours this week!`);
 
-  if (!locateSchema) {
-    const newSchema = new EconomySchema({
-      User: message.author.id,
-      Wallet: Coins,
-      Bank: 0,
-    });
-
-    await newSchema.save();
-
-    return message.channel.send(
-      `You earnt **${Coins}** by working as a **${Job}**!`
-    );
-  }
-
-  await EconomySchema.updateOne({
-    User: message.author.id,
-    $inc: { Wallet: Coins },
+  await locateSchema.updateOne({
+    Worked: true,
   });
-  return message.channel.send(
-    `You earnt **${Coins}** by working as a **${Job}**!`
-  );
+
+  return message.channel.send(`You successfully worked your hours for this week!`);
+
 };
 
 export const name: string = "work";

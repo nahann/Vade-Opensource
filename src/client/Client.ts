@@ -31,6 +31,7 @@ class Bot extends Client {
   public constants: typeof Constants = Constants;
   public owners: string[] = ["473858248353513472"];
   public version: string = "v9.5.5";
+  public invites = new Collection();
 
   public constructor() {
     super({
@@ -42,7 +43,7 @@ class Bot extends Client {
       cacheGuilds: true,
       cacheChannels: false,
       cacheOverwrites: false,
-      cacheRoles: false,
+      cacheRoles: true,
       cacheEmojis: false,
       cachePresences: false,
     });

@@ -19,3 +19,4 @@ export const name: string = "emit";
 export const category: string = "Development";
 export const description: string = "Emit a Client Event; for testing purposes.";
 export const aliases: string[] = ["sim", "simulate"];
+export const devOnly: boolean = true;

@@ -55,3 +55,4 @@ export const name: string = "adminrole";
 export const category: string = "Administrative";
 export const description: string = "Configure the guilds administrator role.";
 export const aliases: string[] = ["arole"];
+export const userPerms: string[] = ['MANAGE_GUILD'];

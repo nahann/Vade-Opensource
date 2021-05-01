@@ -19,3 +19,4 @@ export const name: string = "say";
 export const devOnly: boolean = true;
 export const usage: string = "!say <Optional channel> <Text>>";
 export const category: string = "Development";
+export const description: string = "Have the Bot say something in an optional channel.";
