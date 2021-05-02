@@ -31,7 +31,7 @@ async function main(client: Bot) {
     }
   });
 
-  schedule.scheduleJob({ hour: 12, minute: 0 }, async () => {
+  schedule.scheduleJob({ hour: 20, minute: 45 }, async () => {
     const locate_schema = await economy.find({ });
     const nf = Intl.NumberFormat();
     for(const schema of locate_schema) {
@@ -41,7 +41,7 @@ async function main(client: Bot) {
           let ID = schema.User;
           let user = client.users.fetch(ID);
           if(user) {
-            if(!schema.LastPaid || schema.LastPaid < Date.now() + ms('7d')) {
+            if(!schema.LastPaid || schema.LastPaid < Date.now()) {
               await schema.updateOne({ 
                 LastPaid: Date.now() + ms('7d'),
                 Worked: false,

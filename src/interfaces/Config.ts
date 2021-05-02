@@ -6,4 +6,10 @@ export interface Config {
   redisPath: string;
   TOPGG_TOKEN: string;
   TOPGG_AUTH: string;
+  LAVA_HOST: string;
+	LAVA_PASSWORD: string;
+	LAVA_PORT: number;
+  SPOTIFY_CLIENT_ID: string;
+  SPOTIFY_SECRET_ID: string;
+  DEFAULT_VOLUME: number;
 }

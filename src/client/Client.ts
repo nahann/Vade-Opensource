@@ -10,10 +10,10 @@ import Util from "../interfaces/Util";
 import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
 import Lottery from "../../Assets/Economy/Scheduled";
-import createRedisClient from "../interfaces/Redis";
-import { RedisClient } from "redis";
+import { Manager } from "erela.js";
 
 const globPromise = promisify(glob);
+
 
 class Bot extends Client {
   private static __instance__?: Bot;
@@ -27,11 +27,12 @@ class Bot extends Client {
   public events: Collection<string, Event> = new Collection();
   public cooldowns: Collection<string, number> = new Collection();
   public config: Config;
-  public redis: RedisClient;
   public constants: typeof Constants = Constants;
   public owners: string[] = ["473858248353513472"];
   public version: string = "v9.5.5";
   public invites = new Collection();
+  public manager: Manager;
+  public prefix: string = "!";
 
   public constructor() {
     super({
@@ -40,6 +41,7 @@ class Bot extends Client {
       messageCacheMaxSize: 200,
       messageEditHistoryMaxSize: 200,
       messageSweepInterval: 180,
+      restTimeOffset: 0,
       cacheGuilds: true,
       cacheChannels: false,
       cacheOverwrites: false,

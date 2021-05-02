@@ -65,7 +65,7 @@ export default {
         member.user.createdTimestamp
       ).fromNow()}**`,
       `**❯** Status: **${member.user.presence.status}**`,
-      `**❯** Game: **${member.user.presence.activities[0]?.name || "N/A"}**`,
+      `**❯** Game: **${member.user.presence.activities[0] ? member.user.presence.activities[0].name : "N/A"}**`,
       `\u200b`,
     ])
     .addField("Member", [

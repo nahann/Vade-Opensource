@@ -34,7 +34,7 @@ export const run: RunFunction = async (client, message, args) => {
       .setTitle("📌 Sticky Roles")
       .setDescription(
         `Blacklisted Roles: ${
-          roleList.length ? roleList.join(" ") : "**None**"
+          roleList?.length ? roleList.join(" ") : "**None**"
         }`
       )
       .setFooter(
