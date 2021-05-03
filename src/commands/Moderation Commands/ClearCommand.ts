@@ -250,7 +250,7 @@ DEFAULT:
 
 export const name: string = "clear";
 export const usage: string = "!clear <Amount to clear> <Optional flags>.";
-export const alises: string[] = ["purge", "clr"];
+export const aliases: string[] = ["purge", "clr"];
 export const category: string = "Moderation";
 export const botPerms: string[] = ["MANAGE_MESSAGES", "MANAGE_CHANNEL"];
 export const userPerms: string[] = ["MANAGE_MESSAGES"];

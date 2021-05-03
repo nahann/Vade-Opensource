@@ -24,7 +24,7 @@ import { RunFunction } from '../../interfaces/Command';
         const search = args.join(' ');
         let res;
 
-        if (player.playing && channel !== message.guild.me.voice.channel)
+        if (player.playing && channel.id !== message.guild.me.voice.channel.id)
             return client.utils.sendError(
                 `You must be in the same channel as ${message.client.user}`,
                 message.channel
