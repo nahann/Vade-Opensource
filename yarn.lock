@@ -584,6 +584,11 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+custom-translate@^2.2.8:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/custom-translate/-/custom-translate-2.2.8.tgz#d74b495efc9305b8f0429f2ad7b66600bc882d41"
+  integrity sha512-TesIkT6vSr6XXHZjUHSPRfDBnGIF1IMOpJTaYAS+mlseZryXXbZZD+W/u9nFnnvzbb7UrwINi057IbXl4UR5xA==
+
 dateformat@~1.0.4-1.2.3:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-1.0.12.tgz#9f124b67594c937ff706932e4a642cca8dbbfee9"

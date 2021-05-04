@@ -47,7 +47,7 @@ class Bot extends Client {
       cacheOverwrites: false,
       cacheRoles: true,
       cacheEmojis: false,
-      cachePresences: false,
+      cachePresences: true,
     });
     
     if (Bot.__instance__) throw new Error("Another client was created.");

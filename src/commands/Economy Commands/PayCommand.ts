@@ -30,7 +30,7 @@ export const run: RunFunction = async (client, message, args) => {
     });
 
     return message.channel.send(
-      `Successfully given ${member.user.tag} **${nf.format(
+      `Successfully given ${member.user.tag} **$${nf.format(
         amountToGive
       )}** and deducted it from your Wallet!`
     );
@@ -44,7 +44,7 @@ export const run: RunFunction = async (client, message, args) => {
     });
 
     return message.channel.send(
-      `Successfully given ${member.user.tag} **${nf.format(
+      `Successfully given ${member.user.tag} **$${nf.format(
         amountToGive
       )}** and deducted it from your Wallet!`
     );

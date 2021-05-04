@@ -4,7 +4,7 @@ const paginationEmbed = async (msg: Message, pages: MessageEmbed[], emojiList = 
 	if (!pages) throw new Error('Pages are not given.');
 	if (emojiList.length !== 2) throw new Error('Need two emojis.');
 	let page = 0;
-	const curPage = await msg.channel.send(pages[page].setFooter(`Page ${page + 1} / ${pages.length}`));
+	const curPage = await msg.channel.send(pages[page]?.setFooter(`Page ${page + 1} / ${pages.length}`) ??  'No role members to display. This is usually due to Discords caching limitations.');
 	for (const emoji of emojiList) await curPage.react(emoji);
 	const reactionCollector = curPage.createReactionCollector(
 		(reaction, user) => emojiList.includes(reaction.emoji.name) && !user.bot,
@@ -22,7 +22,7 @@ const paginationEmbed = async (msg: Message, pages: MessageEmbed[], emojiList = 
 			default:
 				break;
 		}
-		curPage.edit(pages[page].setFooter(`Page ${page + 1} / ${pages.length}`));
+		curPage.edit(pages[page]?.setFooter(`Page ${page + 1} / ${pages.length}`)) ?? '';
 	});
 	reactionCollector.on('end', () => {
 		if (!curPage.deleted) {

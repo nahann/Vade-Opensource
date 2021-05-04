@@ -15,6 +15,7 @@
     "alpha-sort": "^5.0.0",
     "canvas": "^2.7.0",
     "consola": "^2.15.3",
+    "custom-translate": "^2.2.8",
     "dblapi.js": "^2.4.1",
     "discord.js": "^12.5.1",
     "discord.js-light": "^3.5.9",
