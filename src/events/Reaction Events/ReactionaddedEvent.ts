@@ -100,15 +100,14 @@ if(reactionCooldown.has(user.id)) {
 
 
 //checking for options 
-
 if(db.option === 1) {
       try {
        if(!member.roles.cache.find(r => r.name.toLowerCase() === rrRole.name.toLowerCase())){
 
   
         await member.roles.add(rrRole).catch(()=>{})
-        if(guildDB.reactionDM === true){
-        member.send(addEmbed).catch(()=>{})
+        if(guildDB.reactionDM){
+        return member.send(addEmbed).catch(()=>{})
         }
         reactionCooldown.add(user.id);
         setTimeout(()=>{
@@ -123,7 +122,6 @@ if(db.option === 1) {
  setTimeout(()=>{
  botCooldown.delete(message.guild.id)
  }, 6000)
-        return member.send(errorReaction).catch(()=>{})
     }
   }
 
@@ -132,7 +130,7 @@ if(db.option === 2) {
       if (!member.roles.cache.find(r => r.name.toLowerCase() === rrRole.name.toLowerCase())) {
       await member.roles.add(rrRole).catch(()=>{})
         if(guildDB.reactionDM){
-        member.send(addEmbed).catch(()=>{})
+        return member.send(addEmbed).catch(()=>{})
         }
       reactionCooldown.add(user.id);
       setTimeout(() => {
@@ -140,7 +138,7 @@ if(db.option === 2) {
       }, 2000);
       }
   } catch (err) {
-    if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
+    if (!message.guild.me.permissions.has('MANAGE_ROLES')) return;
  botCooldown.add(message.guild.id)
  setTimeout(()=>{
  botCooldown.delete(message.guild.id)
@@ -153,8 +151,8 @@ if(db.option === 2) {
     try {
       if (member.roles.cache.find(r => r.name.toLowerCase() === rrRole.name.toLowerCase())){
       await member.roles.remove(rrRole).catch(()=>{})
-        if(guildDB.reactionDM === true){
-        member.send(remEmbed).catch(()=>{})
+        if(guildDB.reactionDM){
+        return member.send(remEmbed).catch(()=>{})
         }
       reactionCooldown.add(user.id);
       setTimeout(() => {
@@ -176,8 +174,8 @@ if(db.option === 2) {
          if (member.roles.cache.find(r => r.name.toLowerCase() === rrRole.name.toLowerCase())){
         await member.roles.remove(rrRole).catch(()=>{})
         reactionCooldown.add(user.id);
-        if(guildDB.reactionDM === true){
-        member.send(remEmbed).catch(()=>{})
+        if(guildDB.reactionDM){
+        return member.send(remEmbed).catch(()=>{})
         }
         setTimeout(()=>{
         reactionCooldown.delete(user.id)
@@ -199,8 +197,8 @@ if(db.option === 2) {
       await member.roles.remove(rrRole);
      message.reactions.cache.find(r => r.emoji.name == emoji.name).users.remove(user.id).catch(()=>{})
       
-        if(guildDB.reactionDM === true){
-        member.send(remEmbed).catch(()=>{})
+        if(guildDB.reactionDM){
+        return member.send(remEmbed).catch(()=>{})
         }
       reactionCooldown.add(user.id);
       setTimeout(() => {
@@ -208,7 +206,7 @@ if(db.option === 2) {
       }, 2000);
      }
     } catch (err) {
-    if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
+    if (!message.guild.me.permissions.has('MANAGE_ROLES')) return;
  botCooldown.add(message.guild.id)
  setTimeout(()=>{
  botCooldown.delete(message.guild.id)
@@ -240,8 +238,8 @@ if(db.option === 2) {
      message.reactions.cache.find(r => r.emoji.name == emoji.name).users.remove(user.id).catch(()=>{})
         await member.roles.add(rrRole).catch(()=>{})
 
-        if(guildDB.reactionDM === true){
-        member.send(addEmbed).catch(()=>{})
+        if(guildDB.reactionDM){
+        return member.send(addEmbed).catch(()=>{})
         }
         reactionCooldown.add(user.id);
         setTimeout(()=>{
@@ -251,7 +249,7 @@ if(db.option === 2) {
 
       } catch (err) {
 
-        if (!message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')) return;
+        if (!message.guild.me.permissions.has('MANAGE_ROLES')) return;
  botCooldown.add(message.guild.id)
  setTimeout(()=>{
  botCooldown.delete(message.guild.id)
