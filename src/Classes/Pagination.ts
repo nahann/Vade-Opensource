@@ -1,4 +1,4 @@
-import { MessageEmbed, Message } from 'discord.js';
+import { MessageEmbed, Message } from 'discord.js-light';
 const paginationEmbed = async (msg: Message, pages: MessageEmbed[], emojiList = ['⏪', '⏩'], timeout = 120000) => {
 	if (!msg && !msg.channel) throw new Error('Channel is inaccessible.');
 	if (!pages) throw new Error('Pages are not given.');

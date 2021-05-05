@@ -1,5 +1,5 @@
 import config from "../interfaces/Constants";
-import { MessageEmbed, MessageEmbedOptions } from "discord.js";
+import { MessageEmbed, MessageEmbedOptions } from "discord.js-light";
 
 export default class EmbedHandler extends MessageEmbed {
   constructor(data?: MessageEmbed | MessageEmbedOptions) {

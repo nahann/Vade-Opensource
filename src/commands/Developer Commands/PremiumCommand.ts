@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import PremiumSchema from "../../../models/premium_schema";
-import { GuildMember } from "discord.js";
+import { GuildMember } from "discord.js-light";
 import mongoose from "mongoose";
 
 export const run: RunFunction = async (client, message, args) => {

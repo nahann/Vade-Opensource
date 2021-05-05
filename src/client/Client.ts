@@ -33,20 +33,23 @@ class Bot extends Client {
   public invites = new Collection();
   public manager: Manager;
   public prefix: string = "!";
+  public react: Map<string, Object> = new Map();
+  public fetchforguild: Map<string, Object> = new Map();
 
   public constructor() {
     super({
       ws: { intents: Intents.ALL },
+      partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
       messageCacheLifetime: 180,
       messageCacheMaxSize: 200,
       messageEditHistoryMaxSize: 200,
       messageSweepInterval: 180,
       restTimeOffset: 0,
       cacheGuilds: true,
-      cacheChannels: false,
+      cacheChannels: true,
       cacheOverwrites: false,
       cacheRoles: true,
-      cacheEmojis: false,
+      cacheEmojis: true,
       cachePresences: true,
     });
     

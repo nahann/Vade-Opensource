@@ -1,7 +1,7 @@
 import { Bot } from "client/Client";
 import schedule from "node-schedule";
 import lotterySchema from "../../models/lottery";
-import { TextChannel } from "discord.js";
+import { TextChannel } from "discord.js-light";
 import economy from '../../models/economy';
 import ms from 'ms';
 

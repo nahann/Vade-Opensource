@@ -1,7 +1,7 @@
 import { Bot } from "client/Client";
 import {
+  Channel,
   Guild,
-  GuildChannel,
   GuildMember,
   Message,
   MessageEmbed,
@@ -13,13 +13,120 @@ import premium_schema from "../../models/premium_schema";
 import guild_schema from "../../models/GuildConfig/guild";
 import economy_schema from "../../models/economy";
 import FuzzySearch from "fuse.js";
-
+import serverset from '../../models/GuildConfig/ReactionRoles';
 export default class Util {
   public readonly client: Bot;
   private readonly yes: string[] = ["yes", "si", "yeah", "ok", "sure"];
   private readonly no: string[] = ["no", "nope", "nada"];
   constructor(client: Bot) {
     this.client = client;
+  }
+
+  // Reaction Roles
+
+  async reactionCreate(guildId: string, msgid: string, roleid: string, emoji: string, dm: boolean = false, option: number = 1) {
+    if (!this.client) throw new TypeError("An client was not provided.");
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if (!msgid) throw new TypeError("A message id was not provided.");
+    if (!emoji) throw new TypeError("A reaction/emoji was not provided.");
+    if(!roleid) throw new TypeError("A role id was not provided.");
+    dm = dm ? dm : false ; 
+    if(!option) option = 1
+    
+    const issame = await serverset.findOne({guildID: guildId , msgid: msgid , reaction: emoji , roleid: roleid});
+    if (issame) return false;
+
+    const newRR = new serverset({
+      guildID: guildId, 
+      msgid: msgid, 
+      reaction: emoji , 
+      roleid: roleid,
+      dm: dm,
+      option: option
+    });
+
+    await newRR.save().catch(e => console.log(`Failed to create reaction role: ${e}`));
+    this.client.react.set(msgid+emoji, { 
+      guildID: guildId,
+      msgid: msgid, 
+      reaction: emoji, 
+      roleid: roleid,
+      dm: dm,
+      option: option
+    });
+    
+    return newRR;
+  }
+
+  async reactionDelete(guildId , msgid: string, emoji: string) {
+    if (!this.client) throw new TypeError("An client was not provided.");
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if (!msgid) throw new TypeError("A message id was not provided.");
+    if (!emoji) throw new TypeError("A reaction/emoji was not provided.");
+  
+    const reactionRole = await serverset.findOne({guildID: guildId , msgid: msgid , reaction: emoji  });
+    if (!reactionRole) return false;
+
+    await serverset.findOneAndDelete({guildID: guildId , msgid: msgid , reaction: emoji, option: reactionRole.option }).catch(e => console.log(`Failed to delete reaction: ${e}`));
+    
+     this.client.react.delete(msgid+emoji);
+    
+     
+    return reactionRole;
+    
+  }
+
+  
+  async reactionEdit( guildId: string , msgid: string, newroleid: string , emoji: string, newoption: number = 1) {
+    if (!this.client) throw new TypeError("An client was not provided.");
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if (!msgid) throw new TypeError("A message id was not provided.");
+    if (!emoji) throw new TypeError("A reaction/emoji was not provided.");
+    if(!newroleid) throw new TypeError("A role id was not provided.");
+    const reactionRole = await serverset.findOne({guildID: guildId , msgid: msgid , reaction: emoji  });
+    if (!reactionRole) return false;
+    reactionRole.roleid= newroleid;
+
+    await reactionRole.save().catch(e => console.log(`Failed to save new prefix: ${e}`) );
+    this.client.react.set(msgid+emoji, { 
+      guildID: guildId,
+      msgid: msgid, 
+      reaction: emoji , 
+      roleid: newroleid,
+      dm: reactionRole.dm,
+      option: reactionRole.option
+    });
+    return;
+  }
+
+  async reactionFetch(guildId: string , msgid: string , emoji: string) {
+    if (!this.client) throw new TypeError("A client was not provided.");
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if(!this.client.fetchforguild.has(guildId)){
+    let allrole = await serverset.find({guildid: guildId}).sort([['guildid', 'descending']]).exec();
+    let i = 0;
+    for(i ; i < Object.keys(allrole).length; i++){
+    await this.client.react.set(allrole[i].msgid+allrole[i].reaction, { 
+        guildID: allrole[i].guildID,
+        msgid: allrole[i].msgid, 
+        reaction: allrole[i].reaction , 
+        roleid: allrole[i].roleid,
+        dm: allrole[i].dm
+      }); 
+    }
+    this.client.fetchforguild.set(guildId, { 
+      guildid: guildId,
+      totalreactions: Object.keys(allrole).length
+    });
+  }
+    return this.client.react.get(msgid + emoji); 
+  }
+
+  async reactionFetchAll() {
+    if(!this.client) throw new TypeError(`Client class inaccessible`);
+    let all = await serverset.find({}).sort([['guildID', 'descending']]).exec();
+
+    return all;
   }
 
   async checkPremium(user: string) {
@@ -161,8 +268,8 @@ export default class Util {
   async categoryCheck(category: string, message: Message) {
     if (message.channel.type === "dm") return;
     category = category?.toLowerCase();
-    const modRoleData = await this.resolveModRole(message.guild.id);
-    const adminRoleData = await this.resolveAdminRole(message.guild.id);
+    const modRoleData: Array<string> = await this.resolveModRole(message.guild.id);
+    const adminRoleData: Array<string> = await this.resolveAdminRole(message.guild.id);
     const ownerCheck = this.checkOwner(message.author.id);
     switch (category) {
       case "development":
@@ -170,33 +277,45 @@ export default class Util {
       case "giveaways":
         return message.member.hasPermission("MANAGE_MESSAGES");
       case "reaction roles":
-        return (
-          (message.member.hasPermission("MANAGE_MESSAGES") ||
-            message.member.roles.cache.has(modRoleData)) &&
-          !ownerCheck
-        );
+        if(message.member.permissions.has("MANAGE_MESSAGES")) return true;
+        let c = false;
+        modRoleData.forEach((mod) => {
+          if(message.member.roles.cache.has(mod)) {
+            c = true;
+          }
+        })
+        return c;
       case "moderation":
-        return (
-          (message.member.hasPermission("MANAGE_MESSAGES") ||
-            message.member.roles.cache.has(modRoleData)) &&
-          !ownerCheck
-        );
+        if(message.member.permissions.has("MANAGE_MESSAGES")) return true;
+        let a = false;
+        modRoleData.forEach((mod) => {
+          if(message.member.roles.cache.has(mod)) {
+            a = true;
+          }
+        });
+        return a;
       case "administrative":
-        return (
-          (message.member.hasPermission("BAN_MEMBERS") ||
-            message.member.roles.cache.has(adminRoleData)) &&
-          !ownerCheck
-        );
+        if(message.member.permissions.has("ADMINISTRATOR")) return true;
+        let b = false;
+        adminRoleData.forEach((admin) => {
+          if(message.member.roles.cache.has(admin)) {
+            b = true;
+          }
+
+        })
+        return b;
       case "advertising":
-        return (
-          (message.member.hasPermission("MANAGE_CHANNELS") ||
-            message.member.roles.cache.has(modRoleData)) &&
-          !ownerCheck
-        );
+        if(message.member.permissions.has("MANAGE_CHANNELS")) return true;
+        let d = false;
+        modRoleData.forEach((mod) => {
+          if(message.member.roles.cache.has(mod)) {
+            d = true;
+          }
+
+        })
+        return d;
       case "nsfw":
         return message.channel?.nsfw && !ownerCheck;
-      case "tch":
-        return message.guild.id === "779760518428229632" && !ownerCheck;
       case "roblox":
         return message.member.hasPermission("MANAGE_MESSAGES");
       default:
@@ -208,8 +327,12 @@ export default class Util {
     const guildData2 = await guild_schema.findOne({ Guild: guildID });
     const guild = this.client.guilds.cache.get(guildID);
     if (guild && guildData2) {
-      const role = guild.roles.cache.get(guildData2.ModRole);
-      if (role) return role.id;
+      let arrayOf: Array<string> = [];
+      for(const mod of guildData2.ModRole) {
+        let role = guild.roles.cache.get(mod);
+        if(role) arrayOf.push(role.id)
+      }
+      if (arrayOf) return arrayOf;
     }
     return null;
   }
@@ -217,12 +340,16 @@ export default class Util {
   async resolveAdminRole(guildID: string) {
     const guildData2 = await guild_schema.findOne({ Guild: guildID });
     const guild = this.client.guilds.cache.get(guildID);
-    if (guild && guildData2) {
-      const role = guild.roles.cache.get(guildData2.AdminRole);
-      if (role) return role.id;
+    let arrayOf: Array<string> = [];
+      if(guild && guildData2) {
+        for(const admin of guildData2.AdminRole) {
+          let role = guild.roles.cache.get(admin);
+          if(role) arrayOf.push(role.id)
+        }
+        if (arrayOf) return arrayOf;
+      }
+      return null;
     }
-    return null;
-  }
 
   trimArray(arr: Array<string>, maxLen = 10) {
     if (arr.length > maxLen) {
@@ -308,7 +435,7 @@ export default class Util {
     return main;
   }
 
-  async sendError(text: string, channel: TextChannel, command: string = "") {
+  async sendError(text: string, channel, command: string = "") {
     if (channel.type !== "text") return;
     let message: string;
     if (!command) message = `Run !help [command] for extra help. | Vade`;
@@ -321,7 +448,7 @@ export default class Util {
     await channel.send(error);
   }
 
-  async succEmbed(text: string, channel: TextChannel) {
+  async succEmbed(text: string, channel) {
     if (channel.type !== "text") return;
     let embed = new MessageEmbed()
       .setColor(`#a1ee33`)
