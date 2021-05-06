@@ -135,6 +135,10 @@ export default class Util {
     return false;
   }
 
+  isCustomEmoji(emoji: string) {
+    return emoji.split(":").length == 1 ? false : true;
+}
+
   checkOwner(user: string) {
     return this.client.owners.includes(user);
   }

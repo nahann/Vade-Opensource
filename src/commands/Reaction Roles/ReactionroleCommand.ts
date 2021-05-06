@@ -38,8 +38,7 @@ message.channel.send("Please specify a channel! **[channel / ID]**\n\nType \`can
           message.channel.send("Please provide me with a role **[Role / ID]**\n\nThe following Role will be given when the user reacts!\n\nType \`cancel\` to cancel this prompt.").then(() => {
             message.channel.awaitMessages(filter, { max: 1, time: 60000, errors: ["time"] }).then(async collected2 => {
               let roleName = collected2.first().content
-              let roleMention = collected2.first().mentions
-              let role = roleMention.roles.first() || message.guild.roles.cache.find(rl => rl.name === roleName) || message.guild.roles.cache.get(roleName)
+              let role = client.utils.getRoles(roleName, message.guild);
                   if(roleName.toLowerCase() === 'cancel'){
       cancelledEmbed
       return;
@@ -55,19 +54,10 @@ message.channel.send("Please specify a channel! **[channel / ID]**\n\nType \`can
 
              
               
-    if (!emoji) return message.channel.send(new client.embed()
-     .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`Provide me with a valid Emoji`)
-  
-   .setErrorColor()
-    );
+    if (!emoji) return sendError(`Provide me with a valid Emoji`, message.channel);
 
 
-    if (isCustomEmoji(emoji)) return message.channel.send(new client.embed()
-     .setAuthor(message.author.tag, message.author.displayAvatarURL())
-  .setDescription(`Do Not use custom Emojis!`)
-   .setErrorColor()
-    );
+    if (isCustomEmoji(emoji)) return sendError(`You may not use custom emojis.`, message.channel);
 
 try {
 
@@ -119,7 +109,9 @@ await messageID.react(emoji)
 export const name: string = 'reactionrole';
 export const category: string = 'Reaction Roles';
 export const description: string = 'Setup reaction roles with the types included.';
-export const aliases: string[] = ['rrsetup', 'reactionsetup'];
+export const aliases: string[] = ['rrsetup', 'reactionsetup', 'rr'];
+export const userPerms: string[] = ['MANAGE_ROLES'];
+export const botPerms: string[] = ['MANAGE_ROLES'];
 
 function isCustomEmoji(emoji) {
     return emoji.split(":").length == 1 ? false : true;
