@@ -44,4 +44,4 @@ export const name: string = "welcomechannel";
 export const category: string = "Administrative";
 export const description: string = "Configure the guilds welcome channel.";
 export const aliases: string[] = ["welcomec"];
-export const userPerms: string[] = ['MANAGE_GUILD'];
+export const userPerms: string[] = ["MANAGE_GUILD"];

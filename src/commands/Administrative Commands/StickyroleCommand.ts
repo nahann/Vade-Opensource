@@ -163,5 +163,5 @@ export const category: string = "Administrative";
 export const description: string =
   "Enable sticky roles on this Server. Anyone that leaves, their roles will be remember for the next time they join. Blacklisted roles will not be added.";
 export const aliases: string[] = ["srole"];
-export const userPerms: string[] = ['MANAGE_GUILD'];
-export const botPerms: string[] = ['MANAGE_ROLES'];
+export const userPerms: string[] = ["MANAGE_GUILD"];
+export const botPerms: string[] = ["MANAGE_ROLES"];

@@ -14,10 +14,9 @@ import { Manager } from "erela.js";
 
 const globPromise = promisify(glob);
 
-
 class Bot extends Client {
   private static __instance__?: Bot;
-  
+
   public logger: Consola = consola;
   public commands: Collection<string, Command> = new Collection();
   public aliases: Collection<string, string> = new Collection();
@@ -39,7 +38,7 @@ class Bot extends Client {
   public constructor() {
     super({
       ws: { intents: Intents.ALL },
-      partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
+      partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"],
       messageCacheLifetime: 180,
       messageCacheMaxSize: 200,
       messageEditHistoryMaxSize: 200,
@@ -52,9 +51,9 @@ class Bot extends Client {
       cacheEmojis: true,
       cachePresences: true,
     });
-    
+
     if (Bot.__instance__) throw new Error("Another client was created.");
-    
+
     Bot.__instance__ = this;
   }
 
@@ -96,9 +95,9 @@ class Bot extends Client {
       this.on(file.name, file.run.bind(null, this));
     });
   }
-  
+
   static get instance() {
-    return Bot.__instance__; 
+    return Bot.__instance__;
   }
 }
 

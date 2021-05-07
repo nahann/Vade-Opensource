@@ -13,7 +13,9 @@ import premium_schema from "../../models/premium_schema";
 import guild_schema from "../../models/GuildConfig/guild";
 import economy_schema from "../../models/economy";
 import FuzzySearch from "fuse.js";
-import serverset from '../../models/GuildConfig/ReactionRoles';
+import serverset from "../../models/GuildConfig/ReactionRoles";
+import loggingSchema from "../../models/GuildConfig/Logging";
+import { client } from "./Command";
 export default class Util {
   public readonly client: Bot;
   private readonly yes: string[] = ["yes", "si", "yeah", "ok", "sure"];
@@ -24,107 +26,147 @@ export default class Util {
 
   // Reaction Roles
 
-  async reactionCreate(guildId: string, msgid: string, roleid: string, emoji: string, dm: boolean = false, option: number = 1) {
+  async reactionCreate(
+    guildId: string,
+    msgid: string,
+    roleid: string,
+    emoji: string,
+    dm: boolean = false,
+    option: number = 1
+  ) {
     if (!this.client) throw new TypeError("An client was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!msgid) throw new TypeError("A message id was not provided.");
     if (!emoji) throw new TypeError("A reaction/emoji was not provided.");
-    if(!roleid) throw new TypeError("A role id was not provided.");
-    dm = dm ? dm : false ; 
-    if(!option) option = 1
-    
-    const issame = await serverset.findOne({guildID: guildId , msgid: msgid , reaction: emoji , roleid: roleid});
+    if (!roleid) throw new TypeError("A role id was not provided.");
+    dm = dm ? dm : false;
+    if (!option) option = 1;
+
+    const issame = await serverset.findOne({
+      guildID: guildId,
+      msgid: msgid,
+      reaction: emoji,
+      roleid: roleid,
+    });
     if (issame) return false;
 
     const newRR = new serverset({
-      guildID: guildId, 
-      msgid: msgid, 
-      reaction: emoji , 
+      guildID: guildId,
+      msgid: msgid,
+      reaction: emoji,
       roleid: roleid,
       dm: dm,
-      option: option
+      option: option,
     });
 
-    await newRR.save().catch(e => console.log(`Failed to create reaction role: ${e}`));
-    this.client.react.set(msgid+emoji, { 
+    await newRR
+      .save()
+      .catch((e) => console.log(`Failed to create reaction role: ${e}`));
+    this.client.react.set(msgid + emoji, {
       guildID: guildId,
-      msgid: msgid, 
-      reaction: emoji, 
+      msgid: msgid,
+      reaction: emoji,
       roleid: roleid,
       dm: dm,
-      option: option
+      option: option,
     });
-    
+
     return newRR;
   }
 
-  async reactionDelete(guildId , msgid: string, emoji: string) {
+  async reactionDelete(guildId, msgid: string, emoji: string) {
     if (!this.client) throw new TypeError("An client was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!msgid) throw new TypeError("A message id was not provided.");
     if (!emoji) throw new TypeError("A reaction/emoji was not provided.");
-  
-    const reactionRole = await serverset.findOne({guildID: guildId , msgid: msgid , reaction: emoji  });
+
+    const reactionRole = await serverset.findOne({
+      guildID: guildId,
+      msgid: msgid,
+      reaction: emoji,
+    });
     if (!reactionRole) return false;
 
-    await serverset.findOneAndDelete({guildID: guildId , msgid: msgid , reaction: emoji, option: reactionRole.option }).catch(e => console.log(`Failed to delete reaction: ${e}`));
-    
-     this.client.react.delete(msgid+emoji);
-    
-     
+    await serverset
+      .findOneAndDelete({
+        guildID: guildId,
+        msgid: msgid,
+        reaction: emoji,
+        option: reactionRole.option,
+      })
+      .catch((e) => console.log(`Failed to delete reaction: ${e}`));
+
+    this.client.react.delete(msgid + emoji);
+
     return reactionRole;
-    
   }
 
-  
-  async reactionEdit( guildId: string , msgid: string, newroleid: string , emoji: string, newoption: number = 1) {
+  async reactionEdit(
+    guildId: string,
+    msgid: string,
+    newroleid: string,
+    emoji: string,
+    newoption: number = 1
+  ) {
     if (!this.client) throw new TypeError("An client was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!msgid) throw new TypeError("A message id was not provided.");
     if (!emoji) throw new TypeError("A reaction/emoji was not provided.");
-    if(!newroleid) throw new TypeError("A role id was not provided.");
-    const reactionRole = await serverset.findOne({guildID: guildId , msgid: msgid , reaction: emoji  });
-    if (!reactionRole) return false;
-    reactionRole.roleid= newroleid;
-
-    await reactionRole.save().catch(e => console.log(`Failed to save new prefix: ${e}`) );
-    this.client.react.set(msgid+emoji, { 
+    if (!newroleid) throw new TypeError("A role id was not provided.");
+    const reactionRole = await serverset.findOne({
       guildID: guildId,
-      msgid: msgid, 
-      reaction: emoji , 
+      msgid: msgid,
+      reaction: emoji,
+    });
+    if (!reactionRole) return false;
+    reactionRole.roleid = newroleid;
+
+    await reactionRole
+      .save()
+      .catch((e) => console.log(`Failed to save new prefix: ${e}`));
+    this.client.react.set(msgid + emoji, {
+      guildID: guildId,
+      msgid: msgid,
+      reaction: emoji,
       roleid: newroleid,
       dm: reactionRole.dm,
-      option: reactionRole.option
+      option: reactionRole.option,
     });
     return;
   }
 
-  async reactionFetch(guildId: string , msgid: string , emoji: string) {
+  async reactionFetch(guildId: string, msgid: string, emoji: string) {
     if (!this.client) throw new TypeError("A client was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if(!this.client.fetchforguild.has(guildId)){
-    let allrole = await serverset.find({guildid: guildId}).sort([['guildid', 'descending']]).exec();
-    let i = 0;
-    for(i ; i < Object.keys(allrole).length; i++){
-    await this.client.react.set(allrole[i].msgid+allrole[i].reaction, { 
-        guildID: allrole[i].guildID,
-        msgid: allrole[i].msgid, 
-        reaction: allrole[i].reaction , 
-        roleid: allrole[i].roleid,
-        dm: allrole[i].dm
-      }); 
+    if (!this.client.fetchforguild.has(guildId)) {
+      let allrole = await serverset
+        .find({ guildid: guildId })
+        .sort([["guildid", "descending"]])
+        .exec();
+      let i = 0;
+      for (i; i < Object.keys(allrole).length; i++) {
+        await this.client.react.set(allrole[i].msgid + allrole[i].reaction, {
+          guildID: allrole[i].guildID,
+          msgid: allrole[i].msgid,
+          reaction: allrole[i].reaction,
+          roleid: allrole[i].roleid,
+          dm: allrole[i].dm,
+        });
+      }
+      this.client.fetchforguild.set(guildId, {
+        guildid: guildId,
+        totalreactions: Object.keys(allrole).length,
+      });
     }
-    this.client.fetchforguild.set(guildId, { 
-      guildid: guildId,
-      totalreactions: Object.keys(allrole).length
-    });
-  }
-    return this.client.react.get(msgid + emoji); 
+    return this.client.react.get(msgid + emoji);
   }
 
   async reactionFetchAll() {
-    if(!this.client) throw new TypeError(`Client class inaccessible`);
-    let all = await serverset.find({}).sort([['guildID', 'descending']]).exec();
+    if (!this.client) throw new TypeError(`Client class inaccessible`);
+    let all = await serverset
+      .find({})
+      .sort([["guildID", "descending"]])
+      .exec();
 
     return all;
   }
@@ -137,7 +179,71 @@ export default class Util {
 
   isCustomEmoji(emoji: string) {
     return emoji.split(":").length == 1 ? false : true;
-}
+  }
+
+  async resolveLogChannel(guildID: string, type: string) {
+    let data = await loggingSchema.findOne({
+      type: type,
+      guildID: guildID,
+    });
+
+    if (!data) return null;
+
+    const channel = await this.client.channels.fetch(data.channelID);
+    return channel;
+  }
+
+  formatDate(date: Date) {
+    return new Intl.DateTimeFormat('en-US').format(date);
+  }
+
+  async createLogCh(message: Message, channelid: string, type: string) {
+    const channel = await this.client.channels.fetch(channelid) as TextChannel;
+    let fetchList = await loggingSchema.findOne({
+      guildID: message.guild.id,
+      type: type,
+    });
+
+    if (fetchList)
+      return this.sendError(
+        `There is already a log channel for \`${type}\``,
+        message.channel
+      );
+
+    let findCh = await loggingSchema.findOne({
+      channelID: channelid,
+    });
+
+    if (findCh) {
+      await loggingSchema.findOneAndUpdate(
+        {
+          channelID: channelid,
+        },
+        {
+          $push: {
+            type: type,
+          },
+        }
+      );
+    } else {
+      const data = new loggingSchema({
+        guildname: message.guild.name,
+        guildID: message.guild.id,
+        channelName: channel.name,
+        channelID: channelid,
+        type: type,
+      });
+
+      data.save().catch((err) => {
+        return this.sendError(
+          `An error has occurred while saving data\n\`${err.message}\``,
+          message.channel
+        );
+      });
+    }
+
+   return this.succEmbed(`${channel} has successfully been set as a log channel for \`${type}\``, message.channel);
+  }
 
   checkOwner(user: string) {
     return this.client.owners.includes(user);
@@ -177,28 +283,27 @@ export default class Util {
     return target;
   }
 
- msConversion(millis: number) {
-  let sec: any = Math.floor(millis / 1000);
-  let hrs: any = Math.floor(sec / 3600);
-  sec -= hrs * 3600;
-  let min: any = Math.floor(sec / 60);
-  sec -= min * 60;
+  msConversion(millis: number) {
+    let sec: any = Math.floor(millis / 1000);
+    let hrs: any = Math.floor(sec / 3600);
+    sec -= hrs * 3600;
+    let min: any = Math.floor(sec / 60);
+    sec -= min * 60;
 
-  sec = '' + sec;
-  sec = ('00' + sec).substring(sec.length);
+    sec = "" + sec;
+    sec = ("00" + sec).substring(sec.length);
 
-  if (hrs > 0) {
-      min = '' + min;
-      min = ('00' + min).substring(min.length);
-      return hrs + ':' + min + ':' + sec;
-  } else {
-      return min + ':' + sec;
+    if (hrs > 0) {
+      min = "" + min;
+      min = ("00" + min).substring(min.length);
+      return hrs + ":" + min + ":" + sec;
+    } else {
+      return min + ":" + sec;
+    }
   }
- }
-
 
   async verify(
-    channel: TextChannel,
+    channel: any,
     user: User | GuildMember,
     {
       time = 30000,
@@ -272,8 +377,12 @@ export default class Util {
   async categoryCheck(category: string, message: Message) {
     if (message.channel.type === "dm") return;
     category = category?.toLowerCase();
-    const modRoleData: Array<string> = await this.resolveModRole(message.guild.id);
-    const adminRoleData: Array<string> = await this.resolveAdminRole(message.guild.id);
+    const modRoleData: Array<string> = await this.resolveModRole(
+      message.guild.id
+    );
+    const adminRoleData: Array<string> = await this.resolveAdminRole(
+      message.guild.id
+    );
     const ownerCheck = this.checkOwner(message.author.id);
     switch (category) {
       case "development":
@@ -281,42 +390,40 @@ export default class Util {
       case "giveaways":
         return message.member.hasPermission("MANAGE_MESSAGES");
       case "reaction roles":
-        if(message.member.permissions.has("MANAGE_MESSAGES")) return true;
+        if (message.member.permissions.has("MANAGE_MESSAGES")) return true;
         let c = false;
         modRoleData.forEach((mod) => {
-          if(message.member.roles.cache.has(mod)) {
+          if (message.member.roles.cache.has(mod)) {
             c = true;
           }
-        })
+        });
         return c;
       case "moderation":
-        if(message.member.permissions.has("MANAGE_MESSAGES")) return true;
+        if (message.member.permissions.has("MANAGE_MESSAGES")) return true;
         let a = false;
         modRoleData.forEach((mod) => {
-          if(message.member.roles.cache.has(mod)) {
+          if (message.member.roles.cache.has(mod)) {
             a = true;
           }
         });
         return a;
       case "administrative":
-        if(message.member.permissions.has("ADMINISTRATOR")) return true;
+        if (message.member.permissions.has("ADMINISTRATOR")) return true;
         let b = false;
         adminRoleData.forEach((admin) => {
-          if(message.member.roles.cache.has(admin)) {
+          if (message.member.roles.cache.has(admin)) {
             b = true;
           }
-
-        })
+        });
         return b;
       case "advertising":
-        if(message.member.permissions.has("MANAGE_CHANNELS")) return true;
+        if (message.member.permissions.has("MANAGE_CHANNELS")) return true;
         let d = false;
         modRoleData.forEach((mod) => {
-          if(message.member.roles.cache.has(mod)) {
+          if (message.member.roles.cache.has(mod)) {
             d = true;
           }
-
-        })
+        });
         return d;
       case "nsfw":
         return message.channel?.nsfw && !ownerCheck;
@@ -332,9 +439,9 @@ export default class Util {
     const guild = this.client.guilds.cache.get(guildID);
     if (guild && guildData2) {
       let arrayOf: Array<string> = [];
-      for(const mod of guildData2.ModRole) {
+      for (const mod of guildData2.ModRole) {
         let role = guild.roles.cache.get(mod);
-        if(role) arrayOf.push(role.id)
+        if (role) arrayOf.push(role.id);
       }
       if (arrayOf) return arrayOf;
     }
@@ -345,15 +452,15 @@ export default class Util {
     const guildData2 = await guild_schema.findOne({ Guild: guildID });
     const guild = this.client.guilds.cache.get(guildID);
     let arrayOf: Array<string> = [];
-      if(guild && guildData2) {
-        for(const admin of guildData2.AdminRole) {
-          let role = guild.roles.cache.get(admin);
-          if(role) arrayOf.push(role.id)
-        }
-        if (arrayOf) return arrayOf;
+    if (guild && guildData2) {
+      for (const admin of guildData2.AdminRole) {
+        let role = guild.roles.cache.get(admin);
+        if (role) arrayOf.push(role.id);
       }
-      return null;
+      if (arrayOf) return arrayOf;
     }
+    return null;
+  }
 
   trimArray(arr: Array<string>, maxLen = 10) {
     if (arr.length > maxLen) {
@@ -487,14 +594,14 @@ export default class Util {
   }
 
   streamToArray(stream) {
-    if(!stream.readable) return Promise.resolve([]);
+    if (!stream.readable) return Promise.resolve([]);
     return new Promise((resolve, reject) => {
       const array = [];
       function onData(data) {
         array.push(data);
       }
       function onEnd(error) {
-        if(error) reject(error);
+        if (error) reject(error);
         else resolve(array);
         cleanup();
       }
@@ -508,9 +615,7 @@ export default class Util {
         stream.removeListener("error", onEnd);
         stream.on("close", onClose);
       }
-      
     });
-
   }
 
   async addBal(user: string, Coins: Number) {

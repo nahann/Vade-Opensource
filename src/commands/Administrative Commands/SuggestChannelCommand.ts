@@ -9,7 +9,10 @@ export const run: RunFunction = async (client, message, args) => {
       `Please either specify a channel name, ID or mention. Or "remove".`
     );
   if (channel && check_data) {
-    if(!channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")) return message.channel.send(`Please ensure I have permission to manage messages in the specified channel.`);
+    if (!channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES"))
+      return message.channel.send(
+        `Please ensure I have permission to manage messages in the specified channel.`
+      );
     await check_data.updateOne({
       Suggestion: channel.id,
     });
@@ -49,5 +52,5 @@ export const run: RunFunction = async (client, message, args) => {
 export const name: string = "suggestionchannel";
 export const category: string = "Administrative";
 export const description: string = "Configure the Guilds suggestions channel.";
-export const userPerms: string[] = ['MANAGE_GUILD'];
-export const botPerms: string[] = ['MANAGE_ROLES', 'MANAGE_CHANNELS'];
+export const userPerms: string[] = ["MANAGE_GUILD"];
+export const botPerms: string[] = ["MANAGE_ROLES", "MANAGE_CHANNELS"];

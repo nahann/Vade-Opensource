@@ -14,7 +14,6 @@ export const run: RunFunction = async (client, message: Message) => {
     prefix = (GuildConfig as any).prefix;
   }
 
-
   const suggestionChannelID = GuildConfig.Suggestion;
 
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {

@@ -9,7 +9,8 @@ export const run: RunFunction = async (client, message, args) => {
       `You need to specify a channel in this Server.`
     );
 
-  const text = channel ? args.slice(1).join(" ") : args.join(" ");
+  const text =
+    channel !== message.channel ? args.slice(1).join(" ") : args.join(" ");
   console.assert(channel, `test`);
 
   channel.send(text);
@@ -19,4 +20,5 @@ export const name: string = "say";
 export const devOnly: boolean = true;
 export const usage: string = "!say <Optional channel> <Text>>";
 export const category: string = "Development";
-export const description: string = "Have the Bot say something in an optional channel.";
+export const description: string =
+  "Have the Bot say something in an optional channel.";

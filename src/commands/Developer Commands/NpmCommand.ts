@@ -46,4 +46,4 @@ export const run: RunFunction = async (client, message, args) => {
 export const name: string = "npm";
 export const usage: string = "!npm <To search for>";
 export const category: string = "Development";
-export const description: string = 'Search for an NPM package.';
+export const description: string = "Search for an NPM package.";
