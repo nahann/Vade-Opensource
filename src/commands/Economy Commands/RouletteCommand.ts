@@ -1,7 +1,8 @@
 import { RunFunction } from "../../interfaces/Command";
 import ms from "ms";
-import { Message } from "discord.js";
+import { Message, Util } from "discord.js";
 import economySchema from "../../../models/economy";
+import util from 'util';
 
 export const run: RunFunction = async (client, message, args) => {
   const claims = [
@@ -123,6 +124,7 @@ export const run: RunFunction = async (client, message, args) => {
       );
 
     const player = players.get(message.author.id);
+    console.log(`PLAYER: ` + util.inspect(player));
 
     if (player) {
       if (player.length >= 3)
@@ -154,8 +156,8 @@ export const run: RunFunction = async (client, message, args) => {
       .join("\n")}\nSpinning the wheel...`
   );
 
-  // await new Promise((resolve, reject) => setTimeout(resolve, Math.random() * 15000 + 15000));
-  await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+  await new Promise((resolve, reject) => setTimeout(resolve, Math.random() * 15000 + 15000));
+  // await new Promise((resolve, reject) => setTimeout(resolve, 1000));
 
   const landed = wheel[Math.floor(Math.random() * wheel.length)];
 
