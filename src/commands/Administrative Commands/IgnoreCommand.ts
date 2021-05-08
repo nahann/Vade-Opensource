@@ -61,12 +61,6 @@ export const run: RunFunction = async (client, message, args) => {
       }
     }
   
-
-
-
-
-
-
     default:
       return client.utils.sendError(`You need to specify either: 'commands', 'autoad' or 'automod'.`, message.channel)
   }
