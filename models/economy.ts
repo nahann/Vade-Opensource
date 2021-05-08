@@ -38,6 +38,10 @@ export const bankSchema = new Schema({
     type: String,
     required: false,
   },
+  Pet: {
+    type: String,
+    required: false,
+  },
   LastPaid: {
     type: Number,
     required: false,
