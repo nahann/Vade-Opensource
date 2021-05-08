@@ -19,5 +19,5 @@
     "index.ts",
     "src/Classes/MessageClass.ts",
     "Assets/Economy/Scheduled.ts"
-  ]
+, "Shard.ts"  ]
 }

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only --poll ./index.ts"
+    "start": "ts-node-dev --respawn --transpile-only --poll ./index.ts",
+    "shard": "ts-node-dev --respawn --transpile-only --poll ./shard.ts"
   },
   "license": "MIT",
   "dependencies": {
@@ -30,6 +31,7 @@
     "glob": "^7.1.6",
     "globally": "0.0.0",
     "imageapi.js": "^1.6.1",
+    "kurasuta": "^2.2.3",
     "libnpmsearch": "^3.1.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
