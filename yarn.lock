@@ -2558,6 +2558,11 @@ ssri@^8.0.0, ssri@^8.0.1:
   dependencies:
     minipass "^3.1.1"
 
+string-progressbar@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/string-progressbar/-/string-progressbar-1.0.4.tgz#cc5fd91de411649cb3662ea93c314b65ebd0e83f"
+  integrity sha512-OpkcFxlFjn7kz5jTWmPGY+FFJVN21lQ9k0fkK0XS5GVvlCgS1stgDNEoMyqnkbZEcVP3Gv6IxqgG7tnD7ChBSw==
+
 string-width@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-1.0.2.tgz#118bdf5b8cdc51a2a7e70d211e07e2b0b9b107d3"
