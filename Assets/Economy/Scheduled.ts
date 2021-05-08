@@ -15,8 +15,7 @@ async function main(client: Bot) {
     ) as TextChannel;
     const lottery = await lotterySchema.findOne();
     if (!lottery) {
-      lotteryChannel.send("No one entered the lottery");
-      console.log("No one entered into the lottery");
+      console.log(`No entry participants`)
     } else {
       const nf = Intl.NumberFormat();
       const entrants = lottery.entries;
