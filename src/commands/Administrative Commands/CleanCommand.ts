@@ -34,3 +34,5 @@ export const name: string = 'clean';
 export const category: string = 'Administrative';
 export const description: string = 'Configure the cleanCommands setting for the guild.';
 export const aliases: string[] = ['cleancommands', 'autoclean'];
+export const userPerms: string[] = ['MANAGE_GUILD'];
+export const botPerms: string[] = ['MANAGE_MESSAGES'];
