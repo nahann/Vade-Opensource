@@ -79,7 +79,7 @@ class Bot extends Client {
         guildOnly: false,
         ...file,
       });
-      this.categories.add(file.category);
+      this.categories.add(file.category || 'Miscellaneous');
       if (file.aliases?.length) {
         file.aliases.map((value: string) => this.aliases.set(value, file.name));
       }
