@@ -15,6 +15,7 @@ export interface IGuild extends mongoose.Document {
   AntiAlt: boolean;
   AntiAltDays: number;
   reactionDM: boolean;
+  cleanCommands: boolean;
 }
 
 const guildSchema = new mongoose.Schema({
@@ -32,6 +33,7 @@ const guildSchema = new mongoose.Schema({
   AntiAlt: Boolean,
   AntiAltDays: Number,
   reactionDM: Boolean,
+  cleanCommands: Boolean,
 });
 
 const guilds = mongoose.model<IGuild>(`Guild`, guildSchema, "vade-guilds");

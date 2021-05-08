@@ -1,8 +1,10 @@
 import { RunFunction } from "../../interfaces/Event";
-import { Message } from "discord.js";
+import { Guild, Message } from "discord.js";
 import { Command } from "interfaces/Command";
 import ms from "ms";
 import GuildConfigSchema from "../../../models/GuildConfig/guild";
+import { promisify } from "util";
+const wait = promisify(setTimeout);
 
 export const run: RunFunction = async (client, message: Message) => {
   if (message.author.bot || !message.guild) return;
@@ -94,6 +96,10 @@ export const run: RunFunction = async (client, message: Message) => {
       }
 
       command.run(client, message, args);
+      if(GuildConfig.cleanCommands && message.guild.me.permissions.has("MANAGE_MESSAGES")) {
+        await wait(1000);
+       if(!message.channel.deleted && !message.deleted) message.delete({ timeout: 4000, reason: 'Clean Commands are enabled.'});
+      }
       client.cooldowns.set(
         `${message.author.id}-${command.name}`,
         Date.now() + command.cooldown

@@ -3,9 +3,13 @@ import { DiscordTogether } from '../../../utils/index';
 
 
    export const run: RunFunction = async(client, message, args) => {
+
+    const available: Array<string> = ['poker', 'fishing', 'youtube', 'betrayal'];
     const discordTogether = new DiscordTogether(client, { token: client.config.token } );
 
-    discordTogether.createTogetherCode(message.member.voice.channelID, 'betrayal').then(async invite => {
+    if(!args[0] || !available.includes(args[0]?.toLowerCase())) return message.channel.send(`You must select one of the following:\n\n ${available.join("\n")}`);
+
+    discordTogether.createTogetherCode(message.member.voice.channelID, args[0]?.toLowerCase()).then(async invite => {
         return message.channel.send(`[LINK](${invite.code})`);
          });
 

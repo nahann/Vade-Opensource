@@ -15,7 +15,7 @@ import mainUser from '../../../models/economy';
     const checkPartner = await mainUser.findOne({ Partner: member.id });
     if(checkPartner) return client.utils.sendError(`They are already in a "happy" marriage!`, message.channel);
     message.channel.send(`${member}, do you accept ${message.member} as your Partner in life?`);
-    const verify = await client.utils.verify(message.channel, member, { time: 30000 });
+    const verify = await client.utils.verify(message.channel, member, { time: 30000, extraYes: ['i do'] });
     const partnerSchema = await mainUser.findOne({ User: member.id });
 
     if(!verify) return client.utils.sendError(`${message.member}, You clearly aren't rich enough yet to attract a woman. Buy a car and try again!`, message.channel);
@@ -47,6 +47,6 @@ import mainUser from '../../../models/economy';
 
     }
 export const name: string = 'marry';
-export const category: string = ''
-export const description: string = ''
-export const aliases: string[] = ['']
+export const category: string = 'Fun';
+export const description: string = 'Marry someone!';
+export const aliases: string[] = ['marriage'];
