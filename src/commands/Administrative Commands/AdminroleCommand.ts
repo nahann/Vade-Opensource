@@ -77,7 +77,6 @@ export const run: RunFunction = async (client, message, args) => {
         return message.channel.send(
           `Please mention a valid role name, ID or mention.`
         );
-      let roleID = role.id;
       if (locate_schema.AdminRole && locate_schema.AdminRole?.length >= 5)
         return message.channel.send(
           `You cannot have more than 5 Administrator Roles setup for one Server.`
