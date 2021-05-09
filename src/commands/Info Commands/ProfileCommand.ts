@@ -26,7 +26,7 @@ import ms from 'ms';
     .addField("Economy", `Wallet: ${nf.format(Wallet)}\nBank: ${nf.format(Bank)}\nEmployment Status: ${Job}\nWeekly Wage: ${nf.format(Wage)}`)
     .addField("Personal", `Partner: ${Util.escapeMarkdown(Partner)}`)
     .addField("Cooldowns", `Hourly: ${HourlyTime}\nDaily: ${DailyTime}\nWeekly: ${WeeklyTime}\nMonthly: ${MonthlyTime}`)
-    .setClear()
+    .setMainColor()
     .setTimestamp()
     .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL());
 

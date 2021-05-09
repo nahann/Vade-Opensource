@@ -250,12 +250,14 @@ export default class Util {
   }
 
   async getMember(message: Message, toFind: string = "", msg: boolean = false) {
-    toFind = toFind.toLowerCase();
+    toFind = toFind?.toLowerCase();
 
-    let target = await message.guild.members.fetch(toFind);
+    let target;
 
     if (!toFind) {
       target = message.member;
+    } else if(!isNaN(parseInt(toFind))) {
+      target = await message.guild.members.fetch(toFind);
     }
 
     if (!target && message.mentions.members)
