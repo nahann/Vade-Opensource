@@ -41,7 +41,7 @@ export const run: RunFunction = async (client, message, args) => {
 
   let rolesHigher = false;
   const prefix = await client.utils.resolvePrefix(message.guild.id);
-  const getFlags = await client.utils.getFlags;
+  const getFlags = client.utils.getFlags;
 
   const flags = getFlags(args);
 

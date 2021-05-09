@@ -15,6 +15,8 @@ export const run: RunFunction = async (client, message, args) => {
   if (args[0].length > 4)
     return message.channel.send(`The max length for Prefixes is 4 characters.`);
 
+    if(message.mentions.everyone || message.mentions.members.size >= 1) return message.channel.send(`Your prefix cannot contain a mention.`);
+
   if (!GuildConfig) {
     const newSchema = new GuildConfigSchema({
       _id: mongoose.Types.ObjectId(),
@@ -38,6 +40,6 @@ export const run: RunFunction = async (client, message, args) => {
 };
 
 export const name: string = "prefix";
-export const category: string = "Utility";
+export const category: string = "Administrative";
 export const aliases: string[] = ["setprefix", "sprefix"];
 export const userPerms: string[] = ["ADMINISTRATOR"];
