@@ -60,7 +60,7 @@ class Bot extends Client {
   public async start(config: Config): Promise<void> {
     Mongo();
     this.config = config;
-    // this.login(config.token);
+    this.login(config.token);
     Lottery(this);
 
     const commandFiles: string[] = await globPromise(

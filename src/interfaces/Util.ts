@@ -252,7 +252,7 @@ export default class Util {
   async getMember(message: Message, toFind: string = "", msg: boolean = false) {
     toFind = toFind.toLowerCase();
 
-    let target = message.guild.members.cache.get(toFind);
+    let target = await message.guild.members.fetch(toFind);
 
     if (!toFind) {
       target = message.member;
