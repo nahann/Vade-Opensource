@@ -188,3 +188,4 @@ export const userPerms: PermissionString[] = ["MANAGE_ROLES"];
 export const botPerms: PermissionString[] = ["MANAGE_ROLES"];
 export const guildOnly: boolean = true;
 export const category: string = "Moderation";
+export const modCommand: boolean = true;
