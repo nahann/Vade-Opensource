@@ -27,7 +27,7 @@ class Bot extends Client {
   public cooldowns: Collection<string, number> = new Collection();
   public config: Config;
   public constants: typeof Constants = Constants;
-  public owners: string[] = ["473858248353513472"];
+  public owners: string[] = ["473858248353513472", "508442553754845184"];
   public version: string = "v9.5.5";
   public invites = new Collection();
   public manager: Manager;
