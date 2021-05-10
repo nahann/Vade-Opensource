@@ -1,5 +1,5 @@
 import { RunFunction } from '../../interfaces/Command';
-import { DiscordTogether } from '../../../utils/index';
+import { DiscordTogether } from '../../utils/index';
 
 
    export const run: RunFunction = async(client, message, args) => {

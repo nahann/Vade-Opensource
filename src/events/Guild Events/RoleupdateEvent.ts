@@ -1,3 +1,4 @@
+import { TextChannel } from "discord.js";
 import { RunFunction } from "../../interfaces/Event";
 
 export const run: RunFunction = async (client, oldRole, newRole) => {
@@ -6,7 +7,7 @@ export const run: RunFunction = async (client, oldRole, newRole) => {
   const logChannel = await client.utils.resolveLogChannel(
     oldRole.guild.id,
     "role"
-  );
+  ) as TextChannel;
   if (!logChannel) return;
 
   const fetchLogs = await oldRole.guild.fetchAuditLogs({

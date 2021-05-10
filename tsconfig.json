@@ -11,13 +11,14 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules"],
   "include": [
     "src/**/*.ts",
     "index.ts",
     "src/Classes/MessageClass.ts",
     "Assets/Economy/Scheduled.ts"
-, "Shard.ts"  ]
+, "Shard.ts"  ],
+"exclude": ["node_modules"],
 }
