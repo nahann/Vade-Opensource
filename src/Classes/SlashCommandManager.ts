@@ -73,16 +73,16 @@ export default class SlashCommandManager {
   ): Promise<SlashCommandResponse[]> {
     return commands
       ? commands!.map((data) =>
-       //@ts-ignore
+          //@ts-ignore
           this.client.api
-           //@ts-ignore
+            //@ts-ignore
             .applications(this.client.user!.id)
             .commands.post({ data })
         )
       : this.commands!.map((data) =>
           //@ts-ignore
           this.client.api
-           //@ts-ignore
+            //@ts-ignore
             .applications(this.client.user!.id)
             .commands.post({ data })
         );
@@ -91,7 +91,7 @@ export default class SlashCommandManager {
   async listen() {
     //@ts-ignore
     return this.client.ws.on(
-       //@ts-ignore
+      //@ts-ignore
       "INTERACTION_CREATE",
       async (interaction: Interaction) => {
         if (!this.commands) return;
@@ -110,7 +110,7 @@ export default class SlashCommandManager {
           async respond(content, options) {
             //@ts-ignore
             client.api
-             //@ts-ignore
+              //@ts-ignore
               .interactions(interaction.id, interaction.token)
               .callback.post({
                 data: {
@@ -118,7 +118,6 @@ export default class SlashCommandManager {
                   data: { ...content, ...options },
                 },
               });
-
 
             return content;
           },

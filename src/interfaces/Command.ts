@@ -23,6 +23,7 @@ export interface Command {
   adminCommand?: boolean;
   devOnly?: boolean;
   guildOnly?: boolean;
+  voteRequired?: boolean;
 }
 
 export const client = Bot;

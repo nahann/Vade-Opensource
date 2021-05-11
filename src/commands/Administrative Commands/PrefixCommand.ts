@@ -15,7 +15,8 @@ export const run: RunFunction = async (client, message, args) => {
   if (args[0].length > 4)
     return message.channel.send(`The max length for Prefixes is 4 characters.`);
 
-    if(message.mentions.everyone || message.mentions.members.size >= 1) return message.channel.send(`Your prefix cannot contain a mention.`);
+  if (message.mentions.everyone || message.mentions.members.size >= 1)
+    return message.channel.send(`Your prefix cannot contain a mention.`);
 
   if (!GuildConfig) {
     const newSchema = new GuildConfigSchema({

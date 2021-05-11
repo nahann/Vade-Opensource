@@ -2,7 +2,7 @@ import { RunFunction } from "../../interfaces/Command";
 import ms from "ms";
 import { Message, Util } from "discord.js-light";
 import economySchema from "../../models/economy";
-import util from 'util';
+import util from "util";
 
 export const run: RunFunction = async (client, message, args) => {
   const claims = [
@@ -95,9 +95,11 @@ export const run: RunFunction = async (client, message, args) => {
       .split(/\s+/);
 
     const bet = parseInt(strBet);
-    const number = (claims.includes(strNum as typeof claims[number])
-      ? strNum
-      : parseInt(strNum)) as number | typeof claims[number];
+    const number = (
+      claims.includes(strNum as typeof claims[number])
+        ? strNum
+        : parseInt(strNum)
+    ) as number | typeof claims[number];
 
     console.log(number);
 
@@ -156,7 +158,9 @@ export const run: RunFunction = async (client, message, args) => {
       .join("\n")}\nSpinning the wheel...`
   );
 
-  await new Promise((resolve, reject) => setTimeout(resolve, Math.random() * 15000 + 15000));
+  await new Promise((resolve, reject) =>
+    setTimeout(resolve, Math.random() * 15000 + 15000)
+  );
   // await new Promise((resolve, reject) => setTimeout(resolve, 1000));
 
   const landed = wheel[Math.floor(Math.random() * wheel.length)];

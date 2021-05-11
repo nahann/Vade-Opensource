@@ -34,6 +34,7 @@ class Bot extends Client {
   public prefix: string = "!";
   public react: Map<string, Object> = new Map();
   public fetchforguild: Map<string, Object> = new Map();
+  public userVotes: Record<string, number> = {};
 
   public constructor() {
     super({
@@ -79,7 +80,7 @@ class Bot extends Client {
         guildOnly: false,
         ...file,
       });
-      this.categories.add(file.category || 'Miscellaneous');
+      this.categories.add(file.category || "Miscellaneous");
       if (file.aliases?.length) {
         file.aliases.map((value: string) => this.aliases.set(value, file.name));
       }

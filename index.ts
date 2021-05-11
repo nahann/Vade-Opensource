@@ -1,3 +1,4 @@
+import "discord.js-light";
 import { Config } from "./src/interfaces/Config";
 import * as File from "./config.json";
 import { Bot } from "./src/client/Client";

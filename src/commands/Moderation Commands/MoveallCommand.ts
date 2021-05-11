@@ -1,8 +1,7 @@
-import { RunFunction } from '../../interfaces/Command';
+import { RunFunction } from "../../interfaces/Command";
 
-   export const run: RunFunction = async(client, message, args) => {
-
-    if (!message.member.voice.channel)
+export const run: RunFunction = async (client, message, args) => {
+  if (!message.member.voice.channel)
     return message.reply(
       `You need to be in a Voice Channel in order to run this Command!`
     );
@@ -41,13 +40,12 @@ import { RunFunction } from '../../interfaces/Command';
       );
     }
   }
-
-
-    }
-export const name: string = 'moveall';
-export const category: string = 'Moderation';
-export const description: string = 'Move all members from one VC to your current VC.';
-export const aliases: string[] = ['mvall'];
-export const botPerms: string[] = ['MOVE_MEMBERS', 'MANAGE_CHANNELS'];
-export const userperms: string[] = ['MOVE_MEMBERS'];
+};
+export const name: string = "moveall";
+export const category: string = "Moderation";
+export const description: string =
+  "Move all members from one VC to your current VC.";
+export const aliases: string[] = ["mvall"];
+export const botPerms: string[] = ["MOVE_MEMBERS", "MANAGE_CHANNELS"];
+export const userperms: string[] = ["MOVE_MEMBERS"];
 export const modCommand: boolean = true;

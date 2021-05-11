@@ -4,7 +4,10 @@ import { RunFunction } from "../../interfaces/Event";
 export const run: RunFunction = async (client, oldRole, newRole) => {
   if (oldRole.rawPosition !== newRole.rawPosition) return;
 
-  const logChannel = await client.utils.resolveLogChannel(oldRole.guild.id, "role");
+  const logChannel = await client.utils.resolveLogChannel(
+    oldRole.guild.id,
+    "role"
+  );
   if (!logChannel) {
     return;
   }
@@ -54,7 +57,9 @@ export const run: RunFunction = async (client, oldRole, newRole) => {
     ? ""
     : embed.addField(
         "Color:",
-        `\`#${oldRole.color.toString(16)}\` -> \`#${newRole.color.toString(16)}\``,
+        `\`#${oldRole.color.toString(16)}\` -> \`#${newRole.color.toString(
+          16
+        )}\``,
         true
       );
   added.length

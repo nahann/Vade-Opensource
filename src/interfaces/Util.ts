@@ -1,4 +1,3 @@
-import { Bot } from "client/Client";
 import {
   Channel,
   Guild,
@@ -7,16 +6,17 @@ import {
   MessageEmbed,
   TextChannel,
   User,
-  GuildChannel
+  GuildChannel,
 } from "discord.js-light";
 import FuzzySearch from "fuse.js";
+import ms from "ms";
 
-import premium_schema from "../../src/models/premium_schema";
-import guild_schema from "../../src/models/GuildConfig/guild";
-import economy_schema from "../../src/models/economy";
-import serverset from "../../src/models/GuildConfig/ReactionRoles";
-import loggingSchema from "../../src/models/GuildConfig/Logging";
-import { client } from "./Command";
+import { Bot } from "../client/Client";
+import premium_schema from "../models/premium_schema";
+import guild_schema from "../models/GuildConfig/guild";
+import economy_schema from "../models/economy";
+import serverset from "../models/GuildConfig/ReactionRoles";
+import loggingSchema from "../models/GuildConfig/Logging";
 
 export default class Util {
   public readonly client: Bot;
@@ -26,6 +26,23 @@ export default class Util {
 
   constructor(client: Bot) {
     this.client = client;
+  }
+
+  hasVoted(user: string): boolean {
+    if (!user) {
+      throw new TypeError("You need to pass in a user ID.");
+    }
+
+    const date = this.client.userVotes[user];
+    if (!date) {
+      return false;
+    }
+
+    if (date + ms("12h") < Date.now()) {
+      delete this.client.userVotes[user];
+      return false;
+    }
+    return true;
   }
 
   // Reaction Roles
@@ -53,7 +70,7 @@ export default class Util {
       reaction: emoji,
       roleid: roleid,
     });
-    
+
     if (issame) return false;
 
     const newRR = new serverset({
@@ -187,7 +204,10 @@ export default class Util {
     return emoji.split(":").length == 1 ? false : true;
   }
 
-  async resolveLogChannel<T extends GuildChannel = TextChannel>(guildID: string, type: string): Promise<T> {
+  async resolveLogChannel<T extends GuildChannel = TextChannel>(
+    guildID: string,
+    type: string
+  ): Promise<T> {
     let data = await loggingSchema.findOne({
       type: type,
       guildID: guildID,
@@ -200,11 +220,13 @@ export default class Util {
   }
 
   formatDate(date: Date) {
-    return new Intl.DateTimeFormat('en-US').format(date);
+    return new Intl.DateTimeFormat("en-US").format(date);
   }
 
   async createLogCh(message: Message, channelid: string, type: string) {
-    const channel = await this.client.channels.fetch(channelid) as TextChannel;
+    const channel = (await this.client.channels.fetch(
+      channelid
+    )) as TextChannel;
     let fetchList = await loggingSchema.findOne({
       guildID: message.guild.id,
       type: type,
@@ -248,7 +270,10 @@ export default class Util {
       });
     }
 
-   return this.succEmbed(`${channel} has successfully been set as a log channel for \`${type}\``, message.channel);
+    return this.succEmbed(
+      `${channel} has successfully been set as a log channel for \`${type}\``,
+      message.channel
+    );
   }
 
   checkOwner(user: string) {
@@ -262,7 +287,7 @@ export default class Util {
 
     if (!toFind) {
       target = message.member;
-    } else if(!isNaN(parseInt(toFind))) {
+    } else if (!isNaN(parseInt(toFind))) {
       target = await message.guild.members.fetch(toFind);
     }
 

@@ -1,24 +1,22 @@
 {
-    "compilerOptions": {
-        "target": "es2019",
-        "moduleResolution": "node",
-        "module": "commonjs",
-        "outDir": "./dist",
-        "rootDir": "./",
-        "esModuleInterop": true,
-        "declaration": false,
-        "strict": false,
-        "forceConsistentCasingInFileNames": true,
-        "baseUrl": "./src",
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
-        "skipLibCheck": true
-    },
-    "include": [
-        "src/**/*.ts",
-        "index.ts",
-        "src/Classes/MessageClass.ts",
-        "Shard.ts"
-    ],
-    "exclude": ["node_modules"]
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["ES2020"]
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "declaration": false,
+    "strict": false,
+    "types": ["node"],
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }

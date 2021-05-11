@@ -38,7 +38,6 @@ const options: {
 };
 
 export const run: RunFunction = async (client, message, args) => {
-
   let rolesHigher = false;
   const prefix = await client.utils.resolvePrefix(message.guild.id);
   const getFlags = client.utils.getFlags;
@@ -151,9 +150,7 @@ ${prefix}${name}
               ].index
             : 0),
         flagNames.includes("H") || flagNames.includes("hard")
-          ? args.lastIndexOf(
-              [...args].reverse().find((a) => a.startsWith("-"))
-            )
+          ? args.lastIndexOf([...args].reverse().find((a) => a.startsWith("-")))
           : undefined
       )
       .filter((arg) => !/--?\w+/.test(arg))
@@ -229,7 +226,6 @@ ${prefix}${name}
         `**Banned users:**\n${members.map((m) => `${m.user.tag}`).join("\n")}`
       )
   );
-
 };
 
 export const name: string = "ban";

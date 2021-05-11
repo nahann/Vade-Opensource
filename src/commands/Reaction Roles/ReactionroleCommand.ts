@@ -146,8 +146,8 @@ export const run: RunFunction = async (client, message, args) => {
                                           errors: ["time"],
                                         })
                                         .then((collected4) => {
-                                          let option = collected4.first()
-                                            .content;
+                                          let option =
+                                            collected4.first().content;
                                           let numbers = [
                                             "1",
                                             "2",

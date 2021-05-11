@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import main_schema from "../../../models/economy";
+import main_schema from "../../../src/models/economy";
 
 export const run: RunFunction = async (client, message, args) => {
   const nf = Intl.NumberFormat();
