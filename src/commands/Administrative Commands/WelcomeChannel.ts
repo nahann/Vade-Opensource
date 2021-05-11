@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import guild_data from "../../../models/GuildConfig/guild";
+import guild_data from "../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message, args) => {
   const channel = client.utils.getChannels(args[0], message.guild);

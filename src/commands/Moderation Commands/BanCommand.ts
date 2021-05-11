@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import { GuildMember } from "discord.js";
+import { GuildMember } from "discord.js-light";
 
 const options: {
   [flag: string]: {

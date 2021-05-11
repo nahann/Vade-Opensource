@@ -1,8 +1,9 @@
 import { Bot } from "client/Client";
 import DBL from "dblapi.js";
-import { TextChannel } from "discord.js";
+import { TextChannel } from "discord.js-light";
 import ms from "ms";
-import vote_schema from "../../models/voteremind";
+
+import vote_schema from "../models/voteremind";
 
 export default (client: Bot) => {
   // Only the main Bot, can't test these on the test bot

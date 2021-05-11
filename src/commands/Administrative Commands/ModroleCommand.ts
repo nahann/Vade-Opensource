@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import guild_schema from "../../../models/GuildConfig/guild";
+import guild_schema from "../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message, args) => {
   if (message.channel.type !== "text") return;

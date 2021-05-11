@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import stickyroleSchema from "../../../models/GuildConfig/stickyroles";
+import stickyroleSchema from "../../models/GuildConfig/stickyroles";
 
 export const run: RunFunction = async (client, message, args) => {
   if (message.channel.type !== "text") return;

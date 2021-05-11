@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import moment from "moment";
-import { Permissions } from "discord.js";
+import { Permissions } from "discord.js-light";
 
 export const run: RunFunction = async (client, message, args) => {
   const roleFind = client.utils.getRoles(args[0], message.guild);

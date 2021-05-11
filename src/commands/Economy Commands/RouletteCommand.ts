@@ -1,7 +1,7 @@
 import { RunFunction } from "../../interfaces/Command";
 import ms from "ms";
-import { Message, Util } from "discord.js";
-import economySchema from "../../../models/economy";
+import { Message, Util } from "discord.js-light";
+import economySchema from "../../models/economy";
 import util from 'util';
 
 export const run: RunFunction = async (client, message, args) => {

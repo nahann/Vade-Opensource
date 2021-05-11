@@ -1,14 +1,13 @@
-import { TextChannel } from "discord.js";
+import { TextChannel } from "discord.js-light";
 import { RunFunction } from "../../interfaces/Event";
 
 export const run: RunFunction = async (client, oldRole, newRole) => {
   if (oldRole.rawPosition !== newRole.rawPosition) return;
 
-  const logChannel = await client.utils.resolveLogChannel(
-    oldRole.guild.id,
-    "role"
-  ) as TextChannel;
-  if (!logChannel) return;
+  const logChannel = await client.utils.resolveLogChannel(oldRole.guild.id, "role");
+  if (!logChannel) {
+    return;
+  }
 
   const fetchLogs = await oldRole.guild.fetchAuditLogs({
     limit: 1,
@@ -55,9 +54,7 @@ export const run: RunFunction = async (client, oldRole, newRole) => {
     ? ""
     : embed.addField(
         "Color:",
-        `\`#${oldRole.color.toString(16)}\` -> \`#${newRole.color.toString(
-          16
-        )}\``,
+        `\`#${oldRole.color.toString(16)}\` -> \`#${newRole.color.toString(16)}\``,
         true
       );
   added.length
@@ -74,6 +71,7 @@ export const run: RunFunction = async (client, oldRole, newRole) => {
         true
       )
     : "";
+
   return logChannel.send(embed);
 };
 

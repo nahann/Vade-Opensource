@@ -3,7 +3,7 @@ import constants from "../../interfaces/Constants";
 import FuzzySearch from "fuse.js";
 import { Paginate } from "@the-nerd-cave/paginate";
 import paginationEmbed from "discord.js-pagination";
-import { Collection } from "discord.js";
+import { Collection } from "discord.js-light";
 import { inspect } from "util";
 
 export const run: RunFunction = async (client, message, args) => {

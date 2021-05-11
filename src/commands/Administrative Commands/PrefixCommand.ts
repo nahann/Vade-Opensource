@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import GuildConfigSchema from "../../../models/GuildConfig/guild";
+import GuildConfigSchema from "../../models/GuildConfig/guild";
 import mongoose from "mongoose";
 
 export const run: RunFunction = async (client, message, args) => {

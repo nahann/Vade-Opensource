@@ -1,9 +1,9 @@
 import { RunFunction } from "../../interfaces/Event";
-import Db from "../../../models/GuildConfig/ReactionRoles";
-import { GuildMember, MessageReaction, User } from "discord.js";
+import Db from "../../models/GuildConfig/ReactionRoles";
+import { GuildMember, MessageReaction, User } from "discord.js-light";
 const botCooldown = new Set();
 const reactionCooldown = new Set();
-import GuildDB from "../../../models/GuildConfig/guild";
+import GuildDB from "../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, messageReaction, user) => {
   if (client.user.id === user.id) return;

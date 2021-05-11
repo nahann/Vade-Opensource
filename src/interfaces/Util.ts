@@ -7,19 +7,23 @@ import {
   MessageEmbed,
   TextChannel,
   User,
-} from "discord.js";
-
-import premium_schema from "../../models/premium_schema";
-import guild_schema from "../../models/GuildConfig/guild";
-import economy_schema from "../../models/economy";
+  GuildChannel
+} from "discord.js-light";
 import FuzzySearch from "fuse.js";
-import serverset from "../../models/GuildConfig/ReactionRoles";
-import loggingSchema from "../../models/GuildConfig/Logging";
+
+import premium_schema from "../../src/models/premium_schema";
+import guild_schema from "../../src/models/GuildConfig/guild";
+import economy_schema from "../../src/models/economy";
+import serverset from "../../src/models/GuildConfig/ReactionRoles";
+import loggingSchema from "../../src/models/GuildConfig/Logging";
 import { client } from "./Command";
+
 export default class Util {
   public readonly client: Bot;
+
   private readonly yes: string[] = ["yes", "si", "yeah", "ok", "sure"];
   private readonly no: string[] = ["no", "nope", "nada"];
+
   constructor(client: Bot) {
     this.client = client;
   }
@@ -39,8 +43,9 @@ export default class Util {
     if (!msgid) throw new TypeError("A message id was not provided.");
     if (!emoji) throw new TypeError("A reaction/emoji was not provided.");
     if (!roleid) throw new TypeError("A role id was not provided.");
-    dm = dm ? dm : false;
     if (!option) option = 1;
+
+    dm = dm ? dm : false;
 
     const issame = await serverset.findOne({
       guildID: guildId,
@@ -48,6 +53,7 @@ export default class Util {
       reaction: emoji,
       roleid: roleid,
     });
+    
     if (issame) return false;
 
     const newRR = new serverset({
@@ -181,7 +187,7 @@ export default class Util {
     return emoji.split(":").length == 1 ? false : true;
   }
 
-  async resolveLogChannel(guildID: string, type: string) {
+  async resolveLogChannel<T extends GuildChannel = TextChannel>(guildID: string, type: string): Promise<T> {
     let data = await loggingSchema.findOne({
       type: type,
       guildID: guildID,
@@ -190,7 +196,7 @@ export default class Util {
     if (!data) return null;
 
     const channel = await this.client.channels.fetch(data.channelID);
-    return channel;
+    return channel as T;
   }
 
   formatDate(date: Date) {

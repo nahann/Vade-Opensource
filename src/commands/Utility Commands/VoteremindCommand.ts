@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import main_schema from "../../../models/voteremind";
+import main_schema from "../../models/voteremind";
 
 export const run: RunFunction = async (client, message, args) => {
   const locate_schema = await main_schema.findOne({ User: message.author.id });

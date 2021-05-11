@@ -84,15 +84,10 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*":
+"@types/node@*", "@types/node@^15.0.2":
   version "15.0.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.2.tgz#51e9c0920d1b45936ea04341aa3e2e58d339fb67"
   integrity sha512-p68+a+KoxpoB47015IeYZYRrdqMUcpbK8re/zpFB8Ld46LHC1lPEbp3EXgkEhAYEcPvjJF6ZO+869SQ0aH1dcA==
-
-"@types/node@^14.14.41":
-  version "14.14.44"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.44.tgz#df7503e6002847b834371c004b372529f3f85215"
-  integrity sha512-+gaugz6Oce6ZInfI/tK4Pq5wIIkJMEJUu92RB3Eu93mtj4wjjjz9EB5mLp5s1pSsLXdC/CPut/xF20ZzAQJbTA==
 
 "@types/redis@^2.8.28":
   version "2.8.28"
@@ -265,11 +260,6 @@ binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
-
-binarytf@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/binarytf/-/binarytf-2.0.0.tgz#c5476cc5cdf023d075b9b8fa62612b86d36f666c"
-  integrity sha512-CS0MvijAFAHBBw4LgIHBP7wzdW3KWEB0KeMjblK0rHOyyhnkoMu3puW7uhJXlnS5WDn5M2XQFaQBtw00FwRfcA==
 
 bl@^2.2.1:
   version "2.2.1"
@@ -1500,15 +1490,6 @@ keyv@^3.0.0:
   integrity sha512-9ykJ/46SN/9KPM/sichzQ7OvXyGDYKGTaDlKMGCAlg2UK8KRy4jb0d8sFc+0Tt0YYnThq8X2RZgCg74RPxgcVA==
   dependencies:
     json-buffer "3.0.0"
-
-kurasuta@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/kurasuta/-/kurasuta-2.2.3.tgz#39ecf8ab131c09265516f0cf38aef686ae6050e4"
-  integrity sha512-nGjfWWq5DHU+VC5uyijgQVXnu99w4Q9GZ3hc26A09zk0PxZ2s8YFFjXM0Os7PkN7hPBUCzJY1WwE/mFlzgZ46A==
-  dependencies:
-    discord.js "^12.5.1"
-    node-fetch "^2.6.1"
-    veza "^1.1.0"
 
 latest-version@^5.0.0:
   version "5.1.0"
@@ -2931,13 +2912,6 @@ validate-npm-package-name@^3.0.0:
   integrity sha1-X6kS2B630MdK/BQN5zF/DKffQ34=
   dependencies:
     builtins "^1.0.3"
-
-veza@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/veza/-/veza-1.1.0.tgz#f1910bdfa5293cf812b01b8e033b7c216793b2ab"
-  integrity sha512-JxDVZZXwFJ+FxsX+kPdsjRK9XZdwayEYzPsPLxpZjzzgncWphjvMlzn8ioVAgeonZ/Aa7vEZOb4Hp13ergwybA==
-  dependencies:
-    binarytf "^2.0.0"
 
 which-boxed-primitive@^1.0.2:
   version "1.0.2"

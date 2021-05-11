@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import autoroleSchema from "../../../models/autoroles";
+import autoroleSchema from "../../models/autoroles";
 
 export const run: RunFunction = async (client, message, args) => {
   let embed = new client.embed().setMainColor();

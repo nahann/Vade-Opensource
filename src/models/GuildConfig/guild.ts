@@ -20,6 +20,9 @@ export interface IGuild extends mongoose.Document {
   ignoreCommands: Array<string>;
   ignoreAntiad: Array<string>;
   ignoreAutomod: Array<string>;
+  description: string;
+  colour: string;
+  footer: string;
 }
 
 const guildSchema = new mongoose.Schema({
@@ -42,6 +45,9 @@ const guildSchema = new mongoose.Schema({
   ignoreCommands: Array,
   ignoreAntiad: Array,
   ignoreAutomod: Array,
+  description: String,
+  colour: String,
+  footer: String,
 });
 
 const guilds = mongoose.model<IGuild>(`Guild`, guildSchema, "vade-guilds");

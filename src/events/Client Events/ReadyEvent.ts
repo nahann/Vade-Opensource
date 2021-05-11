@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Event";
 import SlashCommandManager from "../../Classes/SlashCommandManager";
-import { Guild, TextChannel, User, VoiceChannel } from "discord.js";
+import { Guild, TextChannel, User, VoiceChannel } from "discord.js-light";
 import { Manager } from "erela.js";
 import Spotify from "erela.js-spotify";
 import Deezer from "erela.js-deezer";

@@ -1,8 +1,8 @@
 import { RunFunction } from "../../interfaces/Event";
-import { Guild, Message } from "discord.js";
+import { Guild, Message } from "discord.js-light";
 import { Command } from "interfaces/Command";
 import ms from "ms";
-import GuildConfigSchema from "../../../models/GuildConfig/guild";
+import GuildConfigSchema from "../../models/GuildConfig/guild";
 import { promisify } from "util";
 const wait = promisify(setTimeout);
 

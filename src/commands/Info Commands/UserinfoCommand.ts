@@ -1,4 +1,4 @@
-import { GuildMember } from "discord.js";
+import { GuildMember } from "discord.js-light";
 import { RunFunction } from "../../interfaces/Command";
 import moment from "moment";
 

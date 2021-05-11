@@ -9,7 +9,7 @@ import Constants from "../interfaces/Constants";
 import Util from "../interfaces/Util";
 import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
-import Lottery from "../../Assets/Economy/Scheduled";
+import Lottery from "../utils/Scheduled";
 import { Manager } from "erela.js";
 
 const globPromise = promisify(glob);

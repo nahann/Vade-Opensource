@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import { Collection } from "discord.js";
+import { Collection } from "discord.js-light";
 import ms from "ms";
 import wordsToNumbers from "words-to-numbers-ordinal";
 

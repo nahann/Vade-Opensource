@@ -1,6 +1,6 @@
-import { GuildMember } from "discord.js";
+import { GuildMember } from "discord.js-light";
 import { RunFunction } from "../../interfaces/Command";
-import EconomySchema from "../../../models/economy";
+import EconomySchema from "../../models/economy";
 
 export const run: RunFunction = async (client, message, args) => {
   let user: GuildMember = message.member;

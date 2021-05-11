@@ -1,8 +1,8 @@
 import { RunFunction } from "../../interfaces/Event";
-import findAutorole from "../../../models/autoroles";
-import { GuildMember, TextChannel } from "discord.js";
-import Guild from "../../../models/GuildConfig/guild";
-import findStickyRole from "../../../models/GuildConfig/stickyroles";
+import findAutorole from "../../models/autoroles";
+import { GuildMember, TextChannel } from "discord.js-light";
+import Guild from "../../models/GuildConfig/guild";
+import findStickyRole from "../../models/GuildConfig/stickyroles";
 
 export const run: RunFunction = async (client, member: GuildMember) => {
   try {

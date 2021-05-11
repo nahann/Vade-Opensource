@@ -1,6 +1,6 @@
 import { Bot } from "../client/Client";
 
-import { Message, PermissionString } from "discord.js";
+import { Message, PermissionString } from "discord.js-light";
 
 export type RunFunction = (
   client: Bot,

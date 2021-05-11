@@ -1,5 +1,5 @@
 import { Bot } from "client/Client";
-import { Client, Collection } from "discord.js";
+import { Client, Collection } from "discord.js-light";
 import { readdir, stat } from "fs/promises";
 import { join } from "path";
 import {

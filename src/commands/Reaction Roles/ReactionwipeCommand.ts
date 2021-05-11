@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import ReactionRole from "../../../models/GuildConfig/ReactionRoles";
+import ReactionRole from "../../models/GuildConfig/ReactionRoles";
 
 export const run: RunFunction = async (client, message, args) => {
   if (message.channel.type !== "text") return;

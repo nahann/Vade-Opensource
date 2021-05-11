@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import { version } from "discord.js";
+import { version } from "discord.js-light";
 import { utc } from "moment";
 import os from "os";
 import ms from "ms";

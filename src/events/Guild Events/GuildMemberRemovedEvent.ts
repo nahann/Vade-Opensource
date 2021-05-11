@@ -1,7 +1,7 @@
 import { RunFunction } from "../../interfaces/Event";
-import { TextChannel, Util } from "discord.js";
-import Guild from "../../../models/GuildConfig/guild";
-import findStickyRole from "../../../models/GuildConfig/stickyroles";
+import { TextChannel, Util } from "discord.js-light";
+import Guild from "../../models/GuildConfig/guild";
+import findStickyRole from "../../models/GuildConfig/stickyroles";
 
 export const run: RunFunction = async (client, member) => {
   const locate_main_data = await Guild.findOne({ guildID: member.guild.id });
