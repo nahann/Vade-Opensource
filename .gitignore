@@ -1,6 +1,18 @@
+# IntelliJ User Settings
+.idea/
+
+# Installed NPM Modules.
+node_modules/
+
+# Transpiled typescript
+dist/
+build/
+
+# Configuration Files.
 config.json
-node_modules
-.gitignore
-package-lock.json
-yarn.lock
-dist
+
+# Environment Variables
+*.env
+
+# Log files
+*.log
