@@ -1,4 +1,4 @@
-import { Bot } from "client/Client";
+import { Bot } from "../client/Client";
 import DBL from "dblapi.js";
 import { TextChannel } from "discord.js-light";
 import ms from "ms";
