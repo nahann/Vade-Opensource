@@ -13,4 +13,5 @@ export interface Config {
   SPOTIFY_SECRET_ID: string;
   DEFAULT_VOLUME: number;
   validTypes: Array<string>;
+  validGames: Array<string>;
 }
