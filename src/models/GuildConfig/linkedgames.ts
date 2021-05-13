@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
-export interface IGuild extends mongoose.Document {
-  _id: string;
+export interface IGame extends mongoose.Document {
   guildID: string;
   roleID: string;
   gameName: string;
@@ -9,13 +8,12 @@ export interface IGuild extends mongoose.Document {
 }
 
 const guildSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
   guildID: String,
   gameName: String,
   roleID: String,
 
 });
 
-const guilds = mongoose.model<IGuild>("linked-games", guildSchema);
+const guilds = mongoose.model<IGame>("linked-games", guildSchema);
 
 export default guilds;
