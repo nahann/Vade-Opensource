@@ -1,4 +1,4 @@
-import { Bot } from "client/Client";
+import { Bot } from "../client/Client";
 import { Client, MessageEmbed } from "discord.js-light";
 
 export enum OptionType {
