@@ -11,17 +11,13 @@ export const run: RunFunction = async (client, guild) => {
     .addField(`Owner Info`, `Owner: ${owner.tag} (${guild.ownerID})`)
     .setMainColor();
 
-  const channel: TextChannel = client.guilds.cache
-    .get(client.config.MAIN_GUILD)
+  const channel: TextChannel = (await client.guilds.fetch(client.config.MAIN_GUILD))
     .channels.cache.get("796828146954534973") as TextChannel;
 
   channel.send(newGuildEmbed) ?? null;
 
   const document = await GuildSchema.findOne({ guildID: guild.id });
-  if (document) {
-    // the document already exists.
-    return;
-  }
+  if (document) return; // Maintain old data
 
   const newGuild = new GuildSchema({
     guildName: guild.name,

@@ -1,5 +1,5 @@
 import redis, { RedisClient } from "redis";
-import { redisPath } from "../../config.json";
+import { redisPath } from "../config.json";
 
 const main = async (): Promise<RedisClient> => {
   return await new Promise((resolve, reject) => {

@@ -20,7 +20,6 @@ export const run: RunFunction = async (
     if(!locate) return;
     
     for(const one of locate) {
-
       const guild = await client.guilds.fetch(one.guildID);
       if(guild) {
         const member = await guild.members.fetch(userID);
@@ -37,14 +36,12 @@ export const run: RunFunction = async (
     }
   }
 
-
-
   if (newPresence?.activities) {
     const playingActivities = newPresence.activities.filter(
       (m) => m.type === "PLAYING"
     );
 
-    const activity = playingActivities[0]; // Activity object
+    const activity = playingActivities[0]; 
     if (!activity?.name) {
       return;
     }
@@ -52,8 +49,6 @@ export const run: RunFunction = async (
     const locateSchema = await MainSchema.find({ gameName: activity.name?.toLowerCase() });
     if(!locateSchema) return;
     
-
-    console.log(`Passed "PLAYING" validation`)
 
     const valid: Array<string> = [
       "skyblock",
@@ -65,35 +60,12 @@ export const run: RunFunction = async (
       "roblox"
     ];
 
-    console.log(activity.name?.toLowerCase())
-
     if (!valid.includes(activity.name?.toLowerCase())) {
       return;
     }
 
-    //  "Playing Valorant" - Vade Community
-    // User roles + Playing Valorant
-    // Stops playing "Valorant" and they start playing "osu!", valorant role is removed, and osu role is added if configured
-
-    /* 
-        User switches to playing a game, example being "valorant",
-        Bot detects that and for every server with a role set for "valorant", it will role them as that role,
-        This can be for multiple activities.
-        */
-
-    // wtf, was it echoing?
-    // or did my audio drivers completely die
-
-
-
-
-
-
 
     for(const one of locateSchema) {
-
-      console.log(`It's here`)
-
       const guild = await client.guilds.fetch(one.guildID);
       if(guild) {
         const member = await guild.members.fetch(userID);
@@ -107,10 +79,7 @@ export const run: RunFunction = async (
                userID,
                gameName: activity.name?.toLowerCase()
              });
-
              await newSchema.save();
-             console.log(`Saved the schema`);
-
             }
           }
         }
