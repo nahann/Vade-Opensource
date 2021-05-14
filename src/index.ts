@@ -1,10 +1,6 @@
-import { ShardingManager } from "kurasuta";
+import "discord.js-light";
+import { Config } from "./interfaces/Config";
+import * as File from "./config.json";
 import { Bot } from "./client/Client";
 
-
-const sharder = new ShardingManager("./vade.js", {
-  client: Bot,
-  token: "ODAzOTY5NTEzMzM3OTEzMzk0.YBFg9Q.2_pMDwLp_gGWacHHAeWFXfxSKvM"
-})
-
-sharder.spawn();
+new Bot().start(File as Config);

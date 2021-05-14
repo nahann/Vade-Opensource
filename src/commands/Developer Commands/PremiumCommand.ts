@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import PremiumSchema from "../../../src/models/premium_schema";
+import PremiumSchema from "../../models/premium_schema";
 import { GuildMember } from "discord.js-light";
 import mongoose from "mongoose";
 

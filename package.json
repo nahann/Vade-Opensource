@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only --poll ./index.ts",
+    "start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "shard": "ts-node-dev --respawn --transpile-only --poll ./shard.ts"
   },
   "license": "MIT",

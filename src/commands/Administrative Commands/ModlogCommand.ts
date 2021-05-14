@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import createLogChannel from "../../../src/models/GuildConfig/Logging";
+import createLogChannel from "../../models/GuildConfig/Logging";
 
 export const run: RunFunction = async (client, message, args) => {
   console.log(`running`);

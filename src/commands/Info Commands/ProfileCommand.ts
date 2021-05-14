@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import MainUser from "../../../src/models/economy";
+import MainUser from "../../models/economy";
 import { Util } from "discord.js-light";
 import ms from "ms";
 

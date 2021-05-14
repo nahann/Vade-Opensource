@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import GuildConfig from "../../../src/models/GuildConfig/guild";
+import GuildConfig from "../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message, args) => {
   const locate_schema = await GuildConfig.findOne({

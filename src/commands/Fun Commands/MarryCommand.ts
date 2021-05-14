@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import mainUser from "../../../src/models/economy";
+import mainUser from "../../models/economy";
 
 export const run: RunFunction = async (client, message, args) => {
   const schemaLocate = await mainUser.findOne({ User: message.author.id });

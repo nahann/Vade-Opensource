@@ -309,7 +309,7 @@ export const run: RunFunction = async (client) => {
 
   const manager = new SlashCommandManager(client);
 
-  await manager.load("./src/slash");
+  await manager.load("./slash");
   await manager.register();
   await manager.listen();
 

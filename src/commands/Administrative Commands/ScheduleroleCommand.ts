@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import MainSchema from "../../../src/models/GuildConfig/scheduleRoles";
+import MainSchema from "../../models/GuildConfig/scheduleRoles";
 
 export const run: RunFunction = async (client, message, args) => {
   const findRoles = await MainSchema.findOne({ guildID: message.guild.id });

@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import MainGuild from "../../../src/models/GuildConfig/guild";
+import MainGuild from "../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message, args) => {
   const document = await MainGuild.findOne({ guildID: message.guild.id });
