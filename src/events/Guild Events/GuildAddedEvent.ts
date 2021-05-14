@@ -1,5 +1,6 @@
 import { RunFunction } from "../../interfaces/Event";
 import GuildSchema from "../../models/GuildConfig/guild";
+import { Types } from 'mongoose';
 
 import type { TextChannel } from "discord.js-light";
 
@@ -20,6 +21,7 @@ export const run: RunFunction = async (client, guild) => {
   if (document) return; // Maintain old data
 
   const newGuild = new GuildSchema({
+    _id: Types.ObjectId(),
     guildName: guild.name,
     guildID: guild.id,
     prefix: "!",

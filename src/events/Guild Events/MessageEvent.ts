@@ -11,12 +11,12 @@ export const run: RunFunction = async (client, message: Message) => {
   const GuildConfig = await GuildConfigSchema.findOne({
     guildID: message.guild.id,
   });
-  let prefix: string = "ts!";
+  let prefix: string = "!";
   if ((GuildConfig as any)?.prefix) {
     prefix = (GuildConfig as any).prefix;
   }
 
-  const suggestionChannelID = GuildConfig.Suggestion;
+  const suggestionChannelID = GuildConfig?.Suggestion;
 
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {
     const SuggestionEmbed = new client.embed()
@@ -101,7 +101,7 @@ export const run: RunFunction = async (client, message: Message) => {
 
       command.run(client, message, args);
       if (
-        GuildConfig.cleanCommands &&
+        GuildConfig?.cleanCommands &&
         message.guild.me.permissions.has("MANAGE_MESSAGES")
       ) {
         await wait(1000);
