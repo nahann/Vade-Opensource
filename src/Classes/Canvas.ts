@@ -13,7 +13,6 @@ export default class CanvasUtil {
     ctx.putImageData(data, x, y);
     return ctx;
   }
-
   static invert(ctx, x, y, width, height) {
     const data = ctx.getImageData(x, y, width, height);
     for (let i = 0; i < data.data.length; i += 4) {
