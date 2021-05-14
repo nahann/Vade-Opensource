@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import ms from "ms";
-import EconomySchema from "../../models/economy";
+import EconomySchema from "../../models/profile";
 
 export const run: RunFunction = async (client, message) => {
   const Profile = await EconomySchema.findOne({ User: message.author.id });

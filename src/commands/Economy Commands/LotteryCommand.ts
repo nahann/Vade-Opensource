@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import LotterySchema from "../../models/lottery";
-import economy_schema from "../../models/economy";
+import economy_schema from "../../models/profile";
 
 export const run: RunFunction = async (client, message, args) => {
   const amountToEnter = 1000;

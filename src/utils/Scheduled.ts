@@ -6,7 +6,7 @@ import { promisify } from "util";
 import { Console } from "console";
 const wait = promisify(setTimeout);
 
-import economy from "../models/economy";
+import economy from "../models/profile";
 import scheduleRoles from "../models/GuildConfig/scheduleRoles";
 import { Bot } from "../client/Client";
 

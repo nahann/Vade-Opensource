@@ -1,7 +1,7 @@
 import { RunFunction } from "../../interfaces/Command";
 import { Paginate } from "@the-nerd-cave/paginate";
 import paginationEmbed from "discord.js-pagination";
-import economy from "../../models/economy";
+import economy from "../../models/profile";
 import ms from "ms";
 
 export const run: RunFunction = async (client, message, args) => {

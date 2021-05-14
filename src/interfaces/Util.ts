@@ -14,7 +14,7 @@ import ms from "ms";
 import { Bot } from "../client/Client";
 import premium_schema from "../models/premium_schema";
 import guild_schema from "../models/GuildConfig/guild";
-import economy_schema from "../models/economy";
+import economy_schema from "../models/profile";
 import serverset from "../models/GuildConfig/ReactionRoles";
 import loggingSchema from "../models/GuildConfig/Logging";
 
@@ -98,7 +98,6 @@ export default class Util {
   }
 
   async reactionDelete(guildId, msgid: string, emoji: string) {
-    if (!this.client) throw new TypeError("An client was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!msgid) throw new TypeError("A message id was not provided.");
     if (!emoji) throw new TypeError("A reaction/emoji was not provided.");

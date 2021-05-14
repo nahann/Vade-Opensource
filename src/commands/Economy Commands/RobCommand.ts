@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import mainSchema from "../../models/economy";
+import mainSchema from "../../models/profile";
 
 export const run: RunFunction = async (client, message, args) => {
   if (message.channel.type !== "text") return;

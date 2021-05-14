@@ -1,4 +1,4 @@
-import EconomySchema from "../../models/economy";
+import EconomySchema from "../../models/profile";
 import { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {

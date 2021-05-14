@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import EconomySchema from "../../models/economy";
+import EconomySchema from "../../models/profile";
 
 export const run: RunFunction = async (client, message, args) => {
   const amount = args[0];

@@ -15,6 +15,7 @@ interface IBank extends Document {
   LastPaid: number;
   Passive: boolean;
   Partner: string;
+  MentionNotif: boolean;
 }
 
 export const bankSchema = new Schema({
@@ -76,6 +77,10 @@ export const bankSchema = new Schema({
   },
   JobSwitchTime: {
     type: Number,
+    required: false,
+  },
+  MentionNotif: {
+    type: Boolean,
     required: false,
   },
 });

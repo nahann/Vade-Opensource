@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import EconomySchema from "../../models/economy";
+import EconomySchema from "../../models/profile";
 import { Util } from "discord.js-light";
 
 export const run: RunFunction = async (client, message, args) => {

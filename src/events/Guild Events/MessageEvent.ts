@@ -1,6 +1,7 @@
 import { RunFunction } from "../../interfaces/Event";
 import { Guild, Message } from "discord.js-light";
 import { Command } from "../../interfaces/Command";
+import profile from '../../models/profile';
 import ms from "ms";
 import GuildConfigSchema from "../../models/GuildConfig/guild";
 import { promisify } from "util";
@@ -31,6 +32,26 @@ export const run: RunFunction = async (client, message: Message) => {
     message.channel.send(SuggestionEmbed).then((message) => {
       message.react("👍").then(() => message.react("👎"));
     });
+  }
+
+  if(message.mentions.users.first() && !message.content.toLowerCase().startsWith(prefix)) {
+    const check = await profile.findOne({ User: message.mentions.users.first().id });
+    if(check && check?.MentionNotif) {
+      const person = (await client.users.fetch(message.mentions.users.first().id));
+      if(person) {
+        let mentionedEmbed = new client.embed()
+        .setDescription(`You were mentioned in **${message.guild.name}** by ${message.author.tag} | (${message.author.id})\n\n *Disable these notifications by running !mentionnotif*`)
+        .setClear()
+        .setTimestamp()
+        .setFooter(`Vade Mention Notifications`, client.user.displayAvatarURL())
+        .setThumbnail(client.user.displayAvatarURL());
+
+        await person.send(mentionedEmbed).catch(() => {
+          console.log(`Unable to send ${person.tag} their mention notification.`);
+        });
+
+      }
+    }
   }
 
   if (!message.content.toLowerCase().startsWith(prefix)) return;
