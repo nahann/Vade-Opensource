@@ -333,7 +333,7 @@ export const run: RunFunction = async (client) => {
 
   client.guilds.cache.forEach(async (guild) => {
     if (guild.me.permissions.has("ADMINISTRATOR")) {
-      let invites = await guild.fetchInvites();
+      let invites = await guild.fetchInvites(); // Fetch invites for guilds that it has perms to do so
       if (invites) client.invites.set(guild.id, invites);
     }
   });
