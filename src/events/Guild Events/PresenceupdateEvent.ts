@@ -11,7 +11,6 @@ export const run: RunFunction = async (
   oldPresence: Presence,
   newPresence: Presence
 ) => {
-
   const userID = newPresence.user.id;
   const check = await peoplePlaying.findOne({ userID });
 
