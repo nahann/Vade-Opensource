@@ -19,6 +19,7 @@ import profile from '../../models/profile';
 
     } else {
         const newProf = new profile({
+            User: message.author.id,
             Wallet: 0,
             Bank: 0,
             Language: args[0]?.toLowerCase()
