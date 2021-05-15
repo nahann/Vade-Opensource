@@ -20,7 +20,6 @@ export const run: RunFunction = async (client, message: Message) => {
   const suggestionChannelID = GuildConfig?.Suggestion;
   const checkProfile = await profile.findOne({ User: message.author.id });
   let lang = checkProfile?.Language ?? 'en';
-  console.log(lang)
   
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {
     const SuggestionEmbed = new client.embed()

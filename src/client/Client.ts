@@ -16,7 +16,7 @@ import path from "path";
 
 const i18n = new I18n({
   locales: ['en', 'ro'],
-  directory: path.join(__dirname, '../../Assets/locales'),
+  directory: path.join(__dirname, '../Locales'),
   objectNotation: true,
   defaultLocale: 'en'
 })
