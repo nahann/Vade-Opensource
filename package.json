@@ -4,7 +4,10 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
-    "shard": "ts-node-dev --respawn --transpile-only --poll ./shard.ts"
+    "shard": "ts-node-dev --respawn --transpile-only --poll ./src/sharder.ts"
+  },
+  "_moduleAliases": {
+    "@lib": "dist/lib"
   },
   "license": "MIT",
   "dependencies": {
@@ -14,6 +17,7 @@
     "@the-nerd-cave/paginate": "^1.1.1",
     "alpha-sort": "^5.0.0",
     "canvas": "^2.7.0",
+    "cluster": "^0.7.7",
     "consola": "^2.15.3",
     "custom-translate": "^2.2.8",
     "dblapi.js": "^2.4.1",
@@ -35,6 +39,7 @@
     "koa-body": "^4.2.0",
     "kurasuta": "^2.2.3",
     "libnpmsearch": "^3.1.0",
+    "module-alias": "^2.2.2",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "mongoose": "^5.12.8",

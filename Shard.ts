@@ -1,7 +1,7 @@
-import config from "./config.json";
+import config from "./src/config.json";
 import { ShardingManager } from "discord.js-light";
 
-const shard = new ShardingManager("./index.ts", {
+const shard = new ShardingManager("./index.js", {
   token: config.token,
   totalShards: "auto",
 });

@@ -1,37 +1,19 @@
-import { SharderEvents, ShardingManager } from "kurasuta";
-import { join } from 'path';
-import djs from 'discord.js-light';
+import "module-alias/register";
 
-const sharder = new ShardingManager(join(__dirname, 'vade.ts'), {
-client: djs.Client,
-clientOptions: {
-  ws: { intents: djs.Intents.ALL },
-  partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"],
-  messageCacheLifetime: 180,
-  messageCacheMaxSize: 200,
-  messageEditHistoryMaxSize: 200,
-  messageSweepInterval: 180,
-  restTimeOffset: 0,
-  cacheGuilds: true,
-  cacheChannels: true,
-  cacheOverwrites: false,
-  cacheRoles: true,
-  cacheEmojis: true,
-  cachePresences: true,
-},
-shardCount: 1,
-guildsPerShard: 100,
-retry: true,
-respawn: true,
-development: true
-})
+import { Bot } from "./client/Client";
+import { ShardingManager } from "kurasuta";
+import { isMaster } from "cluster";
+import { join } from "path";
 
-sharder.spawn();
+const main = async () => {
+  const sharder = new ShardingManager(join(__dirname, './vade.ts'), {
+    client: Bot,
+    token: "ODAzOTY5NTEzMzM3OTEzMzk0.YBFg9Q.2_pMDwLp_gGWacHHAeWFXfxSKvM",
+  });
 
-process.on("SIGINT", signal => {
-  sharder.clusters.forEach(shard => {
-      console.warn("[Kurasuta] [Shutdown] Destroying shard " + shard.id)
-      shard.kill()
-  })
-  process.exit()
-})
+  await sharder.spawn();
+};
+
+if (isMaster) {
+  void main();
+}
