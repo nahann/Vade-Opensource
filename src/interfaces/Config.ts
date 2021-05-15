@@ -14,4 +14,5 @@ export interface Config {
   DEFAULT_VOLUME: number;
   validTypes: Array<string>;
   validGames: Array<string>;
+  supportedLang: Array<string>;
 }

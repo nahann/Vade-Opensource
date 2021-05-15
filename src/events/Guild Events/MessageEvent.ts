@@ -18,7 +18,10 @@ export const run: RunFunction = async (client, message: Message) => {
   }
 
   const suggestionChannelID = GuildConfig?.Suggestion;
-
+  const checkProfile = await profile.findOne({ User: message.author.id });
+  let lang = checkProfile?.Language ?? 'en';
+  console.log(lang)
+  
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {
     const SuggestionEmbed = new client.embed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
@@ -120,7 +123,7 @@ export const run: RunFunction = async (client, message: Message) => {
 
       // }
 
-      command.run(client, message, args);
+      command.run(client, message, args, lang);
       if (
         GuildConfig?.cleanCommands &&
         message.guild.me.permissions.has("MANAGE_MESSAGES")

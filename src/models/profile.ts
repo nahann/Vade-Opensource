@@ -1,3 +1,4 @@
+import { string } from "joi";
 import { Document, Model, model, models, Schema } from "mongoose";
 
 interface IBank extends Document {
@@ -16,6 +17,7 @@ interface IBank extends Document {
   Passive: boolean;
   Partner: string;
   MentionNotif: boolean;
+  Language: string;
 }
 
 export const bankSchema = new Schema({
@@ -83,6 +85,10 @@ export const bankSchema = new Schema({
     type: Boolean,
     required: false,
   },
+  Language: {
+    type: String,
+    required: false
+  }
 });
 
 const bank =

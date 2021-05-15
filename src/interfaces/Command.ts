@@ -5,7 +5,8 @@ import { Message, PermissionString } from "discord.js-light";
 export type RunFunction = (
   client: Bot,
   message: Message,
-  args: string[]
+  args: string[],
+  lang: string
 ) => Promise<unknown> | unknown;
 
 export interface Command {

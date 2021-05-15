@@ -11,6 +11,15 @@ import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
 import Lottery from "../utils/Scheduled";
 import { Manager } from "erela.js";
+import { I18n } from 'i18n';
+import path from "path";
+
+const i18n = new I18n({
+  locales: ['en', 'ro'],
+  directory: path.join(__dirname, '../../Assets/locales'),
+  objectNotation: true,
+  defaultLocale: 'en'
+})
 
 const globPromise = promisify(glob);
 
@@ -35,6 +44,11 @@ class Bot extends Client {
   public react: Map<string, Object> = new Map();
   public fetchforguild: Map<string, Object> = new Map();
   public userVotes: Record<string, number> = {};
+  public i18n = i18n;
+
+  public get translate() {
+    return this.i18n.__;
+  }
 
   public constructor() {
     super({

@@ -1,5 +1,10 @@
 {
-    "help": {
-        "description": "A list of all available commands."
-    }
+	"help": {
+		"description": "A list of all available commands."
+	},
+	"language": {
+		"invalid": "That is not a valid language, please select from",
+		"success": "Successfully changed your configured language to"
+	}
+	
 }
