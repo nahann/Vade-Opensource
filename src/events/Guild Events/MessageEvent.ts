@@ -134,13 +134,16 @@ export const run: RunFunction = async (client, message: Message) => {
             reason: "Clean Commands are enabled.",
           });
       }
-      client.cooldowns.set(
-        `${message.author.id}-${command.name}`,
-        Date.now() + command.cooldown
-      );
-      setTimeout(() => {
-        client.cooldowns.delete(`${message.author.id}-${command.name}`);
-      }, command.cooldown);
+      if(!client.owners.includes(message.author.id)) {
+        client.cooldowns.set(
+          `${message.author.id}-${command.name}`,
+          Date.now() + command.cooldown
+        );
+        setTimeout(() => {
+          client.cooldowns.delete(`${message.author.id}-${command.name}`);
+        }, command.cooldown);
+      }
+    
     } catch (e) {
       message.channel.send(
         new client.embed()
