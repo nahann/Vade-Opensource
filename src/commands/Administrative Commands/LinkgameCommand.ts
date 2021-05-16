@@ -15,7 +15,22 @@ import MainSchema from '../../models/GuildConfig/linkedgames';
     const checkPremium = await client.utils.checkPremium(message.guild.ownerID);
     if(LocateAll && LocateAll.length >= 3 && !checkPremium) return message.channel.send(`The guild owner must own Vade Premium to link more than 3 games.`);
     console.log(args[0]);
-    if(!args[0]) return client.utils.sendError(`You need to provide a valid role.`, message.channel);
+    if(!args[0]) return client.utils.sendError(`You need to provide a valid role or specify "remove!.`, message.channel);
+    if(args[0].toLowerCase() === 'remove') {
+
+
+      if(!args[1]) return client.utils.sendError(`You need to provide a role name, mention or ID.`, message.channel);
+      const role = client.utils.getRoles(args[1], message.guild);
+      if(!role) return client.utils.sendError(`You need to provide a valid role.`, message.channel);
+
+      const checkValid = LocateAll.find((m) => m.roleID === role.id);
+      if(!checkValid) return client.utils.sendError(`That role is not linked to a game.`, message.channel);
+      await checkValid.delete();
+
+      return client.utils.succEmbed(`Successfully removed that binding.`, message.channel);
+
+
+    }
     const role = client.utils.getRoles(args[0], message.guild);
     if(!role) return client.utils.sendError(`You need to provide a valid role.`, message.channel);
 
