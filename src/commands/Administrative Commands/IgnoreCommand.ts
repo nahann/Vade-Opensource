@@ -110,5 +110,4 @@ export const name: string = "ignore";
 export const category: string = "Administrative";
 export const description: string =
   "Have the Bot ignore the specified message types in a certain channel.";
-export const aliases: string[] = [""];
 export const userPerms: string[] = ["MANAGE_GUILD"];

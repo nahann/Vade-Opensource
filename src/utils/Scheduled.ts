@@ -3,7 +3,6 @@ import lotterySchema from "../models/lottery";
 import { TextChannel } from "discord.js-light";
 import ms from "ms";
 import { promisify } from "util";
-import { Console } from "console";
 const wait = promisify(setTimeout);
 
 import economy from "../models/profile";
