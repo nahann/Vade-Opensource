@@ -97,6 +97,30 @@ export default class Util {
     return newRR;
   }
 
+  async reactIfAble(msg, user: User, emoji, fallbackEmoji) {
+    const dm = !msg.guild;
+    if (
+      fallbackEmoji &&
+      !dm &&
+      !msg.channel.permissionsFor(user).has("USE_EXTERNAL_EMOJIS")
+    ) {
+      emoji = fallbackEmoji;
+    }
+    if (
+      dm ||
+      msg.channel
+        .permissionsFor(user)
+        .has(["ADD_REACTIONS", "READ_MESSAGE_HISTORY"])
+    ) {
+      try {
+        await msg.react(emoji);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+
   async reactionDelete(guildId, msgid: string, emoji: string) {
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!msgid) throw new TypeError("A message id was not provided.");
