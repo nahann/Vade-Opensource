@@ -7,7 +7,6 @@ import MainSchema from '../../models/GuildConfig/linkedgames';
     const text = args.join(" ");
 
     const regex = text.match(/"[^"]+"|[\\S]+"[^"]+/g);
-    console.log(regex)
    
     if(!regex || !regex.length || regex.length > 1 || !client.config.validGames.includes(regex[0]?.replace(/"/g, "")?.toLowerCase())) return client.utils.sendError(`You need to provide a valid game. For example: !linkgame @role "Valorant". Valid games:\n ${client.config.validGames.join("\n")}`, message.channel);
 
