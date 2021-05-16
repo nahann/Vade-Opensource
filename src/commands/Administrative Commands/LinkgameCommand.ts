@@ -14,7 +14,6 @@ import MainSchema from '../../models/GuildConfig/linkedgames';
     const LocateAll = await MainSchema.find({ guildID: message.guild.id });
     const checkPremium = await client.utils.checkPremium(message.guild.ownerID);
     if(LocateAll && LocateAll.length >= 3 && !checkPremium) return message.channel.send(`The guild owner must own Vade Premium to link more than 3 games.`);
-    console.log(args[0]);
     if(!args[0]) return client.utils.sendError(`You need to provide a valid role or specify "remove!.`, message.channel);
     if(args[0].toLowerCase() === 'remove') {
 
