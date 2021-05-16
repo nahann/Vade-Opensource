@@ -7,7 +7,6 @@
 		"success": "Successfully changed your configured language to"
 	},
 	"slots": {
-		"notEnough": "You don't have enough in your Wallet to play a game of slots!",
 		"newBal": "New Balance",
 		"lowerBet": "The minimum bet you can make is",
 		"higherBet": "The maximum bet you can make is"

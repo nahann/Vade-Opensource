@@ -2,7 +2,6 @@ import { Bot } from "../client/Client";
 import DBL from "dblapi.js";
 import { TextChannel } from "discord.js-light";
 import ms from "ms";
-import fetch from "node-fetch";
 import p from "phin";
 
 import vote_schema from "../models/voteremind";
@@ -62,6 +61,14 @@ export default (client: Bot) => {
   }
 
   // both bots
+
+
+
+
+
+
+
+  
 };
 
 export async function remindToVote(bot: Bot, userId: string) {
