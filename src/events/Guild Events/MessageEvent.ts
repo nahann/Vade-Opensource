@@ -17,8 +17,6 @@ export const run: RunFunction = async (client, message: Message) => {
   if ((GuildConfig as any)?.prefix) {
     mainPrefix = (GuildConfig as any).prefix;
   }
-
-  const mentionRegex = RegExp(`^<@!?${client.user.id}>( |)$`);
   const mentionRegexPrefix = RegExp(`^<@!?${client.user.id}>`);
 
   let prefix = message.content.match(mentionRegexPrefix)
