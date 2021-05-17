@@ -313,6 +313,7 @@ export default class Util {
     } else if (!isNaN(parseInt(toFind))) {
       target = await message.guild.members.fetch(toFind);
     }
+    
 
     if (!target && message.mentions.members)
       target = message.mentions.members.first();
