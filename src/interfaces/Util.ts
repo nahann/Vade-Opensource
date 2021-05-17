@@ -336,7 +336,7 @@ export default class Util {
       });
     }
 
-    if(target.id === this.client.user.id) {
+    if(target && target.id === this.client.user.id) {
       if(msg) {
        message.channel.send({
         embed: {
