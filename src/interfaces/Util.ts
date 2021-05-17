@@ -336,6 +336,21 @@ export default class Util {
       });
     }
 
+    if(target.id === this.client.user.id) {
+      if(msg) {
+       message.channel.send({
+        embed: {
+          description: "You cannot use commands on me!",
+          color: "RED",
+        },
+      });
+
+    } else {
+      return null;
+    }
+
+    }
+
     return target;
   }
 
