@@ -92,6 +92,8 @@ class Bot extends Client {
         premiumOnly: false,
         devOnly: false,
         guildOnly: false,
+        NSFW: false,
+        voteRequired: false,
         ...file,
       });
       this.categories.add(file.category || "Miscellaneous");

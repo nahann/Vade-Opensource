@@ -9,13 +9,21 @@ const wait = promisify(setTimeout);
 
 export const run: RunFunction = async (client, message: Message) => {
   if (message.author.bot || !message.guild) return;
+  if(message.channel.type !== 'text') return;
   const GuildConfig = await GuildConfigSchema.findOne({
     guildID: message.guild.id,
   });
-  let prefix: string = "!";
+  let mainPrefix: string = "!";
   if ((GuildConfig as any)?.prefix) {
-    prefix = (GuildConfig as any).prefix;
+    mainPrefix = (GuildConfig as any).prefix;
   }
+
+  const mentionRegex = RegExp(`^<@!?${client.user.id}>( |)$`);
+  const mentionRegexPrefix = RegExp(`^<@!?${client.user.id}>`);
+
+  let prefix = message.content.match(mentionRegexPrefix)
+  ? message.content.match(mentionRegexPrefix)[0]
+  : mainPrefix;
 
   const suggestionChannelID = GuildConfig?.Suggestion;
   const checkProfile = await profile.findOne({ User: message.author.id });
@@ -117,6 +125,10 @@ export const run: RunFunction = async (client, message: Message) => {
           `This Command requires you to be a Vade Developer!`
         );
       }
+
+      // if (command.NSFW && !message.channel.nsfw) {
+      //   return client.utils.sendError(`This Command can only be ran in an NSFW Channel!`, message.channel)
+      // }
 
       // if(command.voteRequired && !hasVoted) {
 

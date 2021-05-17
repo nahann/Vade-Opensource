@@ -25,6 +25,7 @@ export interface Command {
   devOnly?: boolean;
   guildOnly?: boolean;
   voteRequired?: boolean;
+  NSFW?: boolean;
 }
 
 export const client = Bot;
