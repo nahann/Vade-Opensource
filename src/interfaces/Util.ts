@@ -310,7 +310,7 @@ export default class Util {
 
     if (!toFind) {
       target = message.member;
-    } else if (!isNaN(parseInt(toFind))) {
+    } else if (!Number.isNaN(+toFind)) {
       target = await message.guild.members.fetch(toFind);
     }
 
@@ -326,6 +326,7 @@ export default class Util {
         );
       });
     }
+
 
     if (!target && msg) {
       message.channel.send({

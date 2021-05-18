@@ -6,7 +6,7 @@ export const run: RunFunction = async (client, message, args) => {
     case "add": {
         if(!client.utils.checkOwner(message.author.id)) return client.utils.sendError(`This sub command requires you to be a Vade Developer.`, message.channel);
 
-      const reason = args.slice(2).join(" ") ?? "No reason provided.";
+      const reason = args.slice(2).join(" ").length ? args.slice(2).join(" ") : "No reason provided.";
 
       const member = await client.utils.getMember(message, args[1], true);
       if (!member) return;
@@ -34,19 +34,24 @@ export const run: RunFunction = async (client, message, args) => {
     }
 
     default: {
-      const locateAll = await Schema.find({});
+      const locateAll = await Schema.find({ });
       if (!locateAll.length)
         return client.utils.sendError(
           `Nobody is currently Blacklisted from the Bot.`,
           message.channel
         );
+
+        const mapped = await Promise.all(locateAll.map(async (x) => `**__${(await client.users.fetch(x.User)).tag}__**\n${x.Reason}\n`));
+
+
       const listEmbed = new client.embed()
         .setTitle(`Vade Blacklist`)
         .setDescription(
-          `${locateAll
-            .filter((x) => x.Active)
-            .map(async (x) => `**__${(await client.users.fetch(x.User)).tag}__**\nReason: ${x.Reason ?? 'No reason provided.'}`).join("\n\n")}`
-        );
+          mapped
+        )
+        .setClear()
+        .setTimestamp()
+        .setFooter(`Vade Blacklist`, client.user.displayAvatarURL())
 
         return message.channel.send(listEmbed);
     }
