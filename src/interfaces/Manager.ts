@@ -35,11 +35,11 @@ export default (client: Bot) => {
         url: `https://top.gg/api/bots/${client.user.id}/stats`,
         method: "post",
         data: JSON.stringify({
-          server_count: client.guilds.cache.size
+          server_count: client.guilds.cache.size,
         }),
         headers: {
-          Authorization: client.config.TOPGG_AUTH 
-        }
+          Authorization: client.config.TOPGG_AUTH,
+        },
       });
 
       /* vote reminders */
@@ -50,7 +50,9 @@ export default (client: Bot) => {
           const person = client.users.cache.get(schema.User);
 
           if (schema.Time < Date.now())
-            await person.send(`You can vote again on Top.gg! Vote here: https://top.gg/bot/782309258620305438 Reminder: You can disable reminders via \`!votereminder disable\`.`);
+            await person.send(
+              `You can vote again on Top.gg! Vote here: https://top.gg/bot/782309258620305438 Reminder: You can disable reminders via \`!votereminder disable\`.`
+            );
 
           await schema.updateOne({
             Messaged: true,
@@ -61,14 +63,6 @@ export default (client: Bot) => {
   }
 
   // both bots
-
-
-
-
-
-
-
-  
 };
 
 export async function remindToVote(bot: Bot, userId: string) {
@@ -79,7 +73,9 @@ export async function remindToVote(bot: Bot, userId: string) {
     .channels.cache.get("795711027567263846") as TextChannel;
 
   bot.logger.success(`User with ID ${userId} just voted on top.gg!`);
-  voteLogs.send(`<@${userId}> just voted for the Bot on top.gg! (ID: **${userId}**)`);
+  voteLogs.send(
+    `<@${userId}> just voted for the Bot on top.gg! (ID: **${userId}**)`
+  );
 
   const voteSchema = await vote_schema.findOne({ User: userId });
   if (!voteSchema) {
@@ -92,7 +88,9 @@ export async function remindToVote(bot: Bot, userId: string) {
 
     await newVoteSchema.save();
     const user = bot.users.cache.get(userId);
-    return user.send(`Thanks for voting for the Bot on top.gg! You will be reminded in 12 hours when you can vote again! To disable reminders simply run the Command \`!voteremind disable\`.`);
+    return user.send(
+      `Thanks for voting for the Bot on top.gg! You will be reminded in 12 hours when you can vote again! To disable reminders simply run the Command \`!voteremind disable\`.`
+    );
   } else {
     await voteSchema.updateOne({
       Time: dateCanVote,

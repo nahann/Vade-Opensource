@@ -1,7 +1,7 @@
 import { RunFunction } from "../../interfaces/Event";
 import { Guild, Message } from "discord.js-light";
 import { Command } from "../../interfaces/Command";
-import profile from '../../models/profile';
+import profile from "../../models/profile";
 import ms from "ms";
 import GuildConfigSchema from "../../models/GuildConfig/guild";
 import { promisify } from "util";
@@ -9,7 +9,7 @@ const wait = promisify(setTimeout);
 
 export const run: RunFunction = async (client, message: Message) => {
   if (message.author.bot || !message.guild) return;
-  if(message.channel.type !== 'text') return;
+  if (message.channel.type !== "text") return;
   const GuildConfig = await GuildConfigSchema.findOne({
     guildID: message.guild.id,
   });
@@ -20,13 +20,13 @@ export const run: RunFunction = async (client, message: Message) => {
   const mentionRegexPrefix = RegExp(`^<@!?${client.user.id}>`);
 
   let prefix = message.content.match(mentionRegexPrefix)
-  ? message.content.match(mentionRegexPrefix)[0]
-  : mainPrefix;
+    ? message.content.match(mentionRegexPrefix)[0]
+    : mainPrefix;
 
   const suggestionChannelID = GuildConfig?.Suggestion;
   const checkProfile = await profile.findOne({ User: message.author.id });
-  let lang = checkProfile?.Language ?? 'en';
-  
+  let lang = checkProfile?.Language ?? "en";
+
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {
     const SuggestionEmbed = new client.embed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
@@ -42,22 +42,35 @@ export const run: RunFunction = async (client, message: Message) => {
     });
   }
 
-  if(message.mentions.users.first() && !message.content.toLowerCase().startsWith(prefix)) {
-    const check = await profile.findOne({ User: message.mentions.users.first().id });
-    if(check && check?.MentionNotif) {
-      const person = (await client.users.fetch(message.mentions.users.first().id));
-      if(person) {
+  if (
+    message.mentions.users.first() &&
+    !message.content.toLowerCase().startsWith(prefix)
+  ) {
+    const check = await profile.findOne({
+      User: message.mentions.users.first().id,
+    });
+    if (check && check?.MentionNotif) {
+      const person = await client.users.fetch(
+        message.mentions.users.first().id
+      );
+      if (person) {
         let mentionedEmbed = new client.embed()
-        .setDescription(`You were mentioned in **${message.guild.name}** by ${message.author.tag} | (${message.author.id})\n\n *Disable these notifications by running !mentionnotif*`)
-        .setClear()
-        .setTimestamp()
-        .setFooter(`Vade Mention Notifications`, client.user.displayAvatarURL())
-        .setThumbnail(client.user.displayAvatarURL());
+          .setDescription(
+            `You were mentioned in **${message.guild.name}** by ${message.author.tag} | (${message.author.id})\n\n *Disable these notifications by running !mentionnotif*`
+          )
+          .setClear()
+          .setTimestamp()
+          .setFooter(
+            `Vade Mention Notifications`,
+            client.user.displayAvatarURL()
+          )
+          .setThumbnail(client.user.displayAvatarURL());
 
         await person.send(mentionedEmbed).catch(() => {
-          console.log(`Unable to send ${person.tag} their mention notification.`);
+          console.log(
+            `Unable to send ${person.tag} their mention notification.`
+          );
         });
-
       }
     }
   }
@@ -144,7 +157,7 @@ export const run: RunFunction = async (client, message: Message) => {
             reason: "Clean Commands are enabled.",
           });
       }
-      if(!client.owners.includes(message.author.id)) {
+      if (!client.owners.includes(message.author.id)) {
         client.cooldowns.set(
           `${message.author.id}-${command.name}`,
           Date.now() + command.cooldown
@@ -153,7 +166,6 @@ export const run: RunFunction = async (client, message: Message) => {
           client.cooldowns.delete(`${message.author.id}-${command.name}`);
         }, command.cooldown);
       }
-    
     } catch (e) {
       message.channel.send(
         new client.embed()

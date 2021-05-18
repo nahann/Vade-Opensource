@@ -1,15 +1,13 @@
 {
-    "ping": "Verificam pingul botului",
-    "language": {
-        "invalid": "Aceasta limba nu este valida, va rugam sa alegeti din",
-        "success": "limba configurata a fost modificata cu succes in"
-    },
-    "slots": {
-        "notEnough": "Nu aveti destul in portmoneul vostru pentru a va juca game of slots",
-        "newBal": "Balanta noua",
-		"lowerBet": "Poti paria minim",
-		"higherBet": "Poti paria maxim"
-    }
-   
+  "ping": "Verificam pingul botului",
+  "language": {
+    "invalid": "Aceasta limba nu este valida, va rugam sa alegeti din",
+    "success": "limba configurata a fost modificata cu succes in"
+  },
+  "slots": {
+    "notEnough": "Nu aveti destul in portmoneul vostru pentru a va juca game of slots",
+    "newBal": "Balanta noua",
+    "lowerBet": "Poti paria minim",
+    "higherBet": "Poti paria maxim"
+  }
 }
-

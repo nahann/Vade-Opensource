@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Event";
 import GuildSchema from "../../models/GuildConfig/guild";
-import { Types } from 'mongoose';
+import { Types } from "mongoose";
 
 import type { TextChannel } from "discord.js-light";
 
@@ -10,11 +10,12 @@ export const run: RunFunction = async (client, guild) => {
     .setTitle(`Added to a Server!`)
     .addField(`Guild`, `Guild Name: ${guild.name} (${guild.id})`)
     .addField(`Owner Info`, `Owner: ${owner.tag} (${guild.ownerID})`)
-  .addField(`Member Info`, `${guild.memberCount} Members!`)
+    .addField(`Member Info`, `${guild.memberCount} Members!`)
     .setMainColor();
 
-  const channel: TextChannel = (await client.guilds.fetch(client.config.MAIN_GUILD))
-    .channels.cache.get("796828146954534973") as TextChannel;
+  const channel: TextChannel = (
+    await client.guilds.fetch(client.config.MAIN_GUILD)
+  ).channels.cache.get("796828146954534973") as TextChannel;
 
   channel.send(newGuildEmbed) ?? null;
 

@@ -1,20 +1,20 @@
 {
-    "muteCommand": {
-        "success": "{{user}} estaba silenciado para {{time}}",
-        "error": "hubo error cuando tratando a silenciar ${user}"
-    },
-    "kickCommand": {
-        "success": "{{users}} estaba eliminada con éxito del servidor!",
-        "error": "hubo error cuando tratando a eliminar ${user}!"
-    },
-    "banCommand": {
-        "success": "{{users}} estaba prohibida con éxito del servidor!",
-        "error": "hubo error cuando tratando a banear ${user}!"
-    },
-    "slots": {
-        "notEnough": "no tienes suficiente dinero en tu billetera para jugar tragamonedas!",
-        "newBal": "nuevo saldo total",
-        "lowerBet": "la cantidad mínima que puedes apostar es",
-        "higherBet": "la cantidad máxima que puede apostar es"
-    }
+  "muteCommand": {
+    "success": "{{user}} estaba silenciado para {{time}}",
+    "error": "hubo error cuando tratando a silenciar ${user}"
+  },
+  "kickCommand": {
+    "success": "{{users}} estaba eliminada con éxito del servidor!",
+    "error": "hubo error cuando tratando a eliminar ${user}!"
+  },
+  "banCommand": {
+    "success": "{{users}} estaba prohibida con éxito del servidor!",
+    "error": "hubo error cuando tratando a banear ${user}!"
+  },
+  "slots": {
+    "notEnough": "no tienes suficiente dinero en tu billetera para jugar tragamonedas!",
+    "newBal": "nuevo saldo total",
+    "lowerBet": "la cantidad mínima que puedes apostar es",
+    "higherBet": "la cantidad máxima que puede apostar es"
+  }
 }

@@ -11,15 +11,15 @@ import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
 import Lottery from "../utils/Scheduled";
 import { Manager } from "erela.js";
-import { I18n } from 'i18n';
+import { I18n } from "i18n";
 import path from "path";
 
 const i18n = new I18n({
-  locales: ['en', 'ro'],
-  directory: path.join(__dirname, '../Locales'),
+  locales: ["en", "ro"],
+  directory: path.join(__dirname, "../Locales"),
   objectNotation: true,
-  defaultLocale: 'en'
-})
+  defaultLocale: "en",
+});
 
 const globPromise = promisify(glob);
 

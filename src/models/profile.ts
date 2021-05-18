@@ -87,8 +87,8 @@ export const bankSchema = new Schema({
   },
   Language: {
     type: String,
-    required: false
-  }
+    required: false,
+  },
 });
 
 const bank =

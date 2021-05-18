@@ -313,7 +313,6 @@ export default class Util {
     } else if (!isNaN(parseInt(toFind))) {
       target = await message.guild.members.fetch(toFind);
     }
-    
 
     if (!target && message.mentions.members)
       target = message.mentions.members.first();
@@ -337,19 +336,17 @@ export default class Util {
       });
     }
 
-    if(target && target.id === this.client.user.id) {
-      if(msg) {
-       message.channel.send({
-        embed: {
-          description: "You cannot use commands on me!",
-          color: "RED",
-        },
-      });
-
-    } else {
-      return null;
-    }
-
+    if (target && target.id === this.client.user.id) {
+      if (msg) {
+        message.channel.send({
+          embed: {
+            description: "You cannot use commands on me!",
+            color: "RED",
+          },
+        });
+      } else {
+        return null;
+      }
     }
 
     return target;

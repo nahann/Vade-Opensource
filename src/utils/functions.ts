@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 export type Dictionary<V = any> = Record<string, V>;
 
@@ -7,7 +7,7 @@ export type Dictionary<V = any> = Record<string, V>;
  * Test whether or not a value is an object.
  * @param value
  */
- export function isObj(value: unknown): value is Dictionary {
+export function isObj(value: unknown): value is Dictionary {
   return typeof value === "object" && doesExist(value);
 }
 

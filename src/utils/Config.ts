@@ -13,11 +13,11 @@ export namespace config {
   export function load() {
     const path = join(process.cwd(), "config.json");
     if (!existsSync(path)) {
-      log.error("Config file is missing.")
+      log.error("Config file is missing.");
       return process.exit(1);
     }
 
-    access(path, constants.F_OK, err => {
+    access(path, constants.F_OK, (err) => {
       if (err) {
         log.error(`Cannot read contents of "${basename(path)}"`);
         log.error(err);
@@ -30,7 +30,9 @@ export namespace config {
     try {
       _data = JSON.parse(data);
     } catch (err) {
-      log.error(`Error occurred while parsing the contents of "${basename(path)}"`);
+      log.error(
+        `Error occurred while parsing the contents of "${basename(path)}"`
+      );
       process.exit(1);
     }
   }

@@ -5,12 +5,11 @@ import { APIGatewayBotInfo } from "discord-api-types/v8";
 import { Consola } from "consola";
 
 export class VadeSharder {
-
   static DEFAULTS: VadeSharderOptions = {
     clusterSize: 2,
     clusters: cpus().length,
-    shards: "auto"
-  }
+    shards: "auto",
+  };
 
   /**
    * The token used by each shard.
@@ -34,7 +33,11 @@ export class VadeSharder {
 
   private readonly log: Consola = new Consola({});
 
-  constructor(token: string, file: string, options: Partial<VadeSharderOptions> = {}) {
+  constructor(
+    token: string,
+    file: string,
+    options: Partial<VadeSharderOptions> = {}
+  ) {
     this.options = Object.assign(options, VadeSharder.DEFAULTS);
     this.token = token;
     this.file = file;
@@ -50,11 +53,11 @@ export class VadeSharder {
         this.shardCount = discordRecommended;
       }
 
-      this.log.debug(`Starting ${this.shardCount} shards in ${this.options.clusters} clusters.`);
-      
-      const shards = Array.from({ length: this.shardCount }, (_, i) => i);
-      
+      this.log.debug(
+        `Starting ${this.shardCount} shards in ${this.options.clusters} clusters.`
+      );
 
+      const shards = Array.from({ length: this.shardCount }, (_, i) => i);
     } else {
       // TODO: start cluster.
     }
@@ -66,18 +69,17 @@ export class VadeSharder {
   async fetchGatewayInfo(): Promise<APIGatewayBotInfo> {
     const { body } = await phin<APIGatewayBotInfo>({
       url: "https://discord.com/api/v9/gateway/bot",
-      parse: "json"
+      parse: "json",
     });
 
     return body;
   }
-
 }
 
 interface VadeSharderOptions {
   /**
    * The number of shards to spawn.
-   * 
+   *
    * - "auto" uses the number of shards recommended by discord.
    */
   shards: "auto" | number;

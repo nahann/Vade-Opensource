@@ -19,8 +19,6 @@
   "paths": {
     "@lib": ["lib/index.ts"]
   },
-  "include": [
-    "./src/**/*.ts"
-  ],
+  "include": ["./src/**/*.ts"],
   "exclude": ["node_modules"]
 }

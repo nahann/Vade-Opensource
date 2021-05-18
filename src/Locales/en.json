@@ -1,16 +1,15 @@
 {
-	"help": {
-		"description": "A list of all available commands."
-	},
-	"language": {
-		"invalid": "That is not a valid language, please select from",
-		"success": "Successfully changed your configured language to"
-	},
-	"slots": {
-		"notEnough": "You don't have enough in your Wallet to play a game of slots!",
-		"newBal": "New Balance",
-		"lowerBet": "The minimum bet you can make is",
-		"higherBet": "The maximum bet you can make is"
-	}
-	
+  "help": {
+    "description": "A list of all available commands."
+  },
+  "language": {
+    "invalid": "That is not a valid language, please select from",
+    "success": "Successfully changed your configured language to"
+  },
+  "slots": {
+    "notEnough": "You don't have enough in your Wallet to play a game of slots!",
+    "newBal": "New Balance",
+    "lowerBet": "The minimum bet you can make is",
+    "higherBet": "The maximum bet you can make is"
+  }
 }
