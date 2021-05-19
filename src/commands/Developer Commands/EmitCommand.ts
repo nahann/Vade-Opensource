@@ -13,6 +13,10 @@ export const run: RunFunction = async (client, message, args) => {
       client.emit("guildMemberRemove", message.member);
       message.channel.send(`Emitting....`);
     }
+    case "guildCreate": {
+      client.emit("guildCreate", message.guild);
+      message.channel.send(`Emitting....`);
+    }
   }
 };
 export const name: string = "emit";

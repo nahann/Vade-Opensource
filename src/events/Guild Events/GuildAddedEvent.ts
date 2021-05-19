@@ -3,8 +3,9 @@ import GuildSchema from "../../models/GuildConfig/guild";
 import { Types } from "mongoose";
 
 import type { TextChannel } from "discord.js-light";
+import { Guild } from "discord.js";
 
-export const run: RunFunction = async (client, guild) => {
+export const run: RunFunction = async (client, guild: Guild) => {
   const owner = await client.users.fetch(guild.ownerID);
   const newGuildEmbed = new client.embed()
     .setTitle(`Added to a Server!`)
@@ -21,6 +22,18 @@ export const run: RunFunction = async (client, guild) => {
   channel.send(newGuildEmbed) ?? null;
 
   const document = await GuildSchema.findOne({ guildID: guild.id });
+
+    let sendEmbed = new client.embed()
+    .setTitle(`Thanks for adding me to your Server!`)
+    .setDescription(`Hello! Thank you for adding Vade to your server! \n\nFor a list of Commands you can run \`!help\`. \nIf you'd like help on a specific command/category, you can do \`!help <Command/Category>\`.`)
+    .addField(`Support Server`, `https://discord.com/invite/DFa5wNFWgP`)
+    .addField(`Lead Developer`, `Ethan#7000 (473858248353513472)`);
+
+
+    if(guild.systemChannel && guild.systemChannel.permissionsFor(guild.me).has('SEND_MESSAGES') && guild.systemChannel.permissionsFor(guild.me).has("EMBED_LINKS")) {
+      guild.systemChannel?.send(sendEmbed);
+    }
+
   if (document) return; // Maintain old data
 
   const newGuild = new GuildSchema({

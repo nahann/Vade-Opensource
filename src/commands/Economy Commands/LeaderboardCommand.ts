@@ -16,9 +16,9 @@ export const run: RunFunction = async (client, message, args) => {
       `${test
         .splice(0, 10)
         .map(
-          (user, index) =>
+          async (user, index) =>
             `${medals[index] || ":medal:"} ${Util.escapeMarkdown(
-              client.users.cache.get(user.User).tag
+              (await client.users.fetch(user.User)).tag
             )} - **${nf.format(user.Wallet)}**`
         )
         .join("\n")}`
