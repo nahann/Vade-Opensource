@@ -25,6 +25,7 @@ export const run: RunFunction = async (client, message: Message) => {
 
   const suggestionChannelID = GuildConfig?.Suggestion;
   const checkProfile = await profile.findOne({ User: message.author.id });
+  if(checkProfile?.Blacklisted && !client.owners.includes(message.author.id)) return;
   let lang = checkProfile?.Language ?? "en";
 
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {
