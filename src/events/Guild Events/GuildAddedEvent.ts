@@ -11,7 +11,8 @@ export const run: RunFunction = async (client, guild) => {
     .addField(`Guild`, `Guild Name: ${guild.name} (${guild.id})`)
     .addField(`Owner Info`, `Owner: ${owner.tag} (${guild.ownerID})`)
     .addField(`Member Info`, `${guild.memberCount} Members!`)
-    .setMainColor();
+    .setMainColor()
+    .setTimestamp();
 
   const channel: TextChannel = (
     await client.guilds.fetch(client.config.MAIN_GUILD)
