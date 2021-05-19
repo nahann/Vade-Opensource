@@ -83,7 +83,7 @@ export const run: RunFunction = async (client, message, args) => {
   }
 };
 export const name: string = "blacklist";
-export const category: string = "Developer";
+export const category: string = "Development";
 export const description: string =
   "View the full blacklist, add a blacklist or remove a blacklist.";
 export const aliases: string[] = ["botban"];
