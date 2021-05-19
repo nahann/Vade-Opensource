@@ -1,5 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import Schema from "../../models/blacklist";
+import profileSchema from '../../models/profile';
 
 export const run: RunFunction = async (client, message, args) => {
   switch (args[0]) {
@@ -18,6 +19,24 @@ export const run: RunFunction = async (client, message, args) => {
           Active: true,
       });
       await newBlacklist.save();
+
+
+      const profileCheck = await profileSchema.findOne({ User: member.id });
+      if(profileCheck) { 
+        await profileCheck.updateOne({
+          Blacklisted: true,
+          Wallet: 0,
+          Bank: 0,
+        });
+
+      } else {
+        const newProf = new profileSchema({
+          User: member.id,
+          Blacklisted: true
+        });
+
+        await newProf.save();
+      }
       return client.utils.succEmbed(`Successfully added ${member.user.tag} to the global Blacklist!`, message.channel);
     }
 
@@ -29,6 +48,12 @@ export const run: RunFunction = async (client, message, args) => {
         const check = await Schema.findOne({ User: member.id });
         if(!check) return client.utils.sendError(`That user isn't actually Blacklisted.`, message.channel);
         await check.delete();
+        const profileCheck = await profileSchema.findOne({ User: member.id });
+        if(profileCheck) {
+          await profileCheck.updateOne({
+            Blacklisted: false
+          });
+        }
         return client.utils.succEmbed(`Successfully removed that users Blacklist.`, message.channel);
 
     }

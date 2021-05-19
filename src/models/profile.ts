@@ -18,12 +18,17 @@ interface IBank extends Document {
   Partner: string;
   MentionNotif: boolean;
   Language: string;
+  Blacklisted: boolean;
 }
 
 export const bankSchema = new Schema({
   User: {
     type: String,
     required: true,
+  },
+  Blacklisted: {
+    type: Boolean,
+    required: false,
   },
   Job: {
     type: String,
