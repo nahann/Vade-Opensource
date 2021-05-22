@@ -86,11 +86,6 @@ export const run: RunFunction = async (client, message: Message) => {
   const command: Command =
     client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
 
-    if(!command && client.owners.includes(message.author.id) && args[0] === "sudo") {
-      args.shift()
-      const c: Command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-      c.run(client, message, args, lang)
-    }
 
   if (command) {
     try {
