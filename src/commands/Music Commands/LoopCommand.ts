@@ -23,6 +23,13 @@ import { RunFunction } from '../../interfaces/Command';
         message.channel
       );
 
+      if(player.queue.size >= 1) {
+        player.setTrackRepeat(!player.trackRepeat);
+        const trackRepeat = player.trackRepeat ? "Enabled" : "Disabled";
+        embed.setDescription(`🔁 **${trackRepeat}** track repeat.`);
+        return message.channel.send(embed);
+      }
+
     if (args.length && /track/i.test(args[0])) {
       player.setTrackRepeat(!player.trackRepeat);
       const trackRepeat = player.trackRepeat ? "Enabled" : "Disabled";
