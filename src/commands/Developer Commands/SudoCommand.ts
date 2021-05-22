@@ -17,3 +17,4 @@ export const name: string = 'sudo';
 export const category: string = 'Development';
 export const description: string = 'Bypass Command requirements for dev purposes only.';
 export const aliases: string[] = ['root'];
+export const devOnly: boolean = true;
