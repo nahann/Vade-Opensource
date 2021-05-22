@@ -16,6 +16,16 @@ export const run: RunFunction = async (client, message, args) => {
     ...new Set(client.commands.map((cmd) => cmd.category)),
   ];
 
+  const availableCategories = await Promise.all(
+    allCategories.map((cat) =>
+      client.utils.categoryCheck(cat, message)
+    )
+  );
+
+  const categories = allCategories.filter(
+    (cat, idx) => availableCategories[idx]
+  );
+
   if (!args.length) {
     const mainEmbed = new client.embed()
       .setDescription([
@@ -27,7 +37,7 @@ export const run: RunFunction = async (client, message, args) => {
       ])
       .setClear();
 
-    for (const category of allCategories) {
+    for (const category of categories) {
       mainEmbed.addField(
         `**${client.utils.capitalise(category)} [${
           client.commands.filter((cmd) => cmd.category === category).size
