@@ -7,6 +7,7 @@ import { Command, RunFunction } from '../../interfaces/Command';
     let command: Command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
     if(!command) return client.utils.sendError(`Invalid command.`, message.channel);
     try {
+        args.shift()
         command.run(client, message, args, lang);
     } catch (e) {
         return client.utils.sendError(`Error: ${e}`, message.channel);
