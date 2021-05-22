@@ -6,7 +6,7 @@ import findStickyRole from "../../models/GuildConfig/stickyroles";
 export const run: RunFunction = async (client, member) => {
   const locate_main_data = await Guild.findOne({ guildID: member.guild.id });
   const type = locate_main_data?.welcomeType;
-  const welcome_channel = locate_main_data.welcomeChannel;
+  const welcome_channel = locate_main_data?.welcomeChannel;
   if (!welcome_channel) return;
   const guildChannel = client.channels.cache.get(
     welcome_channel
