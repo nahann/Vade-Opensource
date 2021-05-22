@@ -44,4 +44,4 @@ import { RunFunction } from '../../interfaces/Command';
 export const name: string = 'previous';
 export const category: string = 'Music';
 export const description: string = 'Play the previous song.';
-export const aliases: string[] = ['prior', 'previoussong'];
+export const aliases: string[] = ['prior', 'previoussong', 'prev'];
