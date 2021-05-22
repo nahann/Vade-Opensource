@@ -28,4 +28,4 @@ export const name: string = "disconnect";
 export const category: string = "Music";
 export const description: string =
   "Disconnect the Bot from the Voice Channel and stop the Music that is playing.";
-export const aliases: string[] = ["dc", "stop"];
+export const aliases: string[] = ["dc", "stop", "leave"];
