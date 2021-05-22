@@ -38,15 +38,7 @@ import profileSchema from '../../models/profile';
         
         return client.utils.succEmbed(`Successfully completed that action.`, message.channel);
     }
-
-
-   
-
-
-
-
-
-    }
+        }
 export const name: string = 'setbalance';
 export const category: string = 'Development';
 export const description: string = 'Set a users balance to the amount specified.';

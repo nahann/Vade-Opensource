@@ -688,23 +688,30 @@ export default class Util {
     });
   }
 
-  async addBal(user: string, Coins: Number) {
-    if (!user) throw new TypeError(`No user property provided.`);
-    if (!Coins) throw new TypeError(`No Coins property provided.`);
-    const locate_schema = await economy_schema.findOne({ User: user });
-    if (locate_schema) {
-      await economy_schema.updateOne({
-        User: user,
-        $inc: { Wallet: Coins },
-      });
-    } else {
-      const newSchema = new economy_schema({
-        User: user,
-        Wallet: Coins,
-        Bank: 0,
-      });
+async applyMultiplier(user) {
 
-      await newSchema.save();
-    }
-  }
+
+
+
+
+
+
+}
+
+
+
+
+
+async getMultipliers(user) {
+
+
+
+
+
+
+
+}
+
+
+
 }
