@@ -12,7 +12,7 @@ import StarboardSchema from '../../models/GuildConfig/guild';
     if(!channel && args[0]?.toLowerCase() !== 'remove') return client.utils.sendError(`Please specify a valid channel.`, message.channel);
     if(args[0]?.toLowerCase() === 'remove') {
        if(!data?.Starboard) return client.utils.sendError(`You do not currently have a starboard configured for this guild.`, message.channel);
-       await data.updateOne({,
+       await data.updateOne({
            Starboard: null
        });
        return client.utils.succEmbed(`Successfully removed your current starboard channel!`, message.channel);
