@@ -1,11 +1,11 @@
 import { RunFunction } from "../../interfaces/Event";
-import { MessageReaction, User } from "discord.js-light";
 import moment from "moment";
 const reactionCooldown = new Set();
 import Db from "../../models/GuildConfig/ReactionRoles";
 import GuildDB from "../../models/GuildConfig/guild";
 import StarSchema from '../../models/starboardLogging';
 import { GuildMember } from "discord.js-light";
+import { MessageReaction } from "discord.js";
 const botCooldown = new Set();
 
 export const run: RunFunction = async (client, messageReaction, user) => {
@@ -41,7 +41,14 @@ export const run: RunFunction = async (client, messageReaction, user) => {
 
 
       console.log(`Star added`);
-      
+      const StarboardChannel = guildDB?.Starboard;
+      const reactionMessage = await message.fetch();
+      if(!StarboardChannel) return;
+      const starAmount = guildDB?.StarAmount;
+     
+        // let totalStars = message.reactions.cache.filter(m => m.reaction === "⭐") {
+
+        // }
 
         
         return;

@@ -19,11 +19,12 @@ import StarboardSchema from '../../models/GuildConfig/guild';
     }
     const amount = parseInt(args[1]);
     if(!amount || isNaN(amount)) return client.utils.sendError(`You need to specify the minimum amount of reactions for a message to be sent to the starboard channel.`, message.channel);
-    
+
     await data.updateOne({
         Starboard: channel.id,
+        StarAmount: amount,
     });
-    return client.utils.succEmbed(`Successfully set your starboard channel to ${channel}!`, message.channel);
+    return client.utils.succEmbed(`Successfully set your starboard channel to ${channel} with the minimum reactions required as ${amount}!`, message.channel);
     }
 export const name: string = 'starboard';
 export const category: string = 'Administrative';
