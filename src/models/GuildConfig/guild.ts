@@ -23,6 +23,7 @@ export interface IGuild extends mongoose.Document {
   description: string;
   colour: string;
   footer: string;
+  Starboard: string;
 }
 
 const guildSchema = new mongoose.Schema({
@@ -31,6 +32,7 @@ const guildSchema = new mongoose.Schema({
   guildName: String,
   prefix: String,
   welcomeChannel: String,
+  Starboard: String,
   welcomeMessage: String,
   welcomeType: String,
   logChannelID: String,
@@ -48,6 +50,7 @@ const guildSchema = new mongoose.Schema({
   description: String,
   colour: String,
   footer: String,
+
 });
 
 const guilds = mongoose.model<IGuild>(`Guild`, guildSchema, "vade-guilds");
