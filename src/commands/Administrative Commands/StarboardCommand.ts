@@ -6,27 +6,21 @@ import StarboardSchema from '../../models/GuildConfig/guild';
 
     const data = await StarboardSchema.findOne({ Guild: message.guild.id });
     const premiumCheck = await client.utils.checkPremium(message.guild.ownerID);
-    if(!data) {
-
-
-        if(!args.length) return client.utils.sendError(`You need to specify a channel!`, message.channel);
-        const channel = client.utils.getChannels(args[0], message.guild);
-        if(!channel) return client.utils.sendError(`You need to specify a valid channel!`, message.channel);
-        
-
-
-
+    if(!data) return client.utils.sendError(`Looks like there was an error fetching your guilds data. Please try again.`, message.channel);
+    if(!args[0]) return client.utils.sendError(`Please specify a channel.`, message.channel);
+    const channel = client.utils.getChannels(args[0], message.guild);
+    if(!channel && args[0]?.toLowerCase() !== 'remove') return client.utils.sendError(`Please specify a valid channel.`, message.channel);
+    if(args[0]?.toLowerCase() === 'remove') {
+       if(!data?.Starboard) return client.utils.sendError(`You do not currently have a starboard configured for this guild.`, message.channel);
+       await data.updateOne({,
+           Starboard: null
+       });
+       return client.utils.succEmbed(`Successfully removed your current starboard channel!`, message.channel);
     }
-
-
-
-    if(!args.length) {
-
-
-
-    }
-
-
+    await data.updateOne({
+        Starboard: channel.id,
+    });
+    return client.utils.succEmbed(`Successfully set your starboard channel to ${channel}!`, message.channel);
     }
 export const name: string = 'starboard';
 export const category: string = 'Administrative';
