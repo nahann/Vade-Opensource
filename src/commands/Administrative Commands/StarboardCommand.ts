@@ -17,6 +17,9 @@ import StarboardSchema from '../../models/GuildConfig/guild';
        });
        return client.utils.succEmbed(`Successfully removed your current starboard channel!`, message.channel);
     }
+    const amount = parseInt(args[1]);
+    if(!amount || isNaN(amount)) return client.utils.sendError(`You need to specify the minimum amount of reactions for a message to be sent to the starboard channel.`, message.channel);
+    
     await data.updateOne({
         Starboard: channel.id,
     });

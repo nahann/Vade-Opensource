@@ -4,6 +4,7 @@ import moment from "moment";
 const reactionCooldown = new Set();
 import Db from "../../models/GuildConfig/ReactionRoles";
 import GuildDB from "../../models/GuildConfig/guild";
+import StarSchema from '../../models/starboardLogging';
 import { GuildMember } from "discord.js-light";
 const botCooldown = new Set();
 
@@ -36,7 +37,16 @@ export const run: RunFunction = async (client, messageReaction, user) => {
 
       // return if reaction isnt in database
 
-      if (!db) return;
+      if (!db && emoji !== "⭐") {
+
+
+      console.log(`Star added`);
+      
+
+        
+        return;
+
+      }
 
       // return if the reaction's message ID is different than in database
 
