@@ -16,15 +16,14 @@ export const run: RunFunction = async (client, messageReaction, user) => {
     guildId: message.guild.id,
   });
 
-  await Db.findOne(
+  const db = await Db.findOne(
     {
       guildID: message.guild.id,
       reaction: emoji.toString(),
       msgid: message.id,
-    },
+    });
 
-    async (err, db) => {
-      if (!db) return;
+     if(db) {
       if (message.id !== db.msgid) return;
       const rrRole = await message.guild.roles.fetch(db.roleid);
       if (!rrRole) return;
@@ -140,6 +139,6 @@ export const run: RunFunction = async (client, messageReaction, user) => {
         }
       }
     }
-  );
+    
 };
 export const name: string = "messageReactionRemove";

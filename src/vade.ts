@@ -5,7 +5,10 @@ import * as File from "./config.json";
 import { Bot } from "./client/Client";
 
 export default class extends BaseCluster {
+  readonly client!: Bot;
+
   launch() {
-    new Bot().start(File as Config);
+    console.log("starting");
+    this.client.start(File as Config);
   }
 }

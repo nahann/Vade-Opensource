@@ -1,62 +1,56 @@
-import { RunFunction } from "../../interfaces/Event";
 import moment from "moment";
-const reactionCooldown = new Set();
+import { GuildMember, TextChannel } from "discord.js-light";
+
+/* interfaces */
+import { RunFunction } from "../../interfaces/Event";
+
+/* database models */
 import Db from "../../models/GuildConfig/ReactionRoles";
 import GuildDB from "../../models/GuildConfig/guild";
 import StarSchema from '../../models/starboardLogging';
-import { GuildMember } from "discord.js-light";
-import { MessageReaction } from "discord.js";
+
+/* starboard things */
+import { StarboardManager } from "../../utils/StarboardManager";
+
+/* reaction things */
+const reactionCooldown = new Set();
 const botCooldown = new Set();
 
 export const run: RunFunction = async (client, messageReaction, user) => {
+
+  
   console.log(`Running`);
 
-  if (messageReaction.partial) await messageReaction.fetch();
-  if (user.partial) await user.fetch();
+  if (messageReaction.partial) {
+    await messageReaction.fetch();
+  }
+
+  if(user.partial) {
+    await user.fetch();
+  }
+
+  await messageReaction.users.fetch();
 
   if (client.user.id === user.id) return;
 
   const { message, emoji } = messageReaction;
+  const mainMessage = (await message.fetch());
 
   const member = (await message.guild.members.fetch(user.id)) as GuildMember;
 
   const guildDB = await GuildDB.findOne({
-    guildId: message.guild.id,
+    guildID: message.guild.id,
   });
 
   //find in database
-  await Db.findOne(
+  const db = await Db.findOne(
     {
       guildID: message.guild.id,
       reaction: emoji.toString(),
       msgid: message.id,
-    },
+    });
 
-    async (err, db) => {
-      if (err) console.log(err);
-
-      // return if reaction isnt in database
-
-      if (!db && emoji !== "⭐") {
-
-
-      console.log(`Star added`);
-      const StarboardChannel = guildDB?.Starboard;
-      const reactionMessage = await message.fetch();
-      if(!StarboardChannel) return;
-      const starAmount = guildDB?.StarAmount;
-     
-        // let totalStars = message.reactions.cache.filter(m => m.reaction === "⭐") {
-
-        // }
-
-        
-        return;
-
-      }
-
-      // return if the reaction's message ID is different than in database
-
+    if(db) {
       if (message.id !== db.msgid) return;
 
       // fetch the role to give
@@ -72,21 +66,13 @@ export const run: RunFunction = async (client, messageReaction, user) => {
       let guildName = guild.name;
 
       let slowDownEmbed = new client.embed()
-        .setDescription(
-          `Slow Down There, You're on a cooldown\n\n**Role Name:** ${rrRole.name}\n**Guild Name:** ${guildName}`
-        )
+        .setDescription(`Slow Down There, You're on a cooldown\n\n**Role Name:** ${rrRole.name}\n**Guild Name:** ${guildName}`)
         .setErrorColor();
 
       // add reaction Embed
       let addEmbed = new client.embed()
-        .setAuthor(
-          "Role Added",
-          `https://i.pinimg.com/originals/ed/a7/f3/eda7f39a28ff7d7e34ad4d5e99fb814a.png`,
-          `${message.url}`
-        )
-        .setDescription(
-          `You have recieved the **${rrRole.name}** Role by reacting in ${guildName}`
-        )
+        .setAuthor("Role Added", `https://i.pinimg.com/originals/ed/a7/f3/eda7f39a28ff7d7e34ad4d5e99fb814a.png`, `${message.url}`)
+        .setDescription(`You have recieved the **${rrRole.name}** Role by reacting in ${guildName}`)
         .setFooter(`Vade Reaction Roles`)
         .setSuccessColor();
 
@@ -97,9 +83,7 @@ export const run: RunFunction = async (client, messageReaction, user) => {
           `https://i.pinimg.com/originals/ed/a7/f3/eda7f39a28ff7d7e34ad4d5e99fb814a.png`,
           `${message.url}`
         )
-        .setDescription(
-          `You have removed the **${rrRole.name}** Role by reacting in ${guildName}`
-        )
+        .setDescription(`You have removed the **${rrRole.name}** Role by reacting in ${guildName}`)
         .setFooter(`Vade Reaction Roles`)
         .setSuccessColor();
 
@@ -110,9 +94,7 @@ export const run: RunFunction = async (client, messageReaction, user) => {
           `https://i.pinimg.com/originals/ed/a7/f3/eda7f39a28ff7d7e34ad4d5e99fb814a.png`,
           `${message.url}`
         )
-        .setDescription(
-          ` Failed to Add the role, since I'm Missing the Manage Roles Permission.\n\nPlease let an admin Know.`
-        )
+        .setDescription(`Failed to Add the role, since I'm Missing the Manage Roles Permission.\n\nPlease let an admin Know.`)
         .setFooter(`Vade Reaction Roles`)
         .setErrorColor();
 
@@ -318,6 +300,9 @@ export const run: RunFunction = async (client, messageReaction, user) => {
         }
       }
     }
-  );
+
+  /* STARBOARD STUFF */
+  await StarboardManager.onReactionAdd(messageReaction, user);
 };
+
 export const name: string = "messageReactionAdd";

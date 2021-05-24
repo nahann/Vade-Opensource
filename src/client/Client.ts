@@ -1,7 +1,7 @@
 import { Command } from "../interfaces/Command";
 import { Event } from "../interfaces/Event";
 import consola, { Consola } from "consola";
-import { Client, Intents, Collection } from "discord.js-light";
+import { Client, Intents, Collection, ClientOptions } from "discord.js-light";
 import glob from "glob";
 import { promisify } from "util";
 import { Config } from "../interfaces/Config";
@@ -50,22 +50,8 @@ class Bot extends Client {
     return this.i18n.__;
   }
 
-  public constructor() {
-    super({
-      ws: { intents: Intents.ALL },
-      partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"],
-      messageCacheLifetime: 180,
-      messageCacheMaxSize: 200,
-      messageEditHistoryMaxSize: 200,
-      messageSweepInterval: 180,
-      restTimeOffset: 0,
-      cacheGuilds: true,
-      cacheChannels: true,
-      cacheOverwrites: false,
-      cacheRoles: true,
-      cacheEmojis: true,
-      cachePresences: true,
-    });
+  public constructor(options: ClientOptions) {
+    super(options);
 
     if (Bot.__instance__) throw new Error("Another client was created.");
 

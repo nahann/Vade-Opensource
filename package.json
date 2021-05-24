@@ -4,7 +4,9 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
-    "shard": "ts-node-dev --respawn --transpile-only --poll ./src/sharder.ts"
+    "shard": "ts-node-dev --respawn --transpile-only --poll ./src/sharder.ts",
+    "build": "rm -rf dist && tsc",
+    "dev": "yarn build && node ."
   },
   "_moduleAliases": {
     "@lib": "dist/lib"
@@ -16,6 +18,7 @@
     "@koa/router": "^10.0.0",
     "@the-nerd-cave/paginate": "^1.1.1",
     "alpha-sort": "^5.0.0",
+    "ansikit": "^1.5.0",
     "canvas": "^2.7.0",
     "cluster": "^0.7.7",
     "consola": "^2.15.3",

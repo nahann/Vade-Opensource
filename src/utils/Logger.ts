@@ -10,7 +10,10 @@ export class Logger {
     this.name = name;
   }
 
-  write(level: LogLevel)
+  write(level: LogLevel, content: string) {
+    let method = 
+    if (level )
+  }
 }
 
-type LogLevel = 
+type LogLevel = "info" | "debug" | "error" | "warn";

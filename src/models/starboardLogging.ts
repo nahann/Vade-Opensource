@@ -3,13 +3,20 @@ import { Document, Model, model, models, Schema } from "mongoose";
 
 interface IStar extends Document {
   Guild: string;
+  User: string;
   Amount: number;
   Channel: string;
+  Message: string;
+  StarboardMessage: string;
 
 }
 
 export const bankSchema = new Schema({
   Guild: {
+    type: String,
+    required: true,
+  },
+  User: {
     type: String,
     required: true,
   },
@@ -20,8 +27,15 @@ export const bankSchema = new Schema({
   Channel: {
       type: String,
       required: true,
+  },
+  Message: {
+    type: String,
+    required: true,
+  },
+  StarboardMessage: {
+    type: String,
+    required: true,
   }
-
 });
 
 const bank =

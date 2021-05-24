@@ -1,5 +1,6 @@
 import config from "../interfaces/Constants";
-import { MessageEmbed, MessageEmbedOptions } from "discord.js-light";
+
+import { Guild, MessageEmbed, MessageEmbedOptions } from "discord.js-light";
 
 export default class EmbedHandler extends MessageEmbed {
   constructor(data?: MessageEmbed | MessageEmbedOptions) {
@@ -26,7 +27,20 @@ export default class EmbedHandler extends MessageEmbed {
   setBlankField() {
     return this.addField("\u200b", "\u200b");
   }
+
   setClear() {
     return this.setColor("#2f3136");
+  }
+
+  setIcon(guild: Guild): EmbedHandler {
+    if (!guild) {
+      throw new TypeError(`No guild provided.`);
+    }
+
+    if (!guild.iconURL()) {
+      return this.setThumbnail(guild.client.user.displayAvatarURL());
+    } else {
+      return this.setThumbnail(guild.iconURL());
+    }
   }
 }

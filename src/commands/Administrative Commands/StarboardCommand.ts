@@ -4,7 +4,7 @@ import StarboardSchema from '../../models/GuildConfig/guild';
    export const run: RunFunction = async(client, message, args) => {
 
 
-    const data = await StarboardSchema.findOne({ Guild: message.guild.id });
+    const data = await StarboardSchema.findOne({ guildID: message.guild.id });
     const premiumCheck = await client.utils.checkPremium(message.guild.ownerID);
     if(!data) return client.utils.sendError(`Looks like there was an error fetching your guilds data. Please try again.`, message.channel);
     if(!args[0]) return client.utils.sendError(`Please specify a channel.`, message.channel);
