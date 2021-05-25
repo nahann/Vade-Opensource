@@ -30,3 +30,5 @@ export const name: string = 'starboard';
 export const category: string = 'Administrative';
 export const description: string = 'Configure the guilds starboard settings.';
 export const aliases: string[] = ['star'];
+export const userPerms: string[] = ['MANAGE_CHANNELS'];
+export const botPerms: string[] = ['MANAGE_CHANNELS'];
