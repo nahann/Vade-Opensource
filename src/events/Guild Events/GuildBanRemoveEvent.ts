@@ -8,7 +8,6 @@ import { RunFunction } from '../../interfaces/Event';
     if(!modLog) {
         return;
     }
-    const auditEntry = await guild.fetchBan(user.id);
     if(user.partial) await user.fetch();
     let bannedEmbed = new client.embed()
     .setTitle(`User Banned!`)
