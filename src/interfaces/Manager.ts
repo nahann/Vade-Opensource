@@ -5,6 +5,7 @@ import ms from "ms";
 import p from "phin";
 
 import vote_schema from "../models/voteremind";
+import premium_schema from "../models/premium_schema";
 
 export default (client: Bot) => {
   // Only the main Bot, can't test these on the test bot
@@ -59,10 +60,13 @@ export default (client: Bot) => {
           });
         }
       });
+
+
     }, ms("15m"));
   }
 
   
+
 
 
 

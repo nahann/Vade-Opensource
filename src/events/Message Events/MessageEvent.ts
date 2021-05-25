@@ -128,6 +128,7 @@ export const run: RunFunction = async (client, message: Message) => {
         message.guild.ownerID
       );
       const checkOwner = client.utils.checkOwner(message.author.id);
+      const hasVoted = client.utils.hasVoted(message.author.id);
       if (command.premiumOnly && !checkPremium) {
         return message.channel.send(
           `The Guild owner must have Vade Premium in order for you to run this Command!`
@@ -140,13 +141,13 @@ export const run: RunFunction = async (client, message: Message) => {
         );
       }
 
-      // if (command.NSFW && !message.channel.nsfw) {
-      //   return client.utils.sendError(`This Command can only be ran in an NSFW Channel!`, message.channel)
-      // }
+      if (command.NSFW && !message.channel.nsfw) {
+        return client.utils.sendError(`This Command can only be ran in an NSFW Channel!`, message.channel)
+      }
 
-      // if(command.voteRequired && !hasVoted) {
-
-      // }
+      if(command.voteRequired && !hasVoted) {
+        return client.utils.sendError(`This Command requires you to have voted! You can vote via doing \`${prefix}vote\`.`, message.channel);
+      }
 
       command.run(client, message, args, lang);
       if (
