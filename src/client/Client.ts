@@ -1,3 +1,5 @@
+import { Logger } from "@dimensional-fun/logger";
+
 import { Command } from "../interfaces/Command";
 import { Event } from "../interfaces/Event";
 import consola, { Consola } from "consola";
@@ -26,7 +28,7 @@ const globPromise = promisify(glob);
 class Bot extends Client {
   private static __instance__?: Bot;
 
-  public logger: Consola = consola;
+  public logger: Logger = new Logger("vade");
   public commands: Collection<string, Command> = new Collection();
   public aliases: Collection<string, string> = new Collection();
   public categories: Set<string> = new Set();
@@ -36,7 +38,7 @@ class Bot extends Client {
   public cooldowns: Collection<string, number> = new Collection();
   public config: Config;
   public constants: typeof Constants = Constants;
-  public owners: string[] = ["473858248353513472", "508442553754845184"];
+  public owners: string[] = ["396096412116320258", "473858248353513472", "508442553754845184"];
   public version: string = "v9.5.5";
   public invites = new Collection();
   public manager: Manager;
@@ -59,6 +61,7 @@ class Bot extends Client {
   }
 
   public async start(config: Config): Promise<void> {
+    this.logger.info("hi")
     Mongo();
     this.config = config;
     this.login(config.token);

@@ -38,7 +38,7 @@ export const run: RunFunction = async (client) => {
 
   client.manager.init(client.user.id);
   client.manager.on("nodeConnect", (node) => {
-    client.logger.success(`Node "${node.options.identifier}" connected.`);
+    client.logger.info(`Node "${node.options.identifier}" connected.`);
   });
 
   //Node error event
@@ -313,7 +313,7 @@ export const run: RunFunction = async (client) => {
   await manager.register();
   await manager.listen();
 
-  client.logger.success(`${client.user.tag} is now online!`);
+  client.logger.info(`${client.user.tag} is now online!`);
 
   const nf = Intl.NumberFormat();
 

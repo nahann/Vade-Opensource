@@ -15,7 +15,7 @@ export default (client: Bot) => {
     });
 
     dbl.webhook.on("ready", (hook) => {
-      client.logger.success(
+      client.logger.info(
         `Top.gg webhook running at http://${hook.hostname}:${hook.port}${hook.path}`
       );
     });
@@ -23,7 +23,7 @@ export default (client: Bot) => {
     const dblPOST = new DBL(client.config.TOPGG_TOKEN, client);
 
     dblPOST.on("posted", () => {
-      client.logger.success(`Server count posted to top.gg!`);
+      client.logger.info(`Server count posted to top.gg!`);
     });
 
     // SENDING THE VOTE REMINDER IF ENABLED
@@ -72,7 +72,7 @@ export async function remindToVote(bot: Bot, userId: string) {
     .get(bot.config.MAIN_GUILD)
     .channels.cache.get("795711027567263846") as TextChannel;
 
-  bot.logger.success(`User with ID ${userId} just voted on top.gg!`);
+  bot.logger.info(`User with ID ${userId} just voted on top.gg!`);
   voteLogs.send(
     `<@${userId}> just voted for the Bot on top.gg! (ID: **${userId}**)`
   );

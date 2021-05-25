@@ -7,8 +7,7 @@ import { Bot } from "./client/Client";
 export default class extends BaseCluster {
   readonly client!: Bot;
 
-  launch() {
-    console.log("starting");
-    this.client.start(File as Config);
+  async launch() {
+    await this.client.start(File as Config);
   }
 }

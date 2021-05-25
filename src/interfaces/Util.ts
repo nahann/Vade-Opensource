@@ -42,6 +42,7 @@ export default class Util {
       delete this.client.userVotes[user];
       return false;
     }
+``
     return true;
   }
 

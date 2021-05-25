@@ -1,7 +1,9 @@
+import { Logger } from "@dimensional-fun/logger";
 import mongoose from "mongoose";
 import config from "../config.json";
 
 export default async function connect() {
+  const logger = new Logger("mongodb")
   try {
     mongoose.connect(
       config.mongoURI,
@@ -13,27 +15,27 @@ export default async function connect() {
       },
       (err) => {
         if (err) return console.log(err.stack || err.message);
-        console.log("Connected to mongo");
+        logger.info("Connected to mongo");
       }
     );
 
     mongoose.connection.on("connect", () => {
-      console.log("Mongoose is connected");
+      logger.info("Mongoose is connected");
     });
 
     mongoose.connection.on("error", (err) => {
-      console.log(err.stack || err.message);
+      logger.info(err.stack || err.message);
     });
 
     mongoose.connection.on("disconnect", () => {
-      console.log("Mongoose was disconnected");
+      logger.info("Mongoose was disconnected");
     });
 
     mongoose.connection.on("reconnect", () => {
-      console.log("Mongoose has reconnected");
+      logger.info("Mongoose has reconnected");
     });
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     process.exit(1);
   }
 }
