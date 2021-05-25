@@ -9,7 +9,7 @@ import { Intents } from "discord.js";
 import { Bot } from "./client/Client";
 import * as File from "./config.json";
 
-if (isMaster) {
+// if (isMaster) {
   const main = async () => {
     const logger = new Logger("sharder");
     const sharder = new ShardingManager(join(__dirname, "vade.js"), {
@@ -46,4 +46,4 @@ if (isMaster) {
   };
 
   void main();
-}
+// }

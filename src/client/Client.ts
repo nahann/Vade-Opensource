@@ -64,7 +64,7 @@ class Bot extends Client {
     this.logger.info("hi")
     Mongo();
     this.config = config;
-    this.login(config.token);
+  await this.login(config.token);
     Lottery(this);
 
     const commandFiles: string[] = await globPromise(

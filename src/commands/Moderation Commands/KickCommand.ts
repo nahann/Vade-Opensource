@@ -37,7 +37,7 @@ const options: {
   },
 };
 
-export const run: RunFunction = async (client, message, args) => {
+export const run: RunFunction = async (client, message, args, lang) => {
   const Embed = client.embed;
   const getFlags = client.utils.getFlags;
   const prefix = await client.utils.resolvePrefix(message.guild.id);
@@ -202,7 +202,7 @@ DEFAULT:
           await message.guild?.members.unban(m.user);
           client.commands
             .get("clear")!
-            .run(client, message, ["100", "-u", m.id]);
+            .run(client, message, ["100", "-u", m.id], lang);
         }
       } catch {
         members.splice(i, 1);
