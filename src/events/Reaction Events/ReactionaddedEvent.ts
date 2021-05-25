@@ -18,8 +18,6 @@ const botCooldown = new Set();
 
 export const run: RunFunction = async (client, messageReaction, user) => {
 
-  
-  console.log(`Running`);
 
   if (messageReaction.partial) {
     await messageReaction.fetch();
