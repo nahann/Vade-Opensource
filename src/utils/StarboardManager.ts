@@ -67,10 +67,13 @@ export namespace StarboardManager {
     if (starboardChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) {
       const embed = new client.embed()
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
-        .setDescription(`[Jump to Message](${message.url})\n\n"${message.content}"`)
+        .setDescription(`[Jump to Message](${message.url})\n\n${message.content?.length ? `"${message.content}"` : ""}`)
         .setClear()
         .setIcon(message.guild)
-        .setTimestamp();
+        .setTimestamp()
+
+       let Attachment = message.attachments?.array();
+       message.attachments.size ? embed.setImage(Attachment[0].proxyURL) : "";
 
       const boardMessage = await starboardChannel.send(`${message.channel} | **${reaction.count}** ${EMOJI}`, embed)
       const newBoardEntry = new StarboardSchema({
