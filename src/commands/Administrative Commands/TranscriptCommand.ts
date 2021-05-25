@@ -125,4 +125,4 @@ export const name: string = 'transcript';
 export const category: string = 'Administrative';
 export const description: string = 'Create a transcript for the current channel.';
 export const userPerms: string[] = ['MANAGE_CHANNELS'];
-
+export const premiumOnly: boolean = true;
