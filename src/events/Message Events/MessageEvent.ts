@@ -84,21 +84,15 @@ export const run: RunFunction = async (client, message: Message) => {
 
     if(checkMessage) {
       if(!message.deleted && message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")) {
-        let checkModRoles = await client.utils.resolveModRole(message.guild.id);
-        let checkAdminRoles = await client.utils.resolveAdminRole(message.guild.id);
-        if(checkModRoles) {
-          for(const role of checkModRoles) {
-            if(message.member.roles.cache.has(role) || message.member.permissions.has("MANAGE_MESSAGES")) {
-              return;
-          }
-        }
+        let ModRoles = await client.utils.resolveModRole(message.guild.id);
+        let AdminRoles = await client.utils.resolveAdminRole(message.guild.id);
+        if(ModRoles) {
+          let check = automod.checkMod(message.member, ModRoles);
+          if(check) return;
       }
-      if(checkAdminRoles) {
-        for(const role of checkAdminRoles) {
-          if(message.member.roles.cache.has(role) || message.member.permissions.has("MANAGE_GUILD")) {
-            return;
-        }
-      }
+      if(AdminRoles) {
+        let check = automod.checkAdmin(message.member, AdminRoles);
+        if(check) return;
       }
         message.delete();
         let automodEmbed = new client.embed()

@@ -468,7 +468,7 @@ export function checkMessage(message: Message) {
    }
 }
 
-export function checkMod(member: GuildMember, guild: Guild, modRoles: Array<string>) {
+export function checkMod(member: GuildMember, modRoles: Array<string>) {
     for(const role of modRoles) {
         if(member.roles.cache.has(role) || member.permissions.has("MANAGE_MESSAGES")) {
             return true;
@@ -478,7 +478,7 @@ export function checkMod(member: GuildMember, guild: Guild, modRoles: Array<stri
     }
 }
 
-export function checkAdmin(member: GuildMember, guild: Guild, adminRoles: Array<string>) {
+export function checkAdmin(member: GuildMember, adminRoles: Array<string>) {
     for(const role of adminRoles) {
         if(member.roles.cache.has(role) || member.permissions.has("MANAGE_GUILD")) {
             return true;
