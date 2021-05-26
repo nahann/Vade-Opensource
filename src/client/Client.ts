@@ -15,6 +15,7 @@ import Lottery from "../utils/Scheduled";
 import { Manager } from "erela.js";
 import { I18n } from "i18n";
 import path from "path";
+import buttons from '../utils/buttons/src/index';
 
 const i18n = new I18n({
   locales: ["en", "ro"],
@@ -38,7 +39,7 @@ class Bot extends Client {
   public cooldowns: Collection<string, number> = new Collection();
   public config: Config;
   public constants: typeof Constants = Constants;
-  public owners: string[] = ["396096412116320258", "473858248353513472", "508442553754845184"];
+  public owners: string[] = ["396096412116320258", "473858248353513472"];
   public version: string = "v9.5.5";
   public invites = new Collection();
   public manager: Manager;
@@ -66,6 +67,7 @@ class Bot extends Client {
     this.config = config;
   await this.login(config.token);
     Lottery(this);
+    buttons(this);
 
     const commandFiles: string[] = await globPromise(
       `${__dirname}/../commands/**/*{.ts,.js}`

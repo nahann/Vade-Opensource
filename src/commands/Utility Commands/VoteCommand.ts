@@ -1,4 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
+import { MessageButton } from "../../utils/buttons/src/index";
 
 export const run: RunFunction = async (client, message, args) => {
   let embed = new client.embed()
@@ -9,7 +10,20 @@ export const run: RunFunction = async (client, message, args) => {
     .setTimestamp()
     .setClear();
 
-  return message.channel.send(embed);
+    let button = new MessageButton()
+    .setStyle('url') 
+    .setURL("https://top.gg/bot/782309258620305438")
+    .setLabel('Top.gg')
+
+    let button2 = new MessageButton()
+    .setStyle('url')
+    .setURL("https://discordbotlist.com/bots/vade")
+    .setLabel("Discord Bot List")
+
+    // @ts-ignore
+  return message.channel.send(`You can vote at the following!`, { buttons: [
+    button, button2
+  ]});
 };
 export const name: string = "vote";
 export const category: string = "Utility";
