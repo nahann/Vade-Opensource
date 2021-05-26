@@ -85,12 +85,21 @@ export const run: RunFunction = async (client, message: Message) => {
     if(checkMessage) {
       if(!message.deleted && message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")) {
         let checkModRoles = await client.utils.resolveModRole(message.guild.id);
+        let checkAdminRoles = await client.utils.resolveAdminRole(message.guild.id);
         if(checkModRoles) {
           for(const role of checkModRoles) {
             if(message.member.roles.cache.has(role) || message.member.permissions.has("MANAGE_MESSAGES")) {
               return;
           }
         }
+      }
+      if(checkAdminRoles) {
+        for(const role of checkAdminRoles) {
+          if(message.member.roles.cache.has(role) || message.member.permissions.has("MANAGE_GUILD")) {
+            return;
+        }
+      }
+      }
         message.delete();
         let automodEmbed = new client.embed()
         .setTitle(`Automod Triggered!`)
@@ -104,7 +113,6 @@ export const run: RunFunction = async (client, message: Message) => {
       }
     }
   }
-}
 
   if (!message.content.toLowerCase().startsWith(prefix)) return;
 
