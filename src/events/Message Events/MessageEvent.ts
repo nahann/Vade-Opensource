@@ -7,7 +7,7 @@ import GuildConfigSchema from "../../models/GuildConfig/guild";
 import { promisify } from "util";
 const wait = promisify(setTimeout);
 import { automod } from '../../utils/AutomodManager';
-import { MessageFlags } from "discord.js";
+const verified = "817905283547267122";
 
 export const run: RunFunction = async (client, message: Message) => {
   if (message.author.bot || !message.guild) return;
@@ -190,7 +190,8 @@ export const run: RunFunction = async (client, message: Message) => {
         );
       }
 
-      command.run(client, message, args, lang);
+      command.run(client, message, args, lang)
+      await client.utils.reactIfAble(message, message.member, verified, ":white_check_mark:");
       if (
         GuildConfig?.cleanCommands &&
         message.guild.me.permissions.has("MANAGE_MESSAGES")

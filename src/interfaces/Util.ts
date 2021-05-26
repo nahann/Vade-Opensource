@@ -98,7 +98,7 @@ export default class Util {
     return newRR;
   }
 
-  async reactIfAble(msg, user: User, emoji, fallbackEmoji) {
+  async reactIfAble(msg, user, emoji, fallbackEmoji) {
     const dm = !msg.guild;
     if (
       fallbackEmoji &&
