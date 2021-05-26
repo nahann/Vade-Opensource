@@ -13,7 +13,7 @@ export const run: RunFunction = async (client, message, args) => {
   if (married)
     return client.utils.sendError(
       `You are already married to ${
-        (await client.users.fetch(schemaLocate.Partner))?.tag
+        (await client.users.fetch(schemaLocate?.Partner))?.tag
       }`,
       message.channel
     );

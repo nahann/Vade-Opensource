@@ -20,7 +20,6 @@ export const run: RunFunction = async (client, message, args) => {
 
     return message.channel.send(embed);
   }
-
   switch (args[0]?.toLowerCase()) {
     case "add": {
       if (findRoles?.roleArray.length >= 3)
