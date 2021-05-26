@@ -25,6 +25,7 @@ export interface IGuild extends mongoose.Document {
   footer: string;
   Starboard: string;
   StarAmount: number;
+  Automod: boolean;
 }
 
 const guildSchema = new mongoose.Schema({
@@ -52,6 +53,7 @@ const guildSchema = new mongoose.Schema({
   description: String,
   colour: String,
   footer: String,
+  Automod: Boolean,
 });
 
 const guilds = mongoose.model<IGuild>(`Guild`, guildSchema, "vade-guilds");
