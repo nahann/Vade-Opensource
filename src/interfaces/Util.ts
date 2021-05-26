@@ -463,38 +463,46 @@ export default class Util {
       case "reaction roles":
         if (message.member.permissions.has("MANAGE_MESSAGES")) return true;
         let c = false;
+        if(modRoleData && modRoleData.length) {
         modRoleData.forEach((mod) => {
           if (message.member.roles.cache.has(mod)) {
             c = true;
           }
         });
+      }
         return c;
       case "moderation":
         if (message.member.permissions.has("MANAGE_MESSAGES")) return true;
         let a = false;
+        if(modRoleData && modRoleData.length) {
         modRoleData.forEach((mod) => {
           if (message.member.roles.cache.has(mod)) {
             a = true;
           }
         });
+      }
         return a;
       case "administrative":
         if (message.member.permissions.has("ADMINISTRATOR")) return true;
         let b = false;
+        if(adminRoleData && adminRoleData.length) {
         adminRoleData.forEach((admin) => {
           if (message.member.roles.cache.has(admin)) {
             b = true;
           }
         });
+      }
         return b;
       case "advertising":
         if (message.member.permissions.has("MANAGE_CHANNELS")) return true;
         let d = false;
+        if(modRoleData && modRoleData.length) {
         modRoleData.forEach((mod) => {
           if (message.member.roles.cache.has(mod)) {
             d = true;
           }
         });
+      }
         return d;
       case "nsfw":
         return message.channel?.nsfw && !ownerCheck;

@@ -26,13 +26,13 @@ export const run: RunFunction = async (client, message, args) => {
       `You cannot rob someone whilst in passive mode!`,
       message.channel
     );
-  const userBal = authorRes.Wallet ?? 0;
+  const userBal = authorRes?.Wallet ?? 0;
   if (userBal < 2000)
     return client.utils.sendError(
       `You need at least $2,000 Coins to rob someone!`,
       message.channel
     );
-  const robberBal = Res.Wallet ?? 0;
+  const robberBal = Res?.Wallet ?? 0;
   if (robberBal <= 0 || robberBal < 2000)
     return client.utils.sendError(
       `You cannot rob someone with less than $2,000 in their Wallet!`,
