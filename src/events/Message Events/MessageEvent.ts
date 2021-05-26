@@ -80,7 +80,7 @@ export const run: RunFunction = async (client, message: Message) => {
   }
 
   if(GuildConfig?.Automod) {
-    let checkMessage = await automod.checkMessage(message);
+    let checkMessage = automod.checkMessage(message);
 
     if(checkMessage) {
       if(!message.deleted && message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")) {
