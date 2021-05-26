@@ -6,6 +6,8 @@ import ms from "ms";
 import GuildConfigSchema from "../../models/GuildConfig/guild";
 import { promisify } from "util";
 const wait = promisify(setTimeout);
+import { automod } from '../../utils/AutomodManager';
+import { MessageFlags } from "discord.js";
 
 export const run: RunFunction = async (client, message: Message) => {
   if (message.author.bot || !message.guild) return;
@@ -76,6 +78,33 @@ export const run: RunFunction = async (client, message: Message) => {
       }
     }
   }
+
+  if(GuildConfig?.Automod) {
+    let checkMessage = await automod.checkMessage(message);
+
+    if(checkMessage) {
+      if(!message.deleted && message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")) {
+        let checkModRoles = await client.utils.resolveModRole(message.guild.id);
+        if(checkModRoles) {
+          for(const role of checkModRoles) {
+            if(message.member.roles.cache.has(role) || message.member.permissions.has("MANAGE_MESSAGES")) {
+              return;
+          }
+        }
+        message.delete();
+        let automodEmbed = new client.embed()
+        .setTitle(`Automod Triggered!`)
+        .setDescription(`${message.author} triggered the automod!`)
+        .setClear()
+        .setTimestamp()
+        .setIcon(message.guild)
+        .setFooter(`Vade Moderation`)
+
+        message.channel.send(automodEmbed);
+      }
+    }
+  }
+}
 
   if (!message.content.toLowerCase().startsWith(prefix)) return;
 
