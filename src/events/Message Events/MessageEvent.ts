@@ -103,7 +103,11 @@ export const run: RunFunction = async (client, message: Message) => {
         .setIcon(message.guild)
         .setFooter(`Vade Moderation`)
 
-        message.channel.send(automodEmbed);
+        message.channel.send(automodEmbed).then(async (msg) => {
+          await wait(1000)
+          // @ts-ignore
+          if(!msg.deleted && msg.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")) msg.delete();
+        })
       }
     }
   }
