@@ -1,4 +1,4 @@
-import { Message } from "discord.js-light";
+import { Guild, GuildMember, Message } from "discord.js-light";
 import arrays from '../Assets/Automod/messages.json';
 
 const banned_words = [
@@ -452,9 +452,7 @@ const banned_words = [
     "willy",
     "xrated",
     "xxx"
-  ]
-
-
+  ];
 
 
 export namespace automod {
@@ -468,6 +466,26 @@ export function checkMessage(message: Message) {
            return true;
        } 
    }
+}
+
+export function checkMod(member: GuildMember, guild: Guild, modRoles: Array<string>) {
+    for(const role of modRoles) {
+        if(member.roles.cache.has(role) || member.permissions.has("MANAGE_MESSAGES")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+export function checkAdmin(member: GuildMember, guild: Guild, adminRoles: Array<string>) {
+    for(const role of adminRoles) {
+        if(member.roles.cache.has(role) || member.permissions.has("MANAGE_GUILD")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 }
