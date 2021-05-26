@@ -25,7 +25,8 @@ export const run: RunFunction = async (client, message: Message) => {
 
   const suggestionChannelID = GuildConfig?.Suggestion;
   const checkProfile = await profile.findOne({ User: message.author.id });
-  if(checkProfile?.Blacklisted && !client.owners.includes(message.author.id)) return;
+  if (checkProfile?.Blacklisted && !client.owners.includes(message.author.id))
+    return;
   let lang = checkProfile?.Language ?? "en";
 
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {
@@ -86,7 +87,6 @@ export const run: RunFunction = async (client, message: Message) => {
   const command: Command =
     client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
 
-
   if (command) {
     try {
       if (client.cooldowns.has(`${message.author.id}-${command.name}`))
@@ -142,11 +142,17 @@ export const run: RunFunction = async (client, message: Message) => {
       }
 
       if (command.NSFW && !message.channel.nsfw) {
-        return client.utils.sendError(`This Command can only be ran in an NSFW Channel!`, message.channel)
+        return client.utils.sendError(
+          `This Command can only be ran in an NSFW Channel!`,
+          message.channel
+        );
       }
 
-      if(command.voteRequired && !hasVoted) {
-        return client.utils.sendError(`This Command requires you to have voted! You can vote via doing \`${prefix}vote\`.`, message.channel);
+      if (command.voteRequired && !hasVoted) {
+        return client.utils.sendError(
+          `This Command requires you to have voted! You can vote via doing \`${prefix}vote\`.`,
+          message.channel
+        );
       }
 
       command.run(client, message, args, lang);

@@ -259,4 +259,3 @@ export const botPerms: string[] = ["MANAGE_ROLES"];
 function isCustomEmoji(emoji) {
   return emoji.split(":").length == 1 ? false : true;
 }
-

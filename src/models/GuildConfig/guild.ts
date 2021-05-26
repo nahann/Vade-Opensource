@@ -52,7 +52,6 @@ const guildSchema = new mongoose.Schema({
   description: String,
   colour: String,
   footer: String,
-
 });
 
 const guilds = mongoose.model<IGuild>(`Guild`, guildSchema, "vade-guilds");

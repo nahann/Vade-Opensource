@@ -6,6 +6,6 @@ import type { Bot } from "../../client/Client";
 
 export const run: RunFunction = async (client: Bot, message: Message) => {
   await StarboardManager.onRemoveAll(message);
-}
+};
 
-export const name: string = 'messageReactionRemoveAll'
+export const name: string = "messageReactionRemoveAll";

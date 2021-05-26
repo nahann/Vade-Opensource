@@ -10,20 +10,20 @@ export const run: RunFunction = async (client, message, args) => {
     .setTimestamp()
     .setClear();
 
-    let button = new MessageButton()
-    .setStyle('url') 
+  let button = new MessageButton()
+    .setStyle("url")
     .setURL("https://top.gg/bot/782309258620305438")
-    .setLabel('Top.gg')
+    .setLabel("Top.gg");
 
-    let button2 = new MessageButton()
-    .setStyle('url')
+  let button2 = new MessageButton()
+    .setStyle("url")
     .setURL("https://discordbotlist.com/bots/vade")
-    .setLabel("Discord Bot List")
+    .setLabel("Discord Bot List");
 
-    // @ts-ignore
-  return message.channel.send(`You can vote at the following!`, { buttons: [
-    button, button2
-  ]});
+  // @ts-ignore
+  return message.channel.send(`You can vote at the following!`, {
+    buttons: [button, button2],
+  });
 };
 export const name: string = "vote";
 export const category: string = "Utility";

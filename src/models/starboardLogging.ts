@@ -8,7 +8,6 @@ interface IStar extends Document {
   Channel: string;
   Message: string;
   StarboardMessage: string;
-
 }
 
 export const bankSchema = new Schema({
@@ -21,12 +20,12 @@ export const bankSchema = new Schema({
     required: true,
   },
   Amount: {
-      type: Number,
-      required: true,
+    type: Number,
+    required: true,
   },
   Channel: {
-      type: String,
-      required: true,
+    type: String,
+    required: true,
   },
   Message: {
     type: String,
@@ -35,7 +34,7 @@ export const bankSchema = new Schema({
   StarboardMessage: {
     type: String,
     required: true,
-  }
+  },
 });
 
 const bank =

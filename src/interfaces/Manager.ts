@@ -60,15 +60,8 @@ export default (client: Bot) => {
           });
         }
       });
-
-
     }, ms("15m"));
   }
-
-  
-
-
-
 
   // both bots
 };

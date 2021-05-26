@@ -61,7 +61,7 @@ export const run: RunFunction = async (
       "spotify",
       "brawl stars",
       "roblox",
-      "rocket league®"
+      "rocket league®",
     ];
 
     if (!valid.includes(activity.name?.toLowerCase())) {

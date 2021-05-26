@@ -17,9 +17,7 @@ export const run: RunFunction = async (client, message, args) => {
   ];
 
   const availableCategories = await Promise.all(
-    allCategories.map((cat) =>
-      client.utils.categoryCheck(cat, message)
-    )
+    allCategories.map((cat) => client.utils.categoryCheck(cat, message))
   );
 
   const categories = allCategories.filter(

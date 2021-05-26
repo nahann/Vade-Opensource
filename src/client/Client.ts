@@ -15,7 +15,7 @@ import Lottery from "../utils/Scheduled";
 import { Manager } from "erela.js";
 import { I18n } from "i18n";
 import path from "path";
-import buttons from '../utils/buttons/src/index';
+import buttons from "../utils/buttons/src/index";
 
 const i18n = new I18n({
   locales: ["en", "ro"],
@@ -62,10 +62,10 @@ class Bot extends Client {
   }
 
   public async start(config: Config): Promise<void> {
-    this.logger.info("hi")
+    this.logger.info("hi");
     Mongo();
     this.config = config;
-  await this.login(config.token);
+    await this.login(config.token);
     Lottery(this);
     buttons(this);
 

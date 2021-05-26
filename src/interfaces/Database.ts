@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import config from "../config.json";
 
 export default async function connect() {
-  const logger = new Logger("mongodb")
+  const logger = new Logger("mongodb");
   try {
     mongoose.connect(
       config.mongoURI,

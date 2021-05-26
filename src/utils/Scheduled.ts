@@ -29,7 +29,10 @@ async function main(client: Bot) {
 
       console.log(`Rolling lottery...`);
 
-      await economy.findOneAndUpdate({ User: winner, $inc: { Wallet: lottery.pot }});
+      await economy.findOneAndUpdate({
+        User: winner,
+        $inc: { Wallet: lottery.pot },
+      });
 
       lotteryChannel.send(
         `Congrats <@${winner}> on winning the lottery with a pot of ${nf.format(
