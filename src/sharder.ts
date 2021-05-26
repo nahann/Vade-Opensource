@@ -16,8 +16,8 @@ const main = async () => {
     client: Bot,
     token: File.token,
     timeout: 15000,
-    // shardCount: 1,
-    // clusterCount: 1,
+     shardCount: 1,
+     clusterCount: 1,
     clientOptions: {
       ws: { intents: Intents.ALL },
       partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"],
