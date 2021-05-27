@@ -8,8 +8,6 @@ export const run: RunFunction = async (client, message, args) => {
 
   if (
     !regex ||
-    !regex.length ||
-    regex.length > 1 ||
     !client.config.validGames.includes(
       regex[0]?.replace(/"/g, "")?.toLowerCase()
     )
