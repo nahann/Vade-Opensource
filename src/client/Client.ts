@@ -15,7 +15,9 @@ import Lottery from "../utils/Scheduled";
 import { Manager } from "erela.js";
 import { I18n } from "i18n";
 import path from "path";
+
 import buttons from "../utils/buttons/src/index";
+import type InteractionCreate from "../utils/Buttons/typings/Classes/INTERACTION_CREATE";
 
 const i18n = new I18n({
   locales: ["en", "ro"],
@@ -26,8 +28,8 @@ const i18n = new I18n({
 
 const globPromise = promisify(glob);
 
-class Bot extends Client {
-  private static __instance__?: Bot;
+export class Bot extends Client {
+  public static __instance__?: Bot;
 
   public logger: Logger = new Logger("vade");
   public commands: Collection<string, Command> = new Collection();
@@ -48,13 +50,29 @@ class Bot extends Client {
   public fetchforguild: Map<string, Object> = new Map();
   public userVotes: Record<string, number> = {};
   public i18n = i18n;
+  public buttons: Record<string, (data: InteractionCreate) => void> = {};
 
   public get translate() {
     return this.i18n.__;
   }
 
-  public constructor(options: ClientOptions) {
-    super(options);
+  public constructor(options: ClientOptions = {}) {
+    super({
+      ...options,
+      ws: { intents: Intents.ALL },
+      partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"],
+      messageCacheLifetime: 180,
+      messageCacheMaxSize: 200,
+      messageEditHistoryMaxSize: 200,
+      messageSweepInterval: 180,
+      restTimeOffset: 0,
+      cacheGuilds: true,
+      cacheChannels: true,
+      cacheOverwrites: false,
+      cacheRoles: true,
+      cacheEmojis: true,
+      cachePresences: true,
+    });
 
     if (Bot.__instance__) throw new Error("Another client was created.");
 
@@ -108,5 +126,3 @@ class Bot extends Client {
     return Bot.__instance__;
   }
 }
-
-export { Bot };

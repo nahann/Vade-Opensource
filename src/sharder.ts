@@ -16,23 +16,8 @@ const main = async () => {
     client: Bot,
     token: File.token,
     timeout: 15000,
-     shardCount: 1,
+    shardCount: 1,
     clusterCount: 1,
-    clientOptions: {
-      ws: { intents: Intents.ALL },
-      partials: ["MESSAGE", "CHANNEL", "REACTION", "GUILD_MEMBER", "USER"],
-      messageCacheLifetime: 180,
-      messageCacheMaxSize: 200,
-      messageEditHistoryMaxSize: 200,
-      messageSweepInterval: 180,
-      restTimeOffset: 0,
-      cacheGuilds: true,
-      cacheChannels: true,
-      cacheOverwrites: false,
-      cacheRoles: true,
-      cacheEmojis: true,
-      cachePresences: true,
-    },
   });
 
   sharder.on(SharderEvents.READY, (message) => logger.info("Ready now"));

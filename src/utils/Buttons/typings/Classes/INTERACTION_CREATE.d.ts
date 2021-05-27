@@ -5,6 +5,7 @@ declare class INTERACTION_CREATE {
   id: string;
   version: number;
   token: string;
+  data: Record<string, any>;
   discordID: Snowflake;
   applicationID: Snowflake;
   guild: Guild;

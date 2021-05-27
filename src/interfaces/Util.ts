@@ -122,6 +122,7 @@ export default class Util {
     return null;
   }
 
+
   async reactionDelete(guildId, msgid: string, emoji: string) {
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!msgid) throw new TypeError("A message id was not provided.");

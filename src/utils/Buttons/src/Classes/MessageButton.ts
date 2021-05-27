@@ -1,8 +1,21 @@
 const { resolveStyle } = require("../Util");
 const { resolveString } = require("discord.js").Util;
+const { EventEmitter } = require("events");
 
-class MessageButton {
+/**
+ * TODO: Include docs link
+ */
+ export const enum ButtonStyle {
+	Primary = 1,
+	Secondary,
+	Success,
+	Danger,
+	Link
+}
+
+class MessageButton extends EventEmitter {
   constructor(data = {}) {
+    super()
     this.setup(data);
   }
 
@@ -50,6 +63,21 @@ class MessageButton {
   setID(id) {
     this.custom_id = this.style === 5 ? null : resolveString(id);
     return this;
+  }
+
+  setTimeout(duration, seconds = true) {
+    this.timeout = seconds ? duration * 1000 : duration;
+    return this;
+  }
+
+  /** 
+   * Start the timeout.
+   */
+  startTimeout() {
+    this._timeout = setTimeout(() => {
+      this.emit("timed-out");
+      delete this._timeout;
+    }, this.timeout);
   }
 
   toJSON() {
