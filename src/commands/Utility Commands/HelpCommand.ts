@@ -3,6 +3,7 @@ import constants from "../../interfaces/Constants";
 import FuzzySearch from "fuse.js";
 import { Paginate } from "@the-nerd-cave/paginate";
 import paginationEmbed from "discord.js-pagination";
+import { MessageButton } from "../../utils/buttons/src";
 
 export const run: RunFunction = async (client, message, args) => {
   const checkOrCross = (bool) =>
@@ -21,6 +22,11 @@ export const run: RunFunction = async (client, message, args) => {
   const categories = allCategories.filter(
     (cat, idx) => availableCategories[idx]
   );
+
+  let button = new MessageButton()
+  .setStyle(`url`)
+  .setLabel(`Support Server`)
+  .setURL(`https://vade-bot.com/discord`)
 
   if (!args.length) {
     const mainEmbed = new client.embed()
@@ -42,8 +48,8 @@ export const run: RunFunction = async (client, message, args) => {
         true
       );
     }
-
-    return message.channel.send(mainEmbed);
+    // @ts-ignore
+    return message.channel.send(mainEmbed, { buttons: [ button ]});
   }
 
   const input = args.join(" ");
@@ -121,8 +127,8 @@ export const run: RunFunction = async (client, message, args) => {
         `No match found for that input. Please try an input closer to one of the command/category names.`
       )
       .setErrorColor();
-
-    return message.channel.send(noMatchEmbed2);
+    // @ts-ignore
+    return message.channel.send(noMatchEmbed2,  {buttons: [ button ]});
   }
 
   const commandEmbed = new client.embed()
@@ -152,7 +158,8 @@ export const run: RunFunction = async (client, message, args) => {
       )}`,
     ]);
 
-  return message.channel.send(commandEmbed);
+    // @ts-ignore
+  return message.channel.send(commandEmbed,  { buttons: [ button ] });
 };
 
 export const name: string = "help";
