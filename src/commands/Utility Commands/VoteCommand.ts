@@ -22,6 +22,7 @@ export const run: RunFunction = async (client, message, args) => {
 
   // @ts-ignore
   return message.channel.send(`You can vote at the following!`, {
+        // @ts-ignore
     buttons: [button, button2],
   });
 };
