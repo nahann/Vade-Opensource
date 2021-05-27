@@ -1,12 +1,14 @@
 import { RunFunction } from "../../interfaces/Event";
 
 export const run: RunFunction = async (client, button) => {
-  if (button.replied) console.log(button);
-  console.log(button);
+  if(button.deferred) return;
+  if (button.replied) return;
 
   switch (button.id) {
     case "test": {
-      if (!button.replied) button.channel.send("test");
+      const user = (await client.users.fetch(button.data.member.user.id));
+     button.reply.send(`${user.tag} clicked the button!`);
+     await button.reply()
     }
   }
 };

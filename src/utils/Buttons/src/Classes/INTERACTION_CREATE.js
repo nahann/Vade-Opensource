@@ -31,6 +31,8 @@ class ButtonEvent {
       this.clicker.user = this.client.users.resolve(data.user.id);
     }
 
+    this.data = data;
+
     this.message = new Message(client, data.message, this.channel);
 
     this.webhook = new WebhookClient(
@@ -61,6 +63,7 @@ class ButtonEvent {
       });
     this.deferred = true;
   }
+
 
   async think(ephemeral) {
     if (this.deferred || this.replied)

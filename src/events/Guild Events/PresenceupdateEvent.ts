@@ -11,6 +11,7 @@ export const run: RunFunction = async (
   oldPresence: Presence,
   newPresence: Presence
 ) => {
+  return;
   if(newPresence.user.partial) await newPresence.user.fetch()
   if(newPresence.user.bot) return;
   const userID = newPresence.user.id;

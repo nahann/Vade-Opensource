@@ -49,7 +49,7 @@ export const run: RunFunction = async (client, message, args) => {
       );
     }
     // @ts-ignore
-    return message.channel.send(``, { embed: [mainEmbed], buttons: [ button ]});
+    return message.channel.send(mainEmbed, { buttons: [ button ]});
   }
 
   const input = args.join(" ");
@@ -113,7 +113,7 @@ export const run: RunFunction = async (client, message, args) => {
     });
 
     let emojiList = ["◀️", "▶️"];
-    return paginationEmbed(message, embeds, emojiList, 60 * 1000);
+    return await paginationEmbed(message, embeds, emojiList, 60 * 1000);
     // works
   }
 
@@ -128,7 +128,7 @@ export const run: RunFunction = async (client, message, args) => {
       )
       .setErrorColor();
     // @ts-ignore
-    return message.channel.send(``,  {embeds: [noMatchEmbed2], buttons: [ button ]});
+    return await message.channel.send(noMatchEmbed2,  {buttons: [ button ]});
   }
 
   const commandEmbed = new client.embed()
@@ -159,7 +159,7 @@ export const run: RunFunction = async (client, message, args) => {
     ]);
 
     // @ts-ignore
-  return message.channel.send(``,  { embeds: [commandEmbed], buttons: [ button ] });
+  return await message.channel.send(commandEmbed,  { buttons: [ button ] });
 };
 
 export const name: string = "help";

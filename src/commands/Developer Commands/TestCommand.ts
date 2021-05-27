@@ -6,8 +6,7 @@ export const run: RunFunction = async (client, message, args) => {
     .setStyle("red")
     .setLabel("Kinda cool")
     .setID("test");
-
-  // @ts-ignore
+    // @ts-ignore
   message.channel.send(`test`, { buttons: [btn] });
 };
 export const name: string = "test";
