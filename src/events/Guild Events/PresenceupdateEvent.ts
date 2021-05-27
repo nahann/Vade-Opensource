@@ -47,7 +47,6 @@ export const run: RunFunction = async (
 
     const activity = playingActivities[0];
     if (!activity?.name) {
-      console.log(`No name registered [${newPresence.user.tag}]`)
       return;
     }
 

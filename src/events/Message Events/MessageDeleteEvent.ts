@@ -6,7 +6,7 @@ export const run: RunFunction = async (client, message: Message) => {
   if (!message) return;
   if (message.partial) await message.fetch();
   if (!message.content || !message.guild || message.author.bot) return;
-  StarboardManager.onRemoveAll(message);
+ await StarboardManager.onRemoveAll(message);
 };
 
 export const name: string = "messageDelete";
