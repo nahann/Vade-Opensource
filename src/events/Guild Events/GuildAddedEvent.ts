@@ -4,6 +4,7 @@ import { Types } from "mongoose";
 
 import type { TextChannel } from "discord.js-light";
 import { Guild } from "discord.js";
+import { MessageButton } from "../../utils/buttons/src";
 
 export const run: RunFunction = async (client, guild: Guild) => {
   const owner = await client.users.fetch(guild.ownerID);
@@ -31,12 +32,18 @@ export const run: RunFunction = async (client, guild: Guild) => {
     .addField(`Support Server`, `https://discord.com/invite/DFa5wNFWgP`)
     .addField(`Lead Developer`, `Ethan#7000 (473858248353513472)`);
 
+    let button = new MessageButton()
+    .setStyle(`url`)
+    .setLabel(`Support Server`)
+    .setURL(`https://vade-bot.com/discord`)
+
   if (
     guild.systemChannel &&
     guild.systemChannel.permissionsFor(guild.me).has("SEND_MESSAGES") &&
     guild.systemChannel.permissionsFor(guild.me).has("EMBED_LINKS")
   ) {
-    guild.systemChannel?.send(sendEmbed);
+    // @ts-ignore
+    guild.systemChannel?.send(sendEmbed, { buttons: [ button ]});
   }
 
   if (document) return; // Maintain old data
