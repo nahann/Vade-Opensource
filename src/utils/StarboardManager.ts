@@ -69,7 +69,6 @@ export namespace StarboardManager {
       return;
     }
 
-    message.channel.send("Star amount reached."); /* for debugging purposes  */
 
     if (
       starboardChannel.permissionsFor(message.guild.me).has("SEND_MESSAGES")
