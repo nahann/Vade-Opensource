@@ -11,6 +11,8 @@ export const run: RunFunction = async (
   oldPresence: Presence,
   newPresence: Presence
 ) => {
+  if(newPresence.user.partial) await newPresence.user.fetch()
+  if(newPresence.user.bot) return;
   const userID = newPresence.user.id;
   const check = await peoplePlaying.findOne({ userID });
 
@@ -45,23 +47,24 @@ export const run: RunFunction = async (
 
     const activity = playingActivities[0];
     if (!activity?.name) {
+      console.log(`No name registered [${newPresence.user.tag}]`)
       return;
     }
 
     const locateSchema = await MainSchema.find({
       gameName: activity.name?.toLowerCase(),
     });
-    if (!locateSchema) return;
+    if (!locateSchema?.length) return;
 
     const valid: Array<string> = [
       "skyblock",
-      "call of duty®: modern warfare®",
+      "call of duty: modern warfare",
       "osu!",
       "valorant",
       "spotify",
       "brawl stars",
       "roblox",
-      "rocket league®",
+      "rocket league",
     ];
 
     if (!valid.includes(activity.name?.toLowerCase())) {
