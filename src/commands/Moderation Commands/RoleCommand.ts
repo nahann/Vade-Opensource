@@ -10,9 +10,9 @@ export const run: RunFunction = async (client, message, args) => {
     case "removeall": {
       const [id] = ctx;
 
-      const member = await client.utils.getMember(message, id);
+      const member = await client.utils.getMember(message, id, true);
 
-      if (!member) return message.channel.send(`I could not find the member!`);
+      if (!member) return;
 
       await Promise.all(
         member.roles.cache.map(async (role) => {
@@ -66,12 +66,7 @@ export const run: RunFunction = async (client, message, args) => {
     case "bots": {
       const [id] = ctx;
 
-      const role =
-        message.guild.roles.cache.find(
-          ({ name }) => name.toLowerCase() === id.toLowerCase()
-        ) ??
-        (await message.guild.roles.fetch(id)) ??
-        message.mentions.roles.first();
+      const role = client.utils.getRoles(id, message.guild);
 
       if (!role) return message.channel.send(`I could not find the role!`);
 
@@ -95,13 +90,7 @@ export const run: RunFunction = async (client, message, args) => {
     case "humans": {
       const [id] = ctx;
 
-      const role =
-        message.guild.roles.cache.find(
-          ({ name }) => name.toLowerCase() === id.toLowerCase()
-        ) ??
-        (await message.guild.roles.fetch(id)) ??
-        message.mentions.roles.first();
-
+      const role = client.utils.getRoles(id, message.guild)
       if (!role) return message.channel.send(`I could not find the role!`);
 
       const msg = await message.channel.send(`Adding roles to all humans..`);
@@ -122,34 +111,20 @@ export const run: RunFunction = async (client, message, args) => {
     }
 
     default: {
-      const [id, ...ids] = ctx;
+      const [id, ...ids] = args;
 
-      const member = await client.utils.getMember(message, id);
+      const member = await client.utils.getMember(message, id, true);
 
-      if (!member) return message.channel.send(`I could not find the member!`);
+      if (!member) return;
 
       try {
         await Promise.all(
           (
             await Promise.all(
               ids.map(async (id) => {
-                if (/^(-\+)?\d{18,19}$/.test(id))
-                  return message.guild.roles.fetch(
-                    id.match(/^(-\+)?\d{18,19}$/)?.[0] ?? ""
-                  );
-
-                if (/^(-\+)?<@&\d{18,19}>$/.test(id))
-                  return message.guild.roles.fetch(
-                    id.match(/^(-\+)?<@&(\d{18,19})>$/)?.[0] ?? ""
-                  );
-
-                const role = message.guild.roles.cache.find(
-                  ({ name }) => name.toLowerCase() === id.toLowerCase()
-                );
-
-                if (role) return role;
-
-                throw new Error(`Unable to find the role ${id}.`);
+              const role = client.utils.getRoles(id, message.guild);
+              if(role) return role;
+              throw new TypeError(`Unable to  find the role!`);
               })
             )
           ).map(async (role, i) => {
@@ -177,6 +152,7 @@ export const run: RunFunction = async (client, message, args) => {
       } catch (e) {
         return message.channel.send(e.message);
       }
+      client.utils.succEmbed(`Successfully added the role(s).`, message.channel);
     }
   }
 };
