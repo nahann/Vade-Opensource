@@ -8,14 +8,17 @@ export const run: RunFunction = async (client, message, args) => {
     case "guildMemberAdd": {
       client.emit("guildMemberAdd", message.member);
       message.channel.send(`Emitting....`);
+      break;
     }
     case "guildMemberRemove": {
       client.emit("guildMemberRemove", message.member);
       message.channel.send(`Emitting....`);
+      break;
     }
     case "guildCreate": {
       client.emit("guildCreate", message.guild);
       message.channel.send(`Emitting....`);
+      break;
     }
   }
 };

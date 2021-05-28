@@ -1,8 +1,10 @@
 import { RunFunction } from "../../interfaces/Event";
 import findAutorole from "../../models/autoroles";
-import { GuildMember, TextChannel } from "discord.js-light";
+import { GuildMember, TextChannel, Collection } from "discord.js-light";
 import Guild from "../../models/GuildConfig/guild";
 import findStickyRole from "../../models/GuildConfig/stickyroles";
+import inviteMemberSchema from "../../models/Invites/inviteMember";
+import inviterSchema from "../../models/Invites/inviter";
 
 export const run: RunFunction = async (client, member: GuildMember) => {
   try {
@@ -11,7 +13,7 @@ export const run: RunFunction = async (client, member: GuildMember) => {
       enabled: true,
     });
     console.log(fetchList);
-    if (!fetchList || !fetchList.roles.length) return;
+    if (fetchList && fetchList.roles.length) {
     fetchList.roles.forEach(async (role) => {
       console.log(role);
       const findRole = client.utils.getRoles(role, member.guild);
@@ -35,6 +37,7 @@ export const run: RunFunction = async (client, member: GuildMember) => {
           await member.roles.add(findRole.id);
       }
     });
+  }
   } catch (e) {
     console.log(e);
   }
@@ -102,28 +105,95 @@ export const run: RunFunction = async (client, member: GuildMember) => {
   }
 
   const locate_main_data = await Guild.findOne({ guildID: member.guild.id });
-  const type = locate_main_data?.welcomeType;
-  const welcome_channel = locate_main_data.welcomeChannel;
-  if (!welcome_channel) return;
-  const guildChannel = client.channels.cache.get(
-    welcome_channel
-  ) as TextChannel;
-  if (!guildChannel) return;
+  const defaultWelcomeChannel = locate_main_data?.welcomeType;
+  const welcome_channel = locate_main_data?.welcomeChannel;
+  const invite_channel = locate_main_data?.inviteChannel;
 
-  switch (type) {
-    case "message": {
+  if (welcome_channel) {
+    const guildChannel = (await client.channels.fetch(
+      welcome_channel
+    ) as TextChannel)
+    if(guildChannel) {
+    if(defaultWelcomeChannel) {
       let msg;
-
       msg = locate_main_data?.welcomeMessage;
       if (msg) {
         guildChannel.send(member, msg);
       } else {
         guildChannel.send(`${member}, welcome to the server!`);
       }
-    }
-
-    case "image": {
+     }
     }
   }
+
+  if(invite_channel) {
+    const channel = (await client.channels.fetch(invite_channel) as TextChannel);
+    const gi: any = client.invites.get(member.guild.id) || new Collection();
+  const invites = await member.guild.fetchInvites();
+  const invite =
+    invites.find((x) => gi.has(x.code) && gi.get(x.code).uses < x.uses) ||
+    gi.find((x) => !invites.has(x.code)) ||
+    member.guild.vanityURLCode;
+  client.invites.set(member.guild.id, invites);
+
+  if(!invite) {
+    return channel.send(`${member} joined! Unable to locate who they were Invited by.`);
+  }
+
+  if (invite === member.guild.vanityURLCode) {
+    channel.send(`${member} joined! Joined via Vanity URL.`);
+  }
+  if (!invite.inviter) return;
+  await inviteMemberSchema.findOneAndUpdate(
+    { guildID: member.guild.id, userID: member.user.id },
+    { $set: { inviter: invite.inviter.id, date: Date.now() } },
+    { upsert: true }
+  );
+  if (
+    Date.now() - member.user.createdTimestamp <=
+    1000 * 60 * 60 * 24 * 7
+  ) {
+    await inviterSchema.findOneAndUpdate(
+      { guildID: member.guild.id, userID: invite.inviter.id },
+      { $inc: { total: 1, fake: 1 } },
+      { upsert: true }
+    );
+    const inviterData = await inviterSchema.findOne({
+      guildID: member.guild.id,
+      userID: invite.inviter.id,
+    });
+    const total = inviterData ? inviterData?.total : 0;
+    channel.send(
+      `${member} joined our server. Was invited by ${invite.inviter.tag} (**${total}** Invites)`
+    );
+  } else {
+    await inviterSchema.findOneAndUpdate(
+      { guildID: member.guild.id, userID: invite.inviter.id },
+      { $inc: { total: 1, regular: 1 } },
+      { upsert: true }
+    );
+    const inviterData = await inviterSchema.findOne({
+      guildID: member.guild.id,
+      userID: invite.inviter.id,
+    });
+    const total = inviterData ? inviterData.total : 0;
+    channel.send(
+      `${member} joined our server. They were invited by ${invite.inviter.tag} (**${total}** Invites)`
+    );
+  }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 };
 export const name: string = "guildMemberAdd";

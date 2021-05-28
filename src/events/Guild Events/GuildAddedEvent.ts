@@ -33,7 +33,7 @@ export const run: RunFunction = async (client, guild: Guild) => {
     .addField(`Lead Developer`, `Ethan#7000 (473858248353513472)`);
 
     let button = new MessageButton()
-    .setStyle(`url`)
+    .setStyle(5)
     .setLabel(`Support Server`)
     .setURL(`https://vade-bot.com/discord`)
 
