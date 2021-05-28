@@ -1,9 +1,9 @@
-import { RunFunction } from "../../interfaces/Command";
+import type { RunFunction } from "../../interfaces/Command";
 import constants from "../../interfaces/Constants";
 import FuzzySearch from "fuse.js";
 import { Paginate } from "@the-nerd-cave/paginate";
-import paginationEmbed from "discord.js-pagination";
-import { MessageButton } from "../../utils/buttons/src";
+import paginationEmbed from "../../Classes/Pagination";
+import { MessageButton, ButtonStyle } from "../../utils/buttons/src/Classes/MessageButton";
 
 export const run: RunFunction = async (client, message, args) => {
   const checkOrCross = (bool) =>
@@ -19,14 +19,12 @@ export const run: RunFunction = async (client, message, args) => {
     allCategories.map((cat) => client.utils.categoryCheck(cat, message))
   );
 
-  const categories = allCategories.filter(
-    (cat, idx) => availableCategories[idx]
-  );
+  const categories = allCategories.filter((_, idx) => availableCategories[idx]);
 
   let button = new MessageButton()
-  .setStyle(`url`)
-  .setLabel(`Support Server`)
-  .setURL(`https://vade-bot.com/discord`)
+    .setStyle(ButtonStyle.Link)
+    .setLabel(`Support Server`)
+    .setURL(`https://vade-bot.com/discord`)
 
   if (!args.length) {
     const mainEmbed = new client.embed()
@@ -49,7 +47,7 @@ export const run: RunFunction = async (client, message, args) => {
       );
     }
     // @ts-ignore
-    return message.channel.send(mainEmbed, { buttons: [ button ]});
+    return message.channel.send({ embed: mainEmbed, buttons: [ button ]});
   }
 
   const input = args.join(" ");
@@ -128,7 +126,7 @@ export const run: RunFunction = async (client, message, args) => {
       )
       .setErrorColor();
     // @ts-ignore
-    return await message.channel.send(noMatchEmbed2,  {buttons: [ button ]});
+    return await message.channel.send({ embed: noMatchEmbed2, buttons: [ button ] });
   }
 
   const commandEmbed = new client.embed()
@@ -159,7 +157,7 @@ export const run: RunFunction = async (client, message, args) => {
     ]);
 
     // @ts-ignore
-  return await message.channel.send(commandEmbed,  { buttons: [ button ] });
+  return await message.channel.send({ embed: commandEmbed, buttons: [ button ] });
 };
 
 export const name: string = "help";

@@ -1,6 +1,7 @@
-import { RunFunction } from "../../interfaces/Command";
 import { Paginate } from "@the-nerd-cave/paginate";
 import paginationEmbed from "../../Classes/Pagination";
+
+import type { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {
   const role = args.join(" ");

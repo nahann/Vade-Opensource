@@ -1,9 +1,10 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';
 
-   export const run: RunFunction = async(client, message, args) => {
+export const run: RunFunction = async(_c, _m, _a) => {
 
-    }
-export const name: string = '';
-export const category: string = ''
-export const description: string = ''
-export const aliases: string[] = ['']
+}
+
+export const name: string = 'nickname';
+export const category: string = 'Moderation';
+export const description: string = 'Set a users nickname to the one specified.';
+export const aliases: string[] = ['nick'];

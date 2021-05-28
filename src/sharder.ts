@@ -1,10 +1,8 @@
 import "module-alias/register";
 
 import { Logger } from "@dimensional-fun/logger";
-import { isMaster } from "cluster";
-import { join } from "path";
 import { ShardingManager, SharderEvents } from "kurasuta";
-import { Intents } from "discord.js";
+import { join } from "path";
 
 import { Bot } from "./client/Client";
 import * as File from "./config.json";
@@ -20,14 +18,10 @@ const main = async () => {
     clusterCount: 1,
   });
 
-  sharder.on(SharderEvents.READY, (message) => logger.info("Ready now"));
-  sharder.on(SharderEvents.DEBUG, (message) => logger.debug(message));
-  sharder.on(SharderEvents.SHARD_READY, (shard) =>
-    logger.info(`Starting shard ${shard}, [${process.pid}]`)
-  );
-  sharder.on(SharderEvents.SPAWN, (cluster) =>
-    logger.info(`Spawning cluster; id=${cluster.id}`)
-  );
+  sharder.on(SharderEvents.READY, _ => logger.info("Ready now"));
+  sharder.on(SharderEvents.DEBUG, msg => logger.debug(msg));
+  sharder.on(SharderEvents.SHARD_READY, id => logger.info(`Starting shard ${id}, [${process.pid}]`));
+  sharder.on(SharderEvents.SPAWN, ({ id }) => logger.info(`Spawning cluster; id=${id}`));
 
   await sharder
     .spawn()

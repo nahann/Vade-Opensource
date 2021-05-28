@@ -1,22 +1,22 @@
 import { Logger } from "@dimensional-fun/logger";
 
-import { Command } from "../interfaces/Command";
-import { Event } from "../interfaces/Event";
-import consola, { Consola } from "consola";
 import { Client, Intents, Collection, ClientOptions } from "discord.js-light";
 import glob from "glob";
 import { promisify } from "util";
-import { Config } from "../interfaces/Config";
 import Constants from "../interfaces/Constants";
 import Util from "../interfaces/Util";
 import Mongo from "../interfaces/Database";
 import EmbedConstruction from "../Classes/MainBotEmbed";
 import Lottery from "../utils/Scheduled";
-import { Manager } from "erela.js";
 import { I18n } from "i18n";
 import path from "path";
 
 import buttons from "../utils/buttons/src/index";
+
+import type { Manager } from "erela.js";
+import type { Config } from "../interfaces/Config";
+import type { Command } from "../interfaces/Command";
+import type { Event } from "../interfaces/Event";
 import type InteractionCreate from "../utils/Buttons/typings/Classes/INTERACTION_CREATE";
 
 const i18n = new I18n({

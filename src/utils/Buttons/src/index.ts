@@ -1,11 +1,13 @@
-const { Structures } = require("discord.js");
-const Message = require("./Classes/Message");
-const TextChannel = require("./Classes/TextChannel");
-const DMChannel = require("./Classes/DMChannel");
-const MessageButton = require("./Classes/MessageButton");
-const INTERACTION_CREATE = require("./Classes/INTERACTION_CREATE.js");
+import { Structures } from "discord.js";
+import Message from "./Classes/Message";
+import TextChannel from "./Classes/TextChannel";
+import DMChannel from "./Classes/DMChannel";
+import INTERACTION_CREATE from "./Classes/INTERACTION_CREATE";
 
-module.exports = (client) => {
+import { MessageButton } from "./Classes/MessageButton"
+
+export default (client) => {
+  // @ts-expect-error 
   Structures.extend("Message", () => Message);
   Structures.extend("TextChannel", () => TextChannel);
   Structures.extend("DMChannel", () => DMChannel);
@@ -23,6 +25,6 @@ module.exports = (client) => {
   return {
     MessageButton: MessageButton,
   };
-};
+}
 
-module.exports.MessageButton = MessageButton;
+export { MessageButton }

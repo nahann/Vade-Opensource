@@ -1,5 +1,5 @@
-import { RunFunction } from "../../interfaces/Command";
 import mainUser from "../../models/profile";
+import type { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {
   const schemaLocate = await mainUser.findOne({ User: message.author.id });

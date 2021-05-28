@@ -1,10 +1,11 @@
-import { RunFunction } from "../../interfaces/Event";
 import SlashCommandManager from "../../Classes/SlashCommandManager";
-import { Guild, TextChannel, User, VoiceChannel } from "discord.js-light";
 import { Manager } from "erela.js";
 import Spotify from "erela.js-spotify";
 import Deezer from "erela.js-deezer";
 import Facebook from "erela.js-facebook";
+
+import type { Guild, TextChannel, VoiceChannel } from "discord.js-light";
+import type { RunFunction } from "../../interfaces/Event";
 
 export const run: RunFunction = async (client) => {
   const nodes: any = [
@@ -17,7 +18,6 @@ export const run: RunFunction = async (client) => {
 
   const clientID: string = client.config.SPOTIFY_CLIENT_ID;
   const clientSecret: string = client.config.SPOTIFY_SECRET_ID;
-  const sendError = client.utils.sendError;
 
   client.manager = new Manager({
     nodes,
@@ -98,7 +98,7 @@ export const run: RunFunction = async (client) => {
 
     let embed = new client.embed().setMainColor();
 
-    const filter = (reaction, user) =>
+    const filter = (reaction, _user) =>
       ["⏮", "⏭", "⏯", "🔇", "🔉", "🔊", "🔁", "🔀", "⏹"].includes(
         reaction.emoji.name
       );
@@ -270,7 +270,7 @@ export const run: RunFunction = async (client) => {
   //Pauses music when the bot gets moved
   client.manager.on(
     "playerMove",
-    async (player, currentChannel, newChannel) => {
+    async (player, _currentChannel, newChannel) => {
       if (!newChannel) {
         player.destroy();
       } else {

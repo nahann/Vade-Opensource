@@ -1,6 +1,8 @@
-const { APIMessage } = require("discord.js");
-const Util = require("../Util");
-const MessageButton = require("./MessageButton");
+//@ts-nocheck
+
+import { APIMessage } from "discord.js";
+import Util from "../Util";
+import { MessageButton } from "./MessageButton";
 
 class sendAPICallback extends APIMessage {
   resolveData() {
@@ -10,7 +12,6 @@ class sendAPICallback extends APIMessage {
 
     super.resolveData();
     
-
     if (this.options.flags) {
       this.data.flags = parseInt(this.options.flags);
     }

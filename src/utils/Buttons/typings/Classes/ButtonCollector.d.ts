@@ -1,4 +1,5 @@
-export = ButtonCollector;
+import { Collector, Collection, Message, Channel, Guild } from "discord.js";
+
 declare class ButtonCollector extends Collector<any, any> {
   static key(button: object): string;
   constructor(message: Message, filter: any, options?: {});
@@ -10,6 +11,12 @@ declare class ButtonCollector extends Collector<any, any> {
   _handleGuildDeletion(guild: Guild): void;
   _handleMessageDeletion(message: Message): void;
 }
-import { Collector, Message, Channel, Guild } from "discord.js";
-import Collection_1 = require("discord.js");
-import Collection = Collection_1.Collection;
+
+export = ButtonCollector;
+
+declare module "discord.js" {
+  interface Message {
+    createButtonCollector(filter: any, options?: { time?: number }): ButtonCollector;
+    awaitButtons(filter: any, options?: {}): Promise<Array>;
+  }
+}

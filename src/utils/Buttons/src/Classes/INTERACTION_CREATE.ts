@@ -1,9 +1,28 @@
-const { sendAPICallback } = require("./APIMessage");
-const WebhookClient = require("./WebhookClient");
+// @ts-nocheck
+
+import { sendAPICallback } from "./APIMessage";
+import WebhookClient from "./WebhookClient";
+
+import type { Bot } from "../../../../client/Client"
+import type { Guild, TextChannel, Message as DiscordMessage } from "discord.js";
+
 const Message = require("./Message");
 
-class ButtonEvent {
-  constructor(client, data) {
+export default class ButtonEvent {
+  client: Bot;
+  id: string;
+  version: number;
+  token: string;
+  discordID: string;
+  applicationID: string;
+  guild?: Guild;
+  channel: TextChannel
+  clicker: Record<string, any>;
+  data: Record<string, any>;
+  message: DiscordMessage;
+  webhook: WebhookClient
+
+  constructor(client: Bot, data: Record<string, any>) {
     this.client = client;
 
     this.id = data.data.custom_id;
@@ -20,7 +39,7 @@ class ButtonEvent {
       ? client.guilds.cache.get(data.guild_id)
       : undefined;
 
-    this.channel = client.channels.cache.get(data.channel_id);
+    this.channel = client.channels.cache.get(data.channel_id) as TextChannel;
 
     this.clicker = {};
 
@@ -47,10 +66,9 @@ class ButtonEvent {
   }
 
   async defer(ephemeral) {
-    if (this.deferred || this.replied)
-      throw new Error(
-        "BUTTON_ALREADY_REPLIED: This button already has a reply"
-      );
+    // if (this.deferred || this.replied)
+      // throw new Error("BUTTON_ALREADY_REPLIED: This button already has a reply");
+
     await this.client.api
       .interactions(this.discordID, this.token)
       .callback.post({
@@ -61,15 +79,22 @@ class ButtonEvent {
           },
         },
       });
+
     this.deferred = true;
   }
 
+  async ack() {
+    await this.client.api.interactions(this.discordID, this.token).callback.post({
+      data: {
+        type: 1
+      }
+    })
+  }
 
   async think(ephemeral) {
     if (this.deferred || this.replied)
-      throw new Error(
-        "BUTTON_ALREADY_REPLIED: This button already has a reply"
-      );
+      throw new Error("BUTTON_ALREADY_REPLIED: This button already has a reply");
+
     await this.client.api
       .interactions(this.discordID, this.token)
       .callback.post({
@@ -145,5 +170,3 @@ class ButtonEvent {
     };
   }
 }
-
-module.exports = ButtonEvent;

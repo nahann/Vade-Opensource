@@ -1,8 +1,9 @@
-import { Bot } from "../client/Client";
-import { Client, Collection } from "discord.js-light";
+import { Collection } from "discord.js-light";
 import { readdir, stat } from "fs/promises";
 import { join } from "path";
-import {
+
+import type { Bot } from "../client/Client";
+import type {
   Interaction,
   SlashCommand,
   SlashCommandData,

@@ -1,5 +1,4 @@
 import {
-  Channel,
   Guild,
   GuildMember,
   Message,
@@ -11,10 +10,9 @@ import {
 import FuzzySearch from "fuse.js";
 import ms from "ms";
 
-import { Bot } from "../client/Client";
+import type { Bot } from "../client/Client";
 import premium_schema from "../models/premium_schema";
 import guild_schema from "../models/GuildConfig/guild";
-import economy_schema from "../models/profile";
 import serverset from "../models/GuildConfig/ReactionRoles";
 import loggingSchema from "../models/GuildConfig/Logging";
 
@@ -154,7 +152,7 @@ export default class Util {
     msgid: string,
     newroleid: string,
     emoji: string,
-    newoption: number = 1
+    _newoption: number = 1
   ) {
     if (!this.client) throw new TypeError("An client was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
@@ -697,7 +695,7 @@ export default class Util {
     });
   }
 
-  async applyMultiplier(user) {}
+  async applyMultiplier(_user) {}
 
-  async getMultipliers(user) {}
+  async getMultipliers(_user) {}
 }

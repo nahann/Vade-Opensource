@@ -33,7 +33,7 @@ class ButtonCollector extends Collector {
 
     this.on('collect', (button) => {
       this.total++;
-      this.users.set(button.clicker.user.id, button.clicker.user);
+      this.users.set(button.data.member.user.id, button.data.member.user);
     });
   }
 
@@ -53,7 +53,7 @@ class ButtonCollector extends Collector {
     this.checkEnd();
   }
 
-  get endReason() {
+  endReason() {
     if (this.options.max && this.total >= this.options.max) return 'limit';
     return null;
   }

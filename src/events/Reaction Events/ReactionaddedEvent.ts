@@ -1,13 +1,9 @@
-import moment from "moment";
-import { GuildMember, TextChannel } from "discord.js-light";
-
-/* interfaces */
-import { RunFunction } from "../../interfaces/Event";
+import type { GuildMember } from "discord.js-light";
+import type { RunFunction } from "../../interfaces/Event";
 
 /* database models */
 import Db from "../../models/GuildConfig/ReactionRoles";
 import GuildDB from "../../models/GuildConfig/guild";
-import StarSchema from "../../models/starboardLogging";
 
 /* starboard things */
 import { StarboardManager } from "../../utils/StarboardManager";
@@ -30,7 +26,6 @@ export const run: RunFunction = async (client, messageReaction, user) => {
   if (client.user.id === user.id) return;
 
   const { message, emoji } = messageReaction;
-  const mainMessage = await message.fetch();
 
   const member = (await message.guild.members.fetch(user.id)) as GuildMember;
 

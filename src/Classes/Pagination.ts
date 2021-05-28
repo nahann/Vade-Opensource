@@ -1,13 +1,13 @@
-import { MessageEmbed, Message } from "discord.js-light";
-import { MessageButton } from "../utils/buttons/src";
+import { MessageButton, ButtonStyle } from "../utils/buttons/src/Classes/MessageButton";
 
-import type MsgBtn from "../utils/Buttons/typings/Classes/MessageButton";
+import type { MessageEmbed, Message } from "discord.js-light";
+import type ButtonEvent from "../utils/Buttons/src/Classes/INTERACTION_CREATE";
 
 const paginationEmbed = async (
   msg: Message,
   pages: MessageEmbed[],
   emojiList = ["⏪", "⏩"],
-  timeout = 60000
+  _timeout = 60000
 ) => {
   if (!msg && !msg.channel) {
     throw new Error("Channel is inaccessible to the client.");
@@ -27,38 +27,58 @@ const paginationEmbed = async (
       "No role members to display. This is usually due to Discords caching limitations."
   );
 
-  const backButton: MsgBtn = new MessageButton()
-    .setStyle("gray")
+  const forwardButton = new MessageButton()
+    .setStyle(ButtonStyle.Secondary)
+    .setID("forward")
+    .setLabel("Forward")
+    .setEmoji(emojiList[1])
+
+  const exitButton = new MessageButton()
+    .setStyle(ButtonStyle.Secondary)
+    .setID("exit")
+    .setLabel("Exit")
+    .setEmoji("❌")
+
+  const backButton = new MessageButton()
+    .setStyle(ButtonStyle.Secondary)
     .setID("back")
-    .setLabel("Previous")
+    .setLabel("Back")
+    .setEmoji(emojiList[0])
 
-  for (const emoji of emojiList) await curPage.react(emoji);
-  const reactionCollector = curPage.createReactionCollector(
-    (reaction, user) => emojiList.includes(reaction.emoji.name) && !user.bot,
-    { time: timeout }
-  );
+  const collector = curPage.createButtonCollector((button) => button.data.member.user.id === msg.author.id, { time: 60e3 });
+  collector.on('collect', (b: ButtonEvent) => {
+    b.defer(true)
 
-  reactionCollector.on("collect", (reaction) => {
-    reaction.users.remove(msg.author);
-    switch (reaction.emoji.name) {
-      case emojiList[0]:
-        page = page > 0 ? --page : pages.length - 1;
-        break;
-      case emojiList[1]:
+    switch (b.id) {
+      case "forward": {
         page = page + 1 < pages.length ? ++page : 0;
-        break;
-      default:
-        break;
+        break
+      }
+       
+      case "exit": {
+        return collector.stop("exited")
+      }
+       
+      case "back": {
+        page = page > 0 ? --page : pages.length - 1;
+        break
+      }
     }
-    curPage.edit(
-      pages[page]?.setFooter(`Page ${page + 1} / ${pages.length}`)
-    ) ?? "";
+
+    curPage.edit({
+      embed: pages[page]?.setFooter(`Page ${page + 1} / ${pages.length}`),
+      buttons: [ backButton, exitButton, forwardButton ]
+    });
   });
-  reactionCollector.on("end", () => {
-    if (!curPage.deleted) {
-      curPage.reactions.removeAll();
-    }
-  });
+
+  collector.on('end', () => {
+    forwardButton.setDisabled()
+    backButton.setDisabled()
+    curPage.edit({ embed: pages[0], buttons: [ backButton, forwardButton ] })
+  })
+  
+  curPage.edit({ buttons: [ backButton, exitButton, forwardButton ] })
   return curPage;
 };
+
 export default paginationEmbed;

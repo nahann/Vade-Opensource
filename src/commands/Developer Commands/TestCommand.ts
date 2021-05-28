@@ -1,17 +1,17 @@
-import { RunFunction } from "../../interfaces/Command";
-import { MessageButton } from "../../utils/buttons/src";
-import type MsgBtn from "../../utils/Buttons/typings/Classes/MessageButton";
+import { MessageButton, ButtonStyle } from "../../utils/buttons/src/Classes/MessageButton";
 
-export const run: RunFunction = async (client, message, args) => {
-  let btn: MsgBtn = new MessageButton()
-    .setStyle("red")
+import type { RunFunction } from "../../interfaces/Command";
+
+export const run: RunFunction = async (_client, message, _args) => {
+  let btn = new MessageButton()
+    .setStyle(ButtonStyle.Danger)
     .setLabel("Kinda cool")
     .setID("test");
     // @ts-ignore
     
   message.channel.send(`test`, { buttons: [btn] });
 
-  btn.on("click", (data) => {
+  btn.on("click", (_data) => {
     message.channel.send("penis")
   })
 };

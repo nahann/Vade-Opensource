@@ -15,8 +15,8 @@ declare class INTERACTION_CREATE {
   webhook: WebhookClient;
   replied: boolean;
   deferred: boolean;
-  defer(ephemeral: boolean): Promise<void>;
-  think(ephemeral: boolean): Promise<void>;
+  defer(ephemeral?: boolean): Promise<void>;
+  think(ephemeral?: boolean): Promise<void>;
   get reply(): {
     send: (content: string, options?: object) => Promise<void>;
     fetch: () => Promise<string>;
