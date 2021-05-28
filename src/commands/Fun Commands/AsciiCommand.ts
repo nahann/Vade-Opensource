@@ -14,7 +14,7 @@ return client.utils.sendError(`Please put text that has 20 characters or less be
 }
 
 
-figlet(text, function(err, data) {
+figlet(text, function(_err, data) {
 message.channel.send(data, {
 code: 'AsciiArt' 
 });
