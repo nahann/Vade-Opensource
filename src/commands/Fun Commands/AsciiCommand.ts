@@ -25,3 +25,5 @@ export const name: string = 'ascii';
 export const category: string = 'Fun';
 export const description: string = 'Asciffy some text!';
 export const usage: string = '!ascii <text goes here>.';
+
+export const aliases: string[] = ['banner'];
