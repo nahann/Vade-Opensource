@@ -11,6 +11,6 @@ import superagent from 'superagent';
 
     }
 export const name: string = 'dog';
-export const category: string = 'Receive an image of a Dog!'
-export const description: string = 'Fun'
+export const category: string = 'Fun'
+export const description: string = 'Receive an image of a Dog!'
 export const aliases: string[] = ['doggo']

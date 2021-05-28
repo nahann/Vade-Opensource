@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 
-export const run: RunFunction = async (client, message, args) => {
+export const run: RunFunction = async (client, message, _args) => {
   let embed = new client.embed().setMainColor();
 
   const player = client.manager.players.get(message.guild.id);
