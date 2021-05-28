@@ -13,7 +13,7 @@ import axios from 'axios'
         account = response.data
         details = account.graphql.user
     } catch (error) {
-        return client.utils.sendError(`Could not locate that member! This is usually due to their account being set to private.`, message.channel)
+        return client.utils.sendError(`Could not locate that user! This is usually due to their account being set to private.`, message.channel)
     }
 
     const embed = new client.embed()
