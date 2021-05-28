@@ -44,6 +44,13 @@ export default class Util {
     return true;
   }
 
+  formatNumber(number, minimumFractionDigits = 0) {
+    return Number.parseFloat(number).toLocaleString(undefined, {
+      minimumFractionDigits,
+      maximumFractionDigits: 2,
+    });
+  }
+
   // Reaction Roles
 
   async reactionCreate(
