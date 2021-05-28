@@ -8,7 +8,7 @@ const cooldown: Map<string, string> = new Map();
 
 export const run: RunFunction = async (
     client,
-    oldPresence: Presence,
+    _oldPresence: Presence,
     newPresence: Presence
 ) => {
     if (newPresence.user.partial) {
