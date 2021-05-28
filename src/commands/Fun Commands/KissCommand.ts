@@ -24,7 +24,7 @@ import snekfetch from 'snekfetch';
       )
       .catch(console.error);
     }
-export const name: string = '';
-export const category: string = ''
-export const description: string = ''
-export const aliases: string[] = ['']
+export const name: string = 'kiss';
+export const category: string = 'Fun';
+export const description: string = 'Give someone a lovely kiss!';
+export const aliases: string[] = ['smooch'];
