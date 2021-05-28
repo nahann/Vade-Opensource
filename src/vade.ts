@@ -1,8 +1,9 @@
 import { BaseCluster } from "kurasuta";
 import "discord.js-light";
-import { Config } from "./interfaces/Config";
 import * as File from "./config.json";
-import { Bot } from "./client/Client";
+
+import type { Config } from "./interfaces/Config";
+import type { Bot } from "./client/Client";
 
 export default class extends BaseCluster {
   readonly client!: Bot;

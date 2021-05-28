@@ -26,7 +26,7 @@ export const run: RunFunction = async (
         const locate = await MainSchema.find({ gameName: check.gameName });
         if (!locate) return;
 
-        if (playing && playing[0].name?.toLowerCase() === check.gameName) {
+        if (playing && playing[0] && playing[0]?.name && playing[0].name?.toLowerCase() === check.gameName) {
             return;
         }
 
