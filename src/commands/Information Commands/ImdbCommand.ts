@@ -1,5 +1,5 @@
 import { RunFunction } from '../../interfaces/Command';
-import imdb from 'imdb-api';
+import { get } from 'imdb-api';
 
    export const run: RunFunction = async(client, message, args) => {
 
@@ -8,9 +8,9 @@ import imdb from 'imdb-api';
         return message.channel.send("Please give the name of movie or series")
       }
       
-      const imob = new imdb.Client({apiKey: "cdb2b2ae"}) //You need to paste you imdb api
       
-      let movie = await imob.get({'name': args.join(" ")})
+      let movie = await get({name: args.join(" ")},  { apiKey: "cdb2b2ae", timeout: 300000 });
+      if(!movie) return client.utils.sendError(`Unable to locate that movie!`, message.channel);
       
       let embed = new client.embed()
       .setTitle(movie.title)
