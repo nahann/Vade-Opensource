@@ -1,7 +1,7 @@
 import { RunFunction } from "../../interfaces/Command";
 import fetch from "node-fetch";
 
-export const run: RunFunction = async (client, message, args) => {
+export const run: RunFunction = async (client, message, _args) => {
   try {
     const fox = await fetch("https://randomfox.ca/floof/").then((response) =>
       response.json()
