@@ -51,6 +51,7 @@
     "koa-body": "^4.2.0",
     "kurasuta": "^2.2.3",
     "libnpmsearch": "^3.1.0",
+    "lyrics-finder": "^21.7.0",
     "mal-scraper": "^2.11.3",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
