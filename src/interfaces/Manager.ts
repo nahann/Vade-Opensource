@@ -10,63 +10,7 @@ import { GiveawaysManager } from "discord-giveaways";
 import mongoose from 'mongoose';
 
 export default (client: Bot) => {
-  // Only the main Bot, can't test these on the test bot
-  if (client.user.id === "782309258620305438") {
-    const dbl = new DBL(client.config.TOPGG_TOKEN, {
-      webhookPort: 5042,
-      webhookAuth: client.config.TOPGG_AUTH,
-    });
-
-    dbl.webhook.on("ready", (hook) => {
-      client.logger.info(
-        `Top.gg webhook running at http://${hook.hostname}:${hook.port}${hook.path}`
-      );
-    });
-
-    const dblPOST = new DBL(client.config.TOPGG_TOKEN, client);
-
-    dblPOST.on("posted", () => {
-      client.logger.info(`Server count posted to top.gg!`);
-    });
-
-    // SENDING THE VOTE REMINDER IF ENABLED
-    client.setInterval(async () => {
-      /* bot stats */
-      // const guilds = client.shard.fetchClientValues("")
-
-      await p({
-        url: `https://top.gg/api/bots/${client.user.id}/stats`,
-        method: "post",
-        data: JSON.stringify({
-          server_count: client.guilds.cache.size,
-        }),
-        headers: {
-          Authorization: client.config.TOPGG_AUTH,
-        },
-      });
-
-      /* vote reminders */
-      const getAll = await vote_schema.find({});
-
-      getAll.forEach(async (schema) => {
-        if (schema.Enabled && !schema.Messaged) {
-          const person = client.users.cache.get(schema.User);
-
-          if (schema.Time < Date.now())
-            await person.send(
-              `You can vote again on Top.gg! Vote here: https://top.gg/bot/782309258620305438 Reminder: You can disable reminders via \`!votereminder disable\`.`
-            );
-
-          await schema.updateOne({
-            Messaged: true,
-          });
-        }
-      });
-    }, ms("15m"));
-  }
-
   // both bots
-
   const giveawaySchema = new mongoose.Schema({
     messageID: String,
     channelID: String,
@@ -114,12 +58,12 @@ export default (client: Bot) => {
     async getAllGiveaways() {
       // Get all the giveaways in the database. We can use the messageID field to fetch all documents by passing an empty condition.
       const g = await giveawayModel.find({});
-      this.client.logger.info("Giveaways", "Getting all giveaways");
+      client.logger.info("Giveaways", "Getting all giveaways");
       return g;
     }
 
     // This function is called when a giveaway needs to be saved in the database (when a giveaway is created or when a giveaway is edited).
-    async saveGiveaway(messageID, giveawayData) {
+    async saveGiveaway(_messageID, giveawayData) {
       // Add the new one
       await giveawayModel.create(giveawayData);
       // Don't forget to return something!
@@ -184,7 +128,7 @@ export default (client: Bot) => {
                 `**${giveaway.extraData.inviteRequirement}**`
               : "")
         )
-        .setTimestamp(new Date(giveaway.endAt).toISOString());
+        .setTimestamp(new Date(parseInt(giveaway.endAt)));
       return embed;
     }
 

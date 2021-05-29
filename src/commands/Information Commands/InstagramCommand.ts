@@ -39,10 +39,9 @@ import axios from 'axios'
         )
 
     message.channel.send(embed)
+}
 
 
-
-    }
 export const name: string = 'instagram';
 export const category: string = 'Information';
 export const description: string = 'Search up a users Instagram account and view the results!';

@@ -5,34 +5,33 @@ const banned_words: Array<string> = arrays.array;
 
 
 export namespace automod {
-
-export function checkMessage(message: Message) {
-
-   for(const msg of message.content.split(" ")) {
-       if(banned_words.includes(msg)) {
-           return true;
-       } 
-   }
-}
-
-export function checkMod(member: GuildMember, modRoles: Array<string>) {
-    for(const role of modRoles) {
-        if(member.roles.cache.has(role) || member.permissions.has("MANAGE_MESSAGES")) {
-            return true;
-        } else {
-            return false;
+    export function checkMessage(message: Message): boolean {
+        for (const msg of message.content.split(" ")) {
+            if (banned_words.includes(msg)) {
+                return true;
+            }
         }
-    }
-}
 
-export function checkAdmin(member: GuildMember, adminRoles: Array<string>) {
-    for(const role of adminRoles) {
-        if(member.roles.cache.has(role) || member.permissions.has("MANAGE_GUILD")) {
-            return true;
-        } else {
-            return false;
+        return false;
+    }
+
+    export function checkMod(member: GuildMember, modRoles: Array<string>): boolean {
+        for (const role of modRoles) {
+            if (member.roles.cache.has(role) || member.permissions.has("MANAGE_MESSAGES")) {
+                return true;
+            }
         }
-    }
-}
 
+        return false;
+    }
+
+    export function checkAdmin(member: GuildMember, adminRoles: Array<string>): boolean {
+        for (const role of adminRoles) {
+            if (member.roles.cache.has(role) || member.permissions.has("MANAGE_GUILD")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
