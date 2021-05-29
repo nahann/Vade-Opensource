@@ -1,4 +1,4 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';
 import fetch from 'node-fetch';
 
 export const run: RunFunction = async(client, message, args) => {
