@@ -17,7 +17,8 @@ export const run: RunFunction = async(client, message, args) => {
 }
 
 export const name: string = 'rolecolour';
-export const category: string = ''
-export const description: string = ''
+export const category: string = 'Administrative';
+export const description: string = 'Change a roles hex colour via this simple Command.';
 export const aliases: string[] = ['rolecolor','color'];
-export const userPerms: string[] = ['']
+export const userPerms: string[] = ['MANAGE_ROLES'];
+export const botPerms: string[] = ['MANAGE_ROLES'];
