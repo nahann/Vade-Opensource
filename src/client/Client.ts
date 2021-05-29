@@ -89,7 +89,8 @@ export class Bot extends Client {
     Lottery(this);
     buttons(this);
     MainManager(this);
-    new API(this);
+    let api = new API(this);
+    api.start()
 
     const commandFiles: string[] = await globPromise(
       `${__dirname}/../commands/**/*{.ts,.js}`
