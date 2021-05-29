@@ -1,4 +1,4 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';
 import paginationEmbed from '../../Classes/Pagination';
 
    export const run: RunFunction = async(client, message, args) => {

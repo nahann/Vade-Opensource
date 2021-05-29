@@ -124,10 +124,12 @@ export const name: string = 'ticket-setup';
 export const category: string = 'Administrative';
 export const description: string = 'Configure the servers ticket system.';
 export const aliases: string[] = ['ticketsetup'];
+export const userPerms: string[] = ['MANAGE_GUILD'];
+export const botPerms: string[] = ['MANAGE_CHANNELS'];
 
 async function createTicketSystem(
     client,
-    ticketData,
+    _ticketData,
     embedDescription,
     embedChannel,
     message,
