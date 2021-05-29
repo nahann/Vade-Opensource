@@ -1,7 +1,8 @@
-import { GuildMember } from "discord.js";
+import { GuildMember } from "discord.js-light";
 import { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {
+  // noinspection DuplicatedCode
   const member: GuildMember = await client.utils.getMember(
     message,
     args[0],

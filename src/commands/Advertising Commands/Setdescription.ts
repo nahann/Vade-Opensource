@@ -10,9 +10,8 @@ export const run: RunFunction = async (client, message, args) => {
     );
   }
 
-  let title = message.guild.name;
-  let description = document.description ?? "No description set.";
-
+  // let title = message.guild.name;
+  // let description = document.description ?? "No description set.";
   let desc = args.join(" ");
   if (!desc) {
     return client.utils.sendError(
@@ -30,7 +29,7 @@ export const run: RunFunction = async (client, message, args) => {
     }
 
     await document.updateOne({
-      description: "No description set.",
+      description: desc,
     });
 
     return client.utils.succEmbed(

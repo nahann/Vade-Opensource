@@ -1,4 +1,4 @@
-import type { MessageButton } from "../../utils/buttons/src/Classes/MessageButton";
+import type { MessageButton } from "../../utils/Buttons/src";
 import type { RunFunction } from "../../interfaces/Event";
 import type InteractionCreate from "../../utils/Buttons/typings/Classes/INTERACTION_CREATE";
 import type { APIActionRowComponent } from "../../utils/buttons/src/Classes/MessageButton";
@@ -15,7 +15,7 @@ export const run: RunFunction = async (client, button: InteractionCreate) => {
 
 };
 
-declare module "discord.js" {
+declare module "discord.js-light" {
 	interface MessageEditOptions {
 		buttons?: MessageButton[];
 		components?: APIActionRowComponent[];
