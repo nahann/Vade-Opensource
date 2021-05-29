@@ -1,9 +1,8 @@
-import { Guild, GuildMember, Message } from "discord.js-light";
 import arrays from '../Assets/Automod/messages.json';
 
+import type {GuildMember, Message} from "discord.js-light";
+
 const banned_words: Array<string> = arrays.array;
-
-
 export namespace automod {
     export function checkMessage(message: Message): boolean {
         for (const msg of message.content.split(" ")) {

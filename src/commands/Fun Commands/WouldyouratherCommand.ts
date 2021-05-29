@@ -1,6 +1,8 @@
-import { RunFunction } from '../../interfaces/Command';
 import stripIndents from 'common-tags';
-import request from 'node-superfetch';
+import phin from 'phin';
+
+import type {RunFunction} from '../../interfaces/Command';
+
 const choices = ['1', '2'];
 
 export const run: RunFunction = async (client, message, _args) => {
@@ -49,24 +51,28 @@ export const run: RunFunction = async (client, message, _args) => {
     }
 
     async function fetchScenario() {
-        const { text } = await request.get("http://either.io/");
-        return JSON.parse(text.match(/window.initial_question = (\{.+\})/)[1])
-          .question;
-      }
-    
-      async function postResponse(id, bool) {
+        const {body} = await phin({url: "http://either.io/", parse: "string"});
+        return JSON
+            .parse(body.match(/window.initial_question = (\{.+\})/)[1])
+            .question;
+    }
+
+    async function postResponse(id, bool) {
         try {
-          const { text } = await request
-            .get(`http://either.io/vote/${id}/${bool ? "1" : "2"}`)
-            .set({ "X-Requested-With": "XMLHttpRequest" });
-          return JSON.parse(text).result;
+            const {body} = await phin({
+                url: `http://either.io/vote/${id}/${bool ? "1" : "2"}`,
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                parse: "string"
+            })
+
+            return JSON.parse(body).result;
         } catch {
             return false;
         }
     }
 
-
 }
+
 export const name: string = 'wouldyourather';
 export const category: string = 'Fun';
 export const description: string = 'Take part n a tiny minigame of would you rather!';

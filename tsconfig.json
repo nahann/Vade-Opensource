@@ -22,6 +22,7 @@
     "pretty": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "importsNotUsedAsValues": "error",
 
     /* Types */
     "types": [

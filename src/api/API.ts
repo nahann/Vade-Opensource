@@ -1,6 +1,6 @@
 import Koa from "koa";
 import Body from "koa-body";
-import { Consola } from "consola";
+import { Logger } from "@dimensional-fun/logger";
 
 import { votes } from "./routers/votes";
 import { main } from "./routers/main";
@@ -14,7 +14,7 @@ export class API {
 
   koa: Koa;
 
-  private log: Consola = new Consola({});
+  private log: Logger = new Logger("api");
 
   constructor(bot: Bot) {
     this.bot = bot;

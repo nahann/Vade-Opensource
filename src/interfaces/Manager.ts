@@ -1,13 +1,11 @@
-import { Bot } from "../client/Client";
-import DBL from "dblapi.js";
-import { TextChannel } from "discord.js-light";
 import ms from "ms";
-import p from "phin";
-
-import vote_schema from "../models/voteremind";
-import premium_schema from "../models/premium_schema";
 import { GiveawaysManager } from "discord-giveaways";
 import mongoose from 'mongoose';
+
+import vote_schema from "../models/voteremind";
+
+import type { Bot } from "../client/Client";
+import type { TextChannel } from "discord.js-light";
 
 export default (client: Bot) => {
   // both bots
@@ -82,10 +80,10 @@ export default (client: Bot) => {
     }
 
     // This function is called when a giveaway needs to be deleted from the database.
-    async deleteGiveaway(messageID) {
+    async deleteGiveaway(messageID: string): Promise<void> {
       await giveawayModel.findOneAndDelete({ messageID: messageID }).exec();
-      return true;
     }
+
     generateMainEmbed(giveaway) {
       let roleID;
       let serverName;
@@ -101,7 +99,7 @@ export default (client: Bot) => {
         }
       }
 
-      const embed = new this.client.embed();
+      const embed = new client.embed();
       embed
         .setAuthor(giveaway.prize)
         .setColor(giveaway.embedColor)
@@ -134,16 +132,24 @@ export default (client: Bot) => {
 
     async roll(winnerCount) {
       if (!this.message) return [];
+
       // Pick the winner
       const reactions = this.message.reactions.cache;
       const reaction =
         reactions.get(this.reaction) ||
         reactions.find((r) => r.emoji.name === this.reaction);
-      if (!reaction) return [];
+
+      if (!reaction) {
+        return [];
+      }
+
       const guild = this.channel.guild;
+
       // Fetch guild members
-      if (this.manager.options.hasGuildMembersIntent)
+      if (this.manager.options.hasGuildMembersIntent) {
         await guild.members.fetch();
+      }
+
       const users = (await reaction.users.fetch())
         .filter((u) => !u.bot || u.bot === this.botsCanWin)
         .filter((u) => u.id !== this.message.client.user.id);
@@ -253,9 +259,7 @@ export default (client: Bot) => {
       embedColorEnd: "#FD2F03",
       reaction: "833110730374119475",
     },
-  }); // it must not be able to read the // console log manager
-  // We now have a giveawaysManager property to access the manager everywhere!
-
+  });
 };
 
 export async function remindToVote(bot: Bot, userId: string) {
