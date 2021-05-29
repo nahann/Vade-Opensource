@@ -1,12 +1,15 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';
 import loadPlaylist from '../../models/Users/playlist';
-import Pagination from "../../Classes/Pagination";
 import paginationEmbed from "../../Classes/Pagination";
 
 export const run: RunFunction = async(client, message, args) => {
 
-   const user = await client.utils.getMember(message, args[0]);
-   const member = user?.user;
+    let member = message.author;
+    let mention = message.mentions.users.first();
+    if (mention) {
+        args.shift();
+        member = mention;
+    }
 
     let fetchList;
 
@@ -25,7 +28,7 @@ export const run: RunFunction = async(client, message, args) => {
         );
 
     if (!args[0]) {
-        const embeds2 = generateListEmbed(message, fetchList);
+        const embeds2 = generateListEmbed(client, message, fetchList);
         return await message.channel.send(embeds2);
     }
 
@@ -93,7 +96,7 @@ function generateQueueEmbed(message, list) {
     return embeds;
 }
 
-function generateListEmbed(message, list) {
+function generateListEmbed(client, message, list) {
     let embeds = [];
     let k = 10;
     for (let i = 0; i <= 10; i++) {
@@ -104,7 +107,7 @@ function generateListEmbed(message, list) {
             .map((pl) => `**${++j}** - \`${pl.playlistName}\``)
             .join("\n");
 
-        const embed = new this.client.embed()
+        const embed = new client.embed()
             .setAuthor(
                 `${message.author.username}'s Playlists\n`,
                 message.author.displayAvatarURL()

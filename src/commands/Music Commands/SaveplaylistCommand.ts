@@ -14,7 +14,10 @@ export const run: RunFunction = async(client, message, args) => {
 
 
     // @ts-ignore
-    let queue = serverQueue.songs;
+    const queue = serverQueue.songs;
+
+    console.log(serverQueue)
+    console.log(queue)
     const pName = args.join(" ");
 
     if (!args[0])
@@ -56,9 +59,7 @@ export const run: RunFunction = async(client, message, args) => {
         playlistName: pName,
         playlistArray: queue,
     });
-    await data.save((err) => {
-        if (err) console.error(err);
-    });
+    await data.save();
 
     return client.utils.succEmbed(`✅ ${message.author} has successfully saved playlist \`${pName}\`!`, message.channel);
 }
