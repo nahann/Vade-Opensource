@@ -11,6 +11,7 @@ import Lottery from "../utils/Scheduled";
 import { I18n } from "i18n";
 import path from "path";
 import MainManager from "../interfaces/Manager";
+import  { API } from '../api/API';
 
 import buttons from "../utils/buttons/src/index";
 
@@ -88,6 +89,7 @@ export class Bot extends Client {
     Lottery(this);
     buttons(this);
     MainManager(this);
+    new API(this);
 
     const commandFiles: string[] = await globPromise(
       `${__dirname}/../commands/**/*{.ts,.js}`
