@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 export interface IPLaylist extends mongoose.Document {
     username: string;
     userID: string;
-    playlistName: boolean;
-    playlistArray: array<string>;
+    playlistName: string;
+    playlistArray: Array<string>;
 }
 
 const reqString = {
