@@ -3,8 +3,6 @@ import fetch from 'node-fetch';
 
 export const run: RunFunction = async(client, message, _args) => {
 
-    !djs
-
     try {
         await message.channel.startTyping();
         const advice = await fetch(
