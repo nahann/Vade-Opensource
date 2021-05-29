@@ -64,6 +64,6 @@ export const run: RunFunction = async(client, message, args) => {
 }
 
 export const name: string = 'saveplaylist';
-export const category: string = ''
+export const category: string = 'Music';
 export const description: string = 'Save a playlist under your profile for future use.';
 export const aliases: string[] = ['savep'];
