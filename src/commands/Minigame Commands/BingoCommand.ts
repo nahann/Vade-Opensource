@@ -125,7 +125,7 @@ export const run: RunFunction = async(client, message, args) => {
     
 }
 
-export const name: string = 'bino';
+export const name: string = 'bingo';
 export const category: string = 'Minigames';
 export const description: string = 'Play a game of Bingo!';
 export const userPerms: string[] = ['MANAGE_MESSAGES'];
