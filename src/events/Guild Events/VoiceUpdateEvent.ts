@@ -10,16 +10,15 @@ export const run: RunFunction = async (
   nS
 ) => {
 
-
-    if(nS.partial) await nS.fetch();
+    if(!nS.guild) return;
 
     const newUserChannel = nS?.channelID;
     const oldUserChannel = oS?.channelID;
-    const findRole = (await client.guilds.fetch(nS.guild.id))?.roles.cache;
+    const findRole = (await client.guilds.fetch(nS?.guild.id))?.roles.cache;
     const findChannel = client.channels.cache;
 
     let member = client.guilds.cache
-        .get(nS.guild.id)
+        .get(nS?.guild.id)
         .members.cache.get(nS.id);
 
     let newChannelList = await findBind.findOne({

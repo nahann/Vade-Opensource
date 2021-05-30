@@ -15,7 +15,7 @@ export const run: RunFunction = async(client, message, args) => {
 }
 
 export const name: string = 'colour';
-export const category: string = '';
-export const description: string = '';
+export const category: string = 'Advertising';
+export const description: string = 'Set your bump embeds colur!';
 export const aliases: string[] = ['bumpcolour', 'bumpcolor'];
 export const premiumOnly: boolean = true;

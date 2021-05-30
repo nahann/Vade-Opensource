@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import { MessageButton } from "../../utils/buttons/src/index";
+import { MessageButton } from "../../utils/buttons/src";
 
 export const run: RunFunction = async (client, message, args) => {
   let embed = new client.embed()
@@ -11,12 +11,12 @@ export const run: RunFunction = async (client, message, args) => {
     .setClear();
 
   let button = new MessageButton()
-    .setStyle("url")
+    .setStyle(5)
     .setURL("https://top.gg/bot/782309258620305438")
     .setLabel("Top.gg");
 
   let button2 = new MessageButton()
-    .setStyle("url")
+    .setStyle(5)
     .setURL("https://discordbotlist.com/bots/vade")
     .setLabel("Discord Bot List");
 

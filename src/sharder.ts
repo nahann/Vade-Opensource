@@ -1,5 +1,3 @@
-import "module-alias/register";
-
 import { Logger } from "@dimensional-fun/logger";
 import { ShardingManager, SharderEvents } from "kurasuta";
 import { join } from "path";

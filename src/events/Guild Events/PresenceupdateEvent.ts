@@ -31,9 +31,9 @@ export const run: RunFunction = async (
         }
 
         for (const one of locate) {
-            const guild = await client.guilds.fetch(one.guildID);
+            const guild = (await client.guilds.fetch(one.guildID)) ?? null;
             if (guild) {
-                const member = await guild.members.fetch(userID);
+                const member = (await guild.members.cache.get(userID)) ?? null;
                 if (member) {
                     const role = await guild.roles.fetch(one.roleID);
                     if (role) {

@@ -20,4 +20,4 @@ export const run: RunFunction = async (client, message, _args) => {
 };
 export const name: string = "test";
 export const category: string = "Development";
-export const description: string = "Test for Discord's Buttons";
+export const description: string = "Test for Discord's buttons";

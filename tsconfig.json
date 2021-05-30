@@ -16,13 +16,7 @@
     "outDir": "./dist",
 
     /* Strict Options */
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "pretty": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "importsNotUsedAsValues": "error",
 
     /* Types */
     "types": [

@@ -18,7 +18,7 @@ import type { Manager } from "erela.js";
 import type { Config } from "../interfaces/Config";
 import type { Command } from "../interfaces/Command";
 import type { Event } from "../interfaces/Event";
-import type InteractionCreate from "../utils/Buttons/typings/Classes/INTERACTION_CREATE";
+import type InteractionCreate from "../utils/buttons/typings/Classes/INTERACTION_CREATE";
 
 const i18n = new I18n({
   locales: ["en", "ro"],
