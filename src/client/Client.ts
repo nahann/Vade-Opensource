@@ -83,7 +83,7 @@ export class Bot extends Client {
 
   public async start(config: Config): Promise<void> {
     this.logger.info("hi");
-    Mongo();
+    await Mongo();
     this.config = config;
     await this.login(config.token);
     Lottery(this);
