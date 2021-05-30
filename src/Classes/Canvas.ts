@@ -61,25 +61,27 @@ export default class CanvasUtil {
     return ctx;
   }
 
-  //   static desaturate(ctx, level, x, y, width, height) {
-  //     const data = ctx.getImageData(x, y, width, height);
-  //     for (let i = 0; i < height; i++) {
-  //       for (let j = 0; j < width; j++) {
-  //         const dest = (i * width + j) * 4;
-  //         const grey =
-  //           0.2125 * data.data[dest] +
-  //             0.7154 * data.data[dest + 1] +
-  //             0.0721 * data.data[dest + 2]
-  //           10
-  //         ;
-  //         data.data[dest] += level * (grey - data.data[dest]);
-  //         data.data[dest + 1] += level * (grey - data.data[dest + 1]);
-  //         data.data[dest + 2] += level * (grey - data.data[dest + 2]);
-  //       }
-  //     }
-  //     ctx.putImageData(data, x, y);
-  //     return ctx;
-  //   }
+    static desaturate(ctx, level, x, y, width, height) {
+      const data = ctx.getImageData(x, y, width, height);
+      for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+          const dest = (i * width + j) * 4;
+          const grey = Number.parseInt(
+              // @ts-ignore
+              0.2125 * data.data[dest] +
+              // @ts-ignore
+              0.7154 * data.data[dest + 1] +
+              0.0721 * data.data[dest + 2],
+              10
+          );
+          data.data[dest] += level * (grey - data.data[dest]);
+          data.data[dest + 1] += level * (grey - data.data[dest + 1]);
+          data.data[dest + 2] += level * (grey - data.data[dest + 2]);
+        }
+      }
+      ctx.putImageData(data, x, y);
+      return ctx;
+    }
 
   static distort(ctx, amplitude, x, y, width, height, strideLevel = 4) {
     const data = ctx.getImageData(x, y, width, height);
