@@ -714,6 +714,11 @@ export default class Util {
         );
     }
 
+    validateHex(hex) {
+        const regex = /^#[0-9A-F]{6}$/i;
+        return regex.test(hex);
+    }
+
     streamToArray(stream) {
         if (!stream.readable) return Promise.resolve([]);
         return new Promise((resolve, reject) => {
