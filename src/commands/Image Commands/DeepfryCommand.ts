@@ -9,9 +9,11 @@ export const run: RunFunction = async(client, message, args) => {
     const member = await client.utils.getMember(message, args[0], true);
     if(!member) return;
     const image = member.user.displayAvatarURL({ format: "png", size: 512 });
+    const msg = message;
 
     try {
         const { body } = await request.get(image);
+        // @ts-ignore
         const data = await loadImage(body);
         const canvas = createCanvas(data.width, data.height);
         const ctx = canvas.getContext("2d");

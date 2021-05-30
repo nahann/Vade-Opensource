@@ -1,5 +1,5 @@
-import { RunFunction } from "../../interfaces/Command";
-import { createCanvas, loadImage, registerFont } from "canvas";
+import type { RunFunction } from "../../interfaces/Command";
+import { createCanvas, loadImage } from "canvas";
 import { join } from "path";
 import { MessageAttachment } from "discord.js";
 

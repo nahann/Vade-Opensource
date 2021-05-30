@@ -1,4 +1,4 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';
 import path from 'path';
 import { createCanvas, loadImage } from "canvas";
 import request from 'node-superfetch';
@@ -46,7 +46,9 @@ export const run: RunFunction = async(client, message, args) => {
         }
         encoder.finish();
         const buffer = await streamToArray(stream);
+
         return msg.channel.send({
+            // @ts-ignore
             files: [{ attachment: Buffer.concat(buffer), name: "triggered.gif" }],
         });
     } catch (err) {

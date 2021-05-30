@@ -1,4 +1,4 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';
 import { createCanvas, loadImage } from "canvas";
 import request from 'node-superfetch';
 import canvas from '../../Classes/Canvas';
