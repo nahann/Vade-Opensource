@@ -8,6 +8,7 @@ export interface IGuild extends mongoose.Document {
   welcomeChannel: string;
   inviteChannel: string;
   welcomeMessage: string;
+  bumpChannel: string;
   welcomeType: string;
   logChannelID: string;
   Suggestion: string;
@@ -36,6 +37,7 @@ const guildSchema = new mongoose.Schema({
   prefix: String,
   welcomeChannel: String,
   inviteChannel: String,
+  bumpChannel: String,
   Starboard: String,
   StarAmount: Number,
   welcomeMessage: String,
