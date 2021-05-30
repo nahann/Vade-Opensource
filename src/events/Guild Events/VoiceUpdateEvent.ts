@@ -10,6 +10,7 @@ export const run: RunFunction = async (
   nS
 ) => {
 
+
     if(nS.partial) await nS.fetch();
 
     const newUserChannel = nS?.channelID;
