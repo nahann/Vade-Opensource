@@ -30,6 +30,6 @@ export const run: RunFunction = async(client, message, args) => {
 }
 
 export const name: string = 'translate';
-export const category: string = ''
-export const description: string = ''
+export const category: string = 'Utility';
+export const description: string = 'Translate text into the provided language.';
 export const aliases: string[] = ['translation']
