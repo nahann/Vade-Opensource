@@ -1,5 +1,5 @@
 import type { RunFunction } from "../../interfaces/Event";
-import { TextChannel, Util, TextChannel } from "discord.js-light";
+import { TextChannel, Util } from "discord.js-light";
 import Guild from "../../models/GuildConfig/guild";
 import findStickyRole from "../../models/GuildConfig/stickyroles";
 import inviterSchema from '../../models/Invites/inviter';
@@ -71,7 +71,7 @@ export const run: RunFunction = async (client, member) => {
     });
     if (!inviteMemberData) {
       inviteChannel.send(
-          `\`${member.user.tag}\` They left our server but I could not find out who they were invited by.`
+          `\`${Util.escapeMarkdown(member.user.tag)}\` They left our server but I could not find out who they were invited by.`
       );
     } else {
       const inviter = await client.users.fetch(inviteMemberData.inviter);
@@ -87,7 +87,7 @@ export const run: RunFunction = async (client, member) => {
       const total = inviterData ? inviterData.total : 0;
       const totalInvite = total < 0 ? 0 : total;
       inviteChannel.send(
-          `\`${member.user.tag}\` left our server. They were invited by ${inviter.tag} (**${totalInvite}** Invites)`
+          `\`${Util.escapeMarkdown(member.user.tag)}\` left our server. They were invited by ${inviter.tag} (**${totalInvite}** Invites)`
       );
     }
   }
