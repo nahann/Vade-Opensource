@@ -1,7 +1,7 @@
 import type { RunFunction } from '../../interfaces/Command';
 import db from '../../models/Invites/inviter';
 
-export const run: RunFunction = async(client, message, args) => {
+export const run: RunFunction = async(client, message, _args) => {
 
     let embed = new client.embed()
         .setClear()
