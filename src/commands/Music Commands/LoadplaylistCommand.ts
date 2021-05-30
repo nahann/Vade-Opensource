@@ -1,4 +1,4 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';
 import playPlaylist from '../../models/Users/playlist';
 import { TrackUtils } from 'erela.js';
 

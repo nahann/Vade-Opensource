@@ -13,7 +13,9 @@ export const run: RunFunction = async (client, message, args) => {
     channel !== message.channel ? args.slice(1).join(" ") : args.join(" ");
   console.assert(channel, `test`);
 
+
   channel.send(text);
+  await message.delete({ timeout: 1000 });
 };
 
 export const name: string = "say";
