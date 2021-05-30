@@ -1,13 +1,13 @@
 import { Schema, model } from "mongoose";
 
 export interface IInviter extends Document {
-    guildID: String,
-    userID: String,
-    total: Number,
-    regular: Number,
-    bonus: Number,
-    leave: Number,
-    fake: Number,
+    guildID: string,
+    userID: string,
+    total: number,
+    regular: number,
+    bonus: number,
+    leave: number,
+    fake: number,
   }
 
 const schema = new Schema({
