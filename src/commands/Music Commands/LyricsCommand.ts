@@ -1,4 +1,4 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';;
 import lyricsFinder from 'lyrics-finder';
 import { TextChannel } from 'discord.js';
 

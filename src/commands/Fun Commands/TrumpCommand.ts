@@ -1,4 +1,4 @@
-import { RunFunction } from '../../interfaces/Command';
+import type { RunFunction } from '../../interfaces/Command';;
 import jimp from 'jimp'
 
    export const run: RunFunction = async(client, message, args) => {
