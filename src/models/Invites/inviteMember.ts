@@ -1,10 +1,10 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface InviteMember extends Document {
-    guildID: String,
-    userID: String,
-    inviter: String,
-    date: Number
+    guildID: string;
+    userID: string;
+    inviter: string;
+    date: number;
   }
 
 const schema = new Schema({
