@@ -15,9 +15,9 @@ export const run: RunFunction = async (
     const findRole = (await client.guilds.fetch(nS?.guild.id))?.roles.cache;
     const findChannel = client.channels.cache;
 
-    let member = client.guilds.cache
-        .get(nS?.guild.id)
-        .members.cache.get(nS.id);
+    let guild = await client.guilds.fetch
+        (nS?.guild.id);
+    let member = await guild.members.fetch(nS.id);
 
     let newChannelList = await findBind.findOne({
         voiceChannelID: newUserChannel,
