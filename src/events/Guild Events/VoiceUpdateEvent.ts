@@ -10,8 +10,6 @@ export const run: RunFunction = async (
   nS
 ) => {
 
-    if(!nS.guild) return;
-
     const newUserChannel = nS?.channelID;
     const oldUserChannel = oS?.channelID;
     const findRole = (await client.guilds.fetch(nS?.guild.id))?.roles.cache;

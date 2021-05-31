@@ -1,34 +1,30 @@
-import phin from "phin";
-
 import type { RunFunction } from '../../interfaces/Command';
+import fetch from 'node-fetch';
 
 export const run: RunFunction = async (client, message, args) => {
-   const member = await client.utils.getMember(message, args[0], true);
-   if (!member) {
-       return;
-   }
 
-   const { body } = await phin<NekosLifeKiss>({
-       url: "https://nekos.life/api/kiss",
-       method: "get",
-       headers: {
-           Key: "dnZ4fFJbjtch56pNbfrZeSRfgWqdPDgf"
-       },
-       parse: "json"
-   });
+    try {
+        const data = await fetch("https://nekos.life/api/kiss").then((res) => res.json());
+        const member = await client.utils.getMember(message, args[0], true);
+        if(!member) return;
+        const user = member?.user;
+        const kissed = message.author.id === user.id ? "themselves" : user.username;
 
-   const embed = new client.embed()
-       .setDescription(`${member} You got a kiss from ${message.author.username} ❤`)
-       .setImage(body.url);
+        const embed = new client.embed()
+            .setTitle(`${message.author.username} kissed ${kissed}`)
+            .setDescription(`[Click to view](${data.url})`)
+            .setImage(`${data.url}`);
 
-   message.channel.send(embed);
+        return message.channel.send(embed);
+    } catch (err) {
+      return client.utils.sendError(`An error has occured: ${err}`, message.channel);
+    }
+
+
+
 }
 
 export const name: string = 'kiss';
 export const category: string = 'Fun';
 export const description: string = 'Give someone a lovely kiss!';
 export const aliases: string[] = ['smooch'];
-
-export interface NekosLifeKiss {
-    url: string;
-}
