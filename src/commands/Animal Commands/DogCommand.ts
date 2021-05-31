@@ -15,6 +15,6 @@ export const run: RunFunction = async(client, message, _args) => {
 }
 
 export const name: string = 'dog';
-export const category: string = 'Fun'
-export const description: string = 'Receive an image of a Dog!'
-export const aliases: string[] = ['doggo']
+export const category: string = 'Animals';
+export const description: string = 'Receive an image of a Dog!';
+export const aliases: string[] = ['doggo'];
