@@ -18,6 +18,6 @@ export const run: RunFunction = async(client, message, args) => {
 
 }
 
-export const name: string = '';
+export const name: string = 'whale';
 export const category: string = 'Animals';
 export const description: string = 'Receive an image of a Whale!';
