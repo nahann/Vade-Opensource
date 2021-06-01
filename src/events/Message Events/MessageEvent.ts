@@ -105,7 +105,6 @@ export const run: RunFunction = async (client, message: Message) => {
         .setTimestamp()
         .setIcon(message.guild)
         .setFooter(`Vade Moderation`)
-
         message.channel.send(automodEmbed).then(async (msg) => {
           await wait(1000)
           // @ts-ignore
