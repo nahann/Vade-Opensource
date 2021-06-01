@@ -1,6 +1,6 @@
 import { Schema, Document, model} from "mongoose";
 
-export interface ITicket extends Document {
+export interface Imodule extends Document {
     Guild: string;
     Modules: string[];
 }
@@ -10,6 +10,6 @@ const Modules = new Schema({
     Modules: Array,
 });
 
-const guilds = model<ITicket>(`TicketData`, Modules);
+const guilds = model<Imodule>(`modules`, Modules);
 
 export default guilds;
