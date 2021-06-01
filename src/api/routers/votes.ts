@@ -1,5 +1,6 @@
 import Router from "@koa/router";
 import joi from "joi";
+import voteSchema from "../../models/Users/voteStorage";
 
 import type Koa from "koa";
 import type { API } from "../API";
@@ -37,7 +38,15 @@ export function votes(api: API): Router {
       return;
     }
 
+
+
     api.bot.userVotes[body.user] = Date.now();
+    const newSchema = new voteSchema({
+      userID: body.user,
+      date: Date.now()
+    });
+
+    await newSchema.save();
   });
 
   return router;

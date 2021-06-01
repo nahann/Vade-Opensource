@@ -214,7 +214,7 @@ export const run: RunFunction = async (client, message: Message) => {
         message.guild.ownerID
       );
       const checkOwner = client.utils.checkOwner(message.author.id);
-      const hasVoted = client.utils.hasVoted(message.author.id);
+      const hasVoted = await client.utils.hasVoted(message.author.id);
       if (command.premiumOnly && !checkPremium) {
         return message.channel.send(
           `The Guild owner must have Vade Premium in order for you to run this Command!`

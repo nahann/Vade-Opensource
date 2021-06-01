@@ -8,6 +8,7 @@ import guild_schema from "../models/GuildConfig/guild";
 import serverset from "../models/GuildConfig/ReactionRoles";
 import loggingSchema from "../models/GuildConfig/Logging";
 import levels from "../models/Users/levels";
+import voteSchema from "../models/Users/voteStorage";
 
 const SUCCESS_EMOJI_ID = "817905283547267122";
 
@@ -21,10 +22,12 @@ export default class Util {
         this.client = client;
     }
 
-    hasVoted(user: string): boolean {
+    async hasVoted(user: string) {
         if (!user) {
             throw new TypeError("You need to pass in a user ID.");
         }
+
+        let test = false;
 
         const date = this.client.userVotes[user];
         if (!date) {
@@ -33,10 +36,20 @@ export default class Util {
 
         if (date + ms("12h") < Date.now()) {
             delete this.client.userVotes[user];
-            return false;
+            test = true;
         }
 
-        return true;
+        const schema = await voteSchema.findOne({ userID: user });
+        if(test) {
+            if(schema && schema.date + ms("12h") < Date.now()) {
+                await schema.delete()
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
     }
 
     /* Level stuff start */
