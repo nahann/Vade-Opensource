@@ -64,6 +64,6 @@ const guildSchema = new mongoose.Schema({
   Automod: Boolean,
 });
 
-const guilds = mongoose.model<IGuild>(`Guild`, guildSchema, "vade-guilds");
+const guilds = mongoose.model<IGuild>(`Guild`, guildSchema, "guilds");
 
 export default guilds;

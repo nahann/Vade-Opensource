@@ -3,15 +3,28 @@ import StarboardSchema from "../../models/GuildConfig/guild";
 
 export const run: RunFunction = async (client, message, args) => {
   const data = await StarboardSchema.findOne({ guildID: message.guild.id });
-  const premiumCheck = await client.utils.checkPremium(message.guild.ownerID);
-  if (!data)
-    return client.utils.sendError(
-      `Looks like there was an error fetching your guilds data. Please try again.`,
-      message.channel
-    );
   if (!args[0])
     return client.utils.sendError(`Please specify a channel.`, message.channel);
   const channel = client.utils.getChannels(args[0], message.guild);
+  const premiumCheck = await client.utils.checkPremium(message.guild.ownerID);
+  if (!data) {
+    if(!channel) return client.utils.sendError(`You need to specify a channel.`, message.channel);
+    const newAmount = parseInt(args[1]);
+    if(!newAmount || isNaN(newAmount) || newAmount.toString().startsWith("-")) return client.utils.sendError(`Please specify the minimum amount of stars.`, message.channel);
+    const newData = new StarboardSchema({
+      guildID: message.guild.id,
+      Starboard: channel.id,
+      StarAmount: newAmount,
+    });
+
+    await newData.save();
+
+    return client.utils.succEmbed(
+        `Successfully set your starboard channel to ${channel} with the minimum reactions required as ${newAmount}!`,
+        message.channel
+    );
+  }
+
   if (!channel && args[0]?.toLowerCase() !== "remove")
     return client.utils.sendError(
       `Please specify a valid channel.`,
