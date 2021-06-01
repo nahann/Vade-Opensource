@@ -902,6 +902,9 @@ export default class Util {
         if (guild && guildData2) {
             let arrayOf: Array<string> = [];
             for (const mod of guildData2.ModRole) {
+                if(typeof guildData2.ModRole === "string") {
+                    return arrayOf.push(mod);
+                }
                 let role = guild.roles.cache.get(mod);
                 if (role) arrayOf.push(role.id);
             }
@@ -916,6 +919,9 @@ export default class Util {
         let arrayOf: Array<string> = [];
         if (guild && guildData2) {
             for (const admin of guildData2.AdminRole) {
+                if(typeof guildData2.AdminRole === "string") {
+                    return arrayOf.push(admin);
+                }
                 let role = guild.roles.cache.get(admin);
                 if (role) arrayOf.push(role.id);
             }
