@@ -831,10 +831,10 @@ export default class Util {
     async categoryCheck(category: string, message: Message) {
         if (message.channel.type === "dm") return;
         category = category?.toLowerCase();
-        const modRoleData: any  = await this.resolveModRole(
+        const modRoleData: string[]  = await this.resolveModRole(
             message.guild.id
         );
-        const adminRoleData: any = await this.resolveAdminRole(
+        const adminRoleData: string[] = await this.resolveAdminRole(
             message.guild.id
         );
         const ownerCheck = this.checkOwner(message.author.id);
@@ -903,7 +903,8 @@ export default class Util {
             let arrayOf: Array<string> = [];
             for (const mod of guildData2.ModRole) {
                 if(typeof guildData2.ModRole === "string") {
-                    return arrayOf.push(mod);
+                    arrayOf.push(mod);
+                    return arrayOf;
                 }
                 let role = guild.roles.cache.get(mod);
                 if (role) arrayOf.push(role.id);
@@ -920,7 +921,8 @@ export default class Util {
         if (guild && guildData2) {
             for (const admin of guildData2.AdminRole) {
                 if(typeof guildData2.AdminRole === "string") {
-                    return arrayOf.push(admin);
+                    arrayOf.push(admin);
+                    return arrayOf;
                 }
                 let role = guild.roles.cache.get(admin);
                 if (role) arrayOf.push(role.id);

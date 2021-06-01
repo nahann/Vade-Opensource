@@ -148,7 +148,6 @@ export const run: RunFunction = async (client, message: Message) => {
         if (one.Level < user.level) {
           const locate_role = message.guild.roles.cache.get(one.Role);
 
-
           if (locate_role) {
             if (message.member.roles.cache.has(locate_role.id)) return;
             if (message.guild.me.permissions.has('MANAGE_ROLES')) {
