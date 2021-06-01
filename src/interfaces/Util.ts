@@ -831,10 +831,10 @@ export default class Util {
     async categoryCheck(category: string, message: Message) {
         if (message.channel.type === "dm") return;
         category = category?.toLowerCase();
-        const modRoleData: Array<string> = await this.resolveModRole(
+        const modRoleData: any  = await this.resolveModRole(
             message.guild.id
         );
-        const adminRoleData: Array<string> = await this.resolveAdminRole(
+        const adminRoleData: any = await this.resolveAdminRole(
             message.guild.id
         );
         const ownerCheck = this.checkOwner(message.author.id);
