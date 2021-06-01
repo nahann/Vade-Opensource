@@ -17,7 +17,7 @@ export function votes(api: API): Router {
 
   router.post("/top-gg", async (ctx: Koa.Context) => {
     const auth = ctx.header.authorization;
-    if (!auth || auth !== api.bot.config.TOPGG_TOKEN) {
+    if (!auth || auth !== api.bot.config.TOPGG_AUTH) {
       ctx.status = 401;
       ctx.body = { success: false, message: "incorrect authorization" };
       return;

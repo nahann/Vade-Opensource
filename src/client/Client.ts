@@ -12,6 +12,8 @@ import { I18n } from "i18n";
 import path from "path";
 import MainManager from "../interfaces/Manager";
 
+import { API } from "../api/API";
+
 import buttons from "../utils/buttons/src/index";
 
 import type { Manager } from "erela.js";
@@ -82,17 +84,24 @@ export class Bot extends Client {
 
   public async start(config: Config): Promise<void> {
     this.logger.info("hi");
-    await Mongo();
     this.config = config;
+
+    /* mongodb & login */
+    await Mongo();
     await this.login(config.token);
+
+    /* start some useless shit that we probably  */
     Lottery(this);
     buttons(this);
     MainManager(this);
-    // let api = new API(this);
-    // api.start()
 
+    /* start the api */
+    let api = new API(this);
+    api.start()
+
+    /* load command files */
     const commandFiles: string[] = await globPromise(
-      `${__dirname}/../commands/**/*{.ts,.js}`
+        `${__dirname}/../commands/**/*{.ts,.js}`
     );
 
     commandFiles.map(async (value: string) => {
@@ -116,7 +125,7 @@ export class Bot extends Client {
     });
 
     const eventFiles: string[] = await globPromise(
-      `${__dirname}/../events/**/*{.ts,.js}`
+        `${__dirname}/../events/**/*{.ts,.js}`
     );
 
     eventFiles.map(async (value: string) => {
