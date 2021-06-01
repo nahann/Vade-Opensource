@@ -1,12 +1,15 @@
-import { RunFunction } from "../../interfaces/Event";
-import { Guild, Message } from "discord.js-light";
+import type { RunFunction } from "../../interfaces/Event";
+import { Message, TextChannel} from "discord.js-light";
 import { Command } from "../../interfaces/Command";
 import profile from "../../models/profile";
 import ms from "ms";
 import GuildConfigSchema from "../../models/GuildConfig/guild";
+import module_schema from "../../models/GuildConfig/modules";
+import level_role_schema from "../../models/GuildConfig/levelRoles";
 import { promisify } from "util";
 const wait = promisify(setTimeout);
 import { automod } from '../../utils/AutomodManager';
+import levels from "../../models/Users/levels";
 const verified = "817905283547267122";
 
 export const run: RunFunction = async (client, message: Message) => {
@@ -108,6 +111,54 @@ export const run: RunFunction = async (client, message: Message) => {
           // @ts-ignore
           if(!msg.deleted && msg.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")) msg.delete();
         })
+      }
+    }
+  }
+
+  const randomXp = Math.floor(Math.random() * 18) + 1; //Random amount of XP until the number you want + 1
+  const hasLeveledUp = await client.utils.appendXp(
+      message.author.id,
+      message.guild.id,
+      randomXp
+  );
+  const schemaCheck = await module_schema.findOne({ Guild: message.guild.id });
+  const find_levels = await level_role_schema.find({
+    Guild: message.guild.id,
+  });
+  if (hasLeveledUp) {
+    if (schemaCheck) {
+      const array2 = await schemaCheck.get('Modules');
+      if (array2.includes('levels')) {
+        return;
+      }
+    }
+    const user = await client.utils.fetch(
+        message.author.id,
+        message.guild.id,
+        false
+    );
+    const levelChannel = GuildConfig?.levelChannel ? (await message.guild.channels.fetch(GuildConfig.levelChannel) as TextChannel) : message.channel;
+    levelChannel.send(
+        // @ts-ignore
+        `${message.author}, You leveled up to level **${user.level}**! Keep it going!`
+    );
+    if (find_levels) {
+      for (const one of find_levels) {
+        // @ts-ignore
+        if (one.Level < user.level) {
+          const locate_role = message.guild.roles.cache.get(one.Role);
+
+
+          if (locate_role) {
+            if (message.member.roles.cache.has(locate_role.id)) return;
+            if (message.guild.me.permissions.has('MANAGE_ROLES')) {
+              await message.member.roles.add(locate_role);
+              levelChannel.send(
+                  `${message.author} has earnt the **${locate_role.name}** role!`
+              );
+            }
+          }
+        }
       }
     }
   }

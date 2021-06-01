@@ -15,8 +15,6 @@ export const run: RunFunction = async (client, message, _args) => {
     console.log(client.utils.hasVoted(message.author.id))
   })
 
-
-
 };
 export const name: string = "test";
 export const category: string = "Development";

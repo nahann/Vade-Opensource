@@ -1,15 +1,15 @@
-import type { RunFunction } from "../../interfaces/Event";
-import type { Bot } from "../../client/Client";
+import type {RunFunction} from "../../interfaces/Event";
+import type {Bot} from "../../client/Client";
 import findBind from "../../models/GuildConfig/bind";
-import type { VoiceChannel } from "discord.js-light";
+import type {VoiceChannel} from "discord.js-light";
+
 const GREEN = '#00C09A';
 
 export const run: RunFunction = async (
-  client: Bot,
-  oS,
-  nS
+    client: Bot,
+    oS,
+    nS
 ) => {
-
     const newUserChannel = nS?.channelID;
     const oldUserChannel = oS?.channelID;
     const findRole = (await client.guilds.fetch(nS?.guild.id))?.roles.cache;
@@ -40,7 +40,7 @@ export const run: RunFunction = async (
             newChannelList.textChannelArr.forEach((textChannelID) => {
                 (findChannel
                     .get(textChannelID) as VoiceChannel)
-                    .updateOverwrite(newRole, { VIEW_CHANNEL: true });
+                    .updateOverwrite(newRole, {VIEW_CHANNEL: true});
             });
             await findBind.findOneAndUpdate(
                 {
