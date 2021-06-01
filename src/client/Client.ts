@@ -47,6 +47,7 @@ export class Bot extends Client {
   public owners: string[] = ["396096412116320258", "473858248353513472"];
   public version: string = "v9.5.5";
   public invites = new Collection();
+  public autoplay: string[] = Array()
   public manager: Manager;
   public prefix: string = "!";
   public react: Map<string, Object> = new Map();

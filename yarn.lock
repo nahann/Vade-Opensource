@@ -1725,10 +1725,9 @@ erela.js-spotify@^1.2.0:
     axios "^0.20.0"
     erela.js "^2.2.0"
 
-erela.js@^2.2.0, erela.js@^2.3.1, erela.js@^2.3.3:
+erela.js@^2.2.0, erela.js@^2.3.1, "erela.js@https://registry.npmjs.org/erela-hackel/-/erela-hackel-2.3.3.tgz":
   version "2.3.3"
-  resolved "https://registry.yarnpkg.com/erela.js/-/erela.js-2.3.3.tgz#22b43e29315c2fcdc8e070beda93eb3f34405c16"
-  integrity sha512-tzowGHLSodZr2j311csFSqm9lwE6plqeULTAwPwuRX9PQbXg4Ohdy/3MTMWrltiFAMSIG/5r9GQtTUt9Mqzhhw==
+  resolved "https://registry.npmjs.org/erela-hackel/-/erela-hackel-2.3.3.tgz#455f99c083a0454e3695f7056817151d8d1c9b52"
   dependencies:
     "@discordjs/collection" "^0.1.6"
     petitio "^1.1.0"

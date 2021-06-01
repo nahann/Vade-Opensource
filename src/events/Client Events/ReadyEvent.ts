@@ -54,11 +54,23 @@ export const run: RunFunction = async (client) => {
   client.on("raw", (d) => client.manager.updateVoiceState(d));
 
   //Track start
-  client.manager.on("trackStart", async (player, track) => {
+  client.manager.on("trackStart", async (player, track, payload) => {
     const channel = (await client.channels.fetch(
       player.textChannel
     )) as TextChannel;
 
+      if (
+          client.autoplay.indexOf(payload.guildId) >= 0 &&
+          !player.queue.length &&
+          !player.trackRepeat &&
+          !player.queueRepeat
+      ) {
+        let res = await player.search(
+            `https://www.youtube.com/watch?v=${track.identifier}&list=RD${track.identifier}`,
+            track.requester
+        );
+        await player.queue.add(res.tracks.filter((t) => t.identifier !== track.identifier));
+      }
     //Embed sent after the track starts playing.
     let np = new client.embed()
       .setMainColor()
