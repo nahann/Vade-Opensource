@@ -12,10 +12,9 @@ export const run: RunFunction = async (
 ) => {
     const newUserChannel = nS?.channelID;
     const oldUserChannel = oS?.channelID;
-    const findRole = (await client.guilds.fetch(nS?.guild.id))?.roles.cache;
     const findChannel = client.channels.cache;
 
-    let guild = await client.guilds.fetch(nS?.guild.id);
+    let guild = await client.guilds.fetch(nS?.channel.guild.id);
 
     let member = await guild.members.fetch(nS.id);
 
@@ -28,10 +27,10 @@ export const run: RunFunction = async (
     });
 
     if (newChannelList) {
-        const role = findRole.get(newChannelList.roleID);
+        const role = await guild.roles.fetch(newChannelList?.roleID);
         if (!role) {
-            let newRole = await client.guilds.cache
-                .get(nS.guild.id)
+            let newRole = await (await client.guilds
+                .fetch(nS?.channel.guild.id))
                 .roles.create({
                     data: {
                         name: `Link - ${(findChannel.get(newUserChannel) as VoiceChannel).name}`,
@@ -69,7 +68,7 @@ export const run: RunFunction = async (
 
     if (oldChannelList) {
         if (oldUserChannel !== newUserChannel) {
-            const role2 = findRole.get(oldChannelList.roleID);
+            const role2 = await guild.roles.fetch(oldChannelList.roleID);
             if (role2) {
                 await member.roles.remove(role2);
             }
@@ -77,7 +76,7 @@ export const run: RunFunction = async (
     }
 
     const logChannel = await client.utils.resolveLogChannel(
-        oS.guild.id,
+        oS?.channel.guild.id,
         "voice"
     );
     if (!logChannel) return;

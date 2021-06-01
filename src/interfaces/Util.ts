@@ -166,8 +166,8 @@ export default class Util {
 
     /**
      * @param {string} [userId] - Discord user id.
-     * @param {string} [guildId] - Discord guild id.
-     * @param {number} [level] - A level to set.
+     * @param guildId
+     * @param level
      */
 
     async setLevel(userId, guildId, level) {
@@ -202,7 +202,7 @@ export default class Util {
             guildID: guildId,
         });
         if (!user) {
-            return false;
+            return null;
         } else if(!fetchPosition) {
              return user;
         }

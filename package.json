@@ -22,6 +22,7 @@
     "@the-nerd-cave/paginate": "^1.1.1",
     "alpha-sort": "^5.0.0",
     "ansikit": "^1.5.0",
+    "canvacord": "^5.2.1",
     "canvas": "^2.7.0",
     "common-tags": "^1.8.0",
     "custom-translate": "^2.2.8",
