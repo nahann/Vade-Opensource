@@ -24,7 +24,7 @@ export interface Command {
   adminCommand?: boolean;
   devOnly?: boolean;
   guildOnly?: boolean;
-  voteRequired?: boolean;
+  voteLocked?: boolean;
   NSFW?: boolean;
 }
 

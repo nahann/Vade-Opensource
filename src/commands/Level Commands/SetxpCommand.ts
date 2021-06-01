@@ -34,3 +34,4 @@ export const description: string = 'Set a users xp.';
 export const aliases: string[] = ['sxp'];
 export const userPerms: string[] = ['MANAGE_MESSAGES'];
 export const modCommand: boolean = true;
+export const premiumOnly: boolean = true;

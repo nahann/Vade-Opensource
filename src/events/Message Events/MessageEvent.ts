@@ -234,9 +234,9 @@ export const run: RunFunction = async (client, message: Message) => {
         );
       }
 
-      if (command.voteRequired && !hasVoted) {
+      if (command.voteLocked && !hasVoted) {
         return client.utils.sendError(
-          `This Command requires you to have voted! You can vote via doing \`${prefix}vote\`.`,
+          `This Command requires you to have voted at top.gg! You can vote via \`${prefix}vote\`.`,
           message.channel
         );
       }

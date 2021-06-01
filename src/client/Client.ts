@@ -116,7 +116,7 @@ export class Bot extends Client {
         devOnly: false,
         guildOnly: false,
         NSFW: false,
-        voteRequired: false,
+        voteLocked: false,
         ...file,
       });
       this.categories.add(file.category || "Miscellaneous");
