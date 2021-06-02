@@ -57,7 +57,7 @@ export const run: RunFunction = async (client, message: Message) => {
       User: message.mentions.users.first().id,
     });
     if (check && check?.MentionNotif) {
-      const person = await client.users.fetch(
+      const person = await client.users.cache.get(
         message.mentions.users.first().id
       );
       if (person) {

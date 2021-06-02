@@ -1,14 +1,15 @@
 import type {RunFunction} from "../../interfaces/Event";
 import type {Bot} from "../../client/Client";
 import findBind from "../../models/GuildConfig/bind";
-import type {VoiceChannel} from "discord.js";
+import type { VoiceChannel } from "discord.js";
+import { VoiceState } from "discord.js";
 
 const GREEN = '#00C09A';
 
 export const run: RunFunction = async (
     client: Bot,
-    oS,
-    nS
+    oS: VoiceState,
+    nS: VoiceState
 ) => {
     const newUserChannel = nS?.channelID;
     const oldUserChannel = oS?.channelID;
@@ -16,10 +17,10 @@ export const run: RunFunction = async (
 
     if(!nS) return;
 
-    let guild = await client.guilds.fetch(nS?.guild.id);
+    let guild = nS.guild;
     if(!guild) return;
 
-    let member = await guild.members.fetch(nS.id);
+    let member = await guild.members.cache.get(nS.id);
 
     let newChannelList = await findBind.findOne({
         voiceChannelID: newUserChannel,
@@ -32,8 +33,7 @@ export const run: RunFunction = async (
     if (newChannelList) {
         const role = await guild.roles.fetch(newChannelList?.roleID);
         if (!role) {
-            let newRole = await (await client.guilds
-                .fetch(nS?.channel.guild.id))
+            let newRole = await nS.guild
                 .roles.create({
                     data: {
                         name: `Link - ${(findChannel.get(newUserChannel) as VoiceChannel).name}`,
@@ -71,7 +71,7 @@ export const run: RunFunction = async (
 
     if (oldChannelList) {
         if (oldUserChannel !== newUserChannel) {
-            const role2 = await guild.roles.fetch(oldChannelList.roleID);
+            const role2 = await guild.roles.cache.get(oldChannelList.roleID);
             if (role2) {
                 await member.roles.remove(role2);
             }
