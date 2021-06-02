@@ -1,4 +1,4 @@
-import { GuildMember } from "discord.js-light";
+import { GuildMember } from "discord.js";
 import { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {

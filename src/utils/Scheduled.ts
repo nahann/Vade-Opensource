@@ -1,6 +1,6 @@
 import schedule from "node-schedule";
 import lotterySchema from "../models/lottery";
-import { TextChannel } from "discord.js-light";
+import { TextChannel } from "discord.js";
 import ms from "ms";
 import { promisify } from "util";
 const wait = promisify(setTimeout);

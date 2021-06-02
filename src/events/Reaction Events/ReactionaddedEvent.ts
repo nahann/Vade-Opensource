@@ -1,4 +1,4 @@
-import type { GuildMember } from "discord.js-light";
+import type { GuildMember } from "discord.js";
 import type { RunFunction } from "../../interfaces/Event";
 
 /* database models */

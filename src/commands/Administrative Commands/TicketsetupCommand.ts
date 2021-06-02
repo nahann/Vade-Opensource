@@ -1,6 +1,6 @@
 import type { RunFunction } from '../../interfaces/Command';
 import TicketData from '../../models/GuildConfig/TicketSchema';
-import { MessageCollector } from 'discord.js-light';
+import { MessageCollector } from 'discord.js';
 
 
 export const run: RunFunction = async(client, message, _args) => {

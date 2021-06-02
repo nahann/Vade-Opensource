@@ -1,6 +1,6 @@
 import { StarboardManager } from "../../utils/StarboardManager";
 
-import type { MessageReaction } from "discord.js-light";
+import type { MessageReaction } from "discord.js";
 import type { RunFunction } from "../../interfaces/Event";
 import type { Bot } from "../../client/Client";
 

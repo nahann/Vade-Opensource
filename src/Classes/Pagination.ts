@@ -1,6 +1,6 @@
 import { MessageButton, ButtonStyle } from "../utils/buttons/src/Classes/MessageButton";
 
-import type { MessageEmbed, Message } from "discord.js-light";
+import type { MessageEmbed, Message } from "discord.js";
 import type ButtonEvent from "../utils/buttons/src/Classes/INTERACTION_CREATE";
 
 const paginationEmbed = async (

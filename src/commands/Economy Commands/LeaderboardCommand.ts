@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import EconomySchema from "../../models/profile";
-import { Util } from "discord.js-light";
+import { Util } from "discord.js";
 
 export const run: RunFunction = async (client, message, args) => {
   const allSchema = await EconomySchema.find({}); // Return all economy schemas

@@ -1,6 +1,6 @@
 import arrays from '../Assets/Automod/messages.json';
 
-import type {GuildMember, Message} from "discord.js-light";
+import type {GuildMember, Message} from "discord.js";
 
 const banned_words: Array<string> = arrays.array;
 export namespace automod {

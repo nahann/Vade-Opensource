@@ -9,7 +9,7 @@ import type {
   TextChannel,
   Channel,
   Message,
-} from "discord.js-light";
+} from "discord.js";
 import type { Bot } from "../client/Client";
 
 export namespace StarboardManager {

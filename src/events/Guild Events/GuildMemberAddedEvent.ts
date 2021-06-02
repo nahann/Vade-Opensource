@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Event";
 import findAutorole from "../../models/autoroles";
-import { GuildMember, TextChannel, Collection } from "discord.js-light";
+import { GuildMember, TextChannel, Collection } from "discord.js";
 import Guild from "../../models/GuildConfig/guild";
 import findStickyRole from "../../models/GuildConfig/stickyroles";
 import inviteMemberSchema from "../../models/Invites/inviteMember";

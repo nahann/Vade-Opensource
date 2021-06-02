@@ -1,4 +1,4 @@
-import {Guild, GuildChannel, GuildMember, Message, MessageEmbed, TextChannel, User,} from "discord.js-light";
+import {Guild, GuildChannel, GuildMember, Message, MessageEmbed, TextChannel, User,} from "discord.js";
 import FuzzySearch from "fuse.js";
 import ms from "ms";
 
@@ -1057,7 +1057,6 @@ export default class Util {
                 return;
             return channel;
         }
-
         return guild.channels.cache.find(
             (x) => x.type === "text" && x.name.toLowerCase() === s
         );

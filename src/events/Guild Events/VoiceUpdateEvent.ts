@@ -1,7 +1,7 @@
 import type {RunFunction} from "../../interfaces/Event";
 import type {Bot} from "../../client/Client";
 import findBind from "../../models/GuildConfig/bind";
-import type {VoiceChannel} from "discord.js-light";
+import type {VoiceChannel} from "discord.js";
 
 const GREEN = '#00C09A';
 
@@ -14,7 +14,10 @@ export const run: RunFunction = async (
     const oldUserChannel = oS?.channelID;
     const findChannel = client.channels.cache;
 
-    let guild = await client.guilds.fetch(nS?.channel.guild.id);
+    if(!nS) return;
+
+    let guild = await client.guilds.fetch(nS?.guild.id);
+    if(!guild) return;
 
     let member = await guild.members.fetch(nS.id);
 

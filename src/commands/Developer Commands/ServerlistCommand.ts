@@ -3,7 +3,7 @@ import paginationEmbed from '../../Classes/Pagination';
 
    export const run: RunFunction = async(client, message, _args) => {
 
-    const guilds = (await client.guilds.fetch());;
+    const guilds = client.guilds.cache;
     let embed = new client.embed()
     .setDescription(guilds.map((a) => `${a.name}: ${a.id}`))
 

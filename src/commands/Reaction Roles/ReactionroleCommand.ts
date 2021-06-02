@@ -1,4 +1,4 @@
-import { Message, TextChannel } from "discord.js-light";
+import { Message, TextChannel } from "discord.js";
 import { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {

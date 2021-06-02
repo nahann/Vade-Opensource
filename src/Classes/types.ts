@@ -1,5 +1,5 @@
 import { Bot } from "../client/Client";
-import { Client, MessageEmbed } from "discord.js-light";
+import { Client, MessageEmbed } from "discord.js";
 
 export enum OptionType {
   SUB_COMMAND = 1,

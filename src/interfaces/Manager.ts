@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import vote_schema from "../models/voteremind";
 
 import type { Bot } from "../client/Client";
-import type { TextChannel } from "discord.js-light";
+import type { TextChannel } from "discord.js";
 
 export default (client: Bot) => {
   // both bots

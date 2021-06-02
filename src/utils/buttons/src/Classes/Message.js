@@ -1,4 +1,4 @@
-const { Structures } = require("discord.js-light");
+const { Structures } = require("discord.js");
 const ButtonCollector = require("./ButtonCollector");
 const APIMessage = require("./APIMessage").APIMessageMain;
 

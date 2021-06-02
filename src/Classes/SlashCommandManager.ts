@@ -1,4 +1,4 @@
-import { Collection } from "discord.js-light";
+import { Collection } from "discord.js";
 import { readdir, stat } from "fs/promises";
 import { join } from "path";
 

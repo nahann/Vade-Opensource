@@ -1,4 +1,4 @@
-import { TextChannel } from "discord.js-light";
+import { TextChannel } from "discord.js";
 import { RunFunction } from "../../interfaces/Event";
 
 export const run: RunFunction = async (client, oldRole, newRole) => {

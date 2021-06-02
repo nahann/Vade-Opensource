@@ -1,6 +1,6 @@
 import { SlashCommand, OptionType } from "../Classes/types";
 import moment from "moment";
-import { Permissions } from "discord.js-light";
+import { Permissions } from "discord.js";
 
 export default {
   name: "roleinfo",

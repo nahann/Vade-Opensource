@@ -1,5 +1,5 @@
 import { BaseCluster } from "kurasuta";
-import "discord.js-light";
+import "discord.js";
 import * as File from "./config.json";
 
 import type { Config } from "./interfaces/Config";

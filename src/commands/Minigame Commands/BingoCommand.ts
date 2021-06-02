@@ -1,5 +1,5 @@
 import type { RunFunction } from '../../interfaces/Command';
-import { Collection, User } from 'discord.js-light';
+import { Collection, User } from 'discord.js';
 import { stripIndents } from "common-tags";
 import nums from "../../Assets/Minigames/bingo.json"
 

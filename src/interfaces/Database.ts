@@ -15,7 +15,6 @@ export default async function connect() {
       },
       (err) => {
         if (err) return console.log(err.stack || err.message);
-        logger.info("Connected to mongo");
       }
     );
 
@@ -24,7 +23,7 @@ export default async function connect() {
     });
 
     mongoose.connection.on("error", (err) => {
-      logger.info(err.stack || err.message);
+      logger.error(err.stack || err.message);
     });
 
     mongoose.connection.on("disconnect", () => {

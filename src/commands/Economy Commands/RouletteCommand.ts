@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import ms from "ms";
-import { Message, Util } from "discord.js-light";
+import { Message, Util } from "discord.js";
 import economySchema from "../../models/profile";
 import util from "util";
 

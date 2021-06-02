@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import { GuildMember } from "discord.js-light";
+import { GuildMember } from "discord.js";
 
 export const run: RunFunction = async (client, message, args) => {
   const member: GuildMember = await client.utils.getMember(
@@ -23,7 +23,7 @@ export const run: RunFunction = async (client, message, args) => {
       `You need to provide a Voice Channel ID.`,
       message.channel
     );
-  await message.guild.channels.fetch(channelID).then((channel) => {
+  let channel =  message.guild.channels.cache.get(channelID);
     if (!channel)
       return client.utils.sendError(
         `Couldn't locate that channel, please try again!`,
@@ -50,7 +50,7 @@ export const run: RunFunction = async (client, message, args) => {
       `Successfully moved ${member} to the voice channel: ${channel} With the reason of: ${reason}`,
       message.channel
     );
-  });
+
 };
 export const name: string = "voicemove";
 export const category: string = "Moderation";

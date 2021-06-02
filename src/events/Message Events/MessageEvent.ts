@@ -1,5 +1,5 @@
 import type { RunFunction } from "../../interfaces/Event";
-import { Message, TextChannel} from "discord.js-light";
+import { Message, TextChannel} from "discord.js";
 import { Command } from "../../interfaces/Command";
 import profile from "../../models/profile";
 import ms from "ms";
@@ -136,7 +136,7 @@ export const run: RunFunction = async (client, message: Message) => {
         message.guild.id,
         false
     );
-    const levelChannel = GuildConfig?.levelChannel ? (await message.guild.channels.fetch(GuildConfig.levelChannel) as TextChannel) : message.channel;
+    const levelChannel = GuildConfig?.levelChannel ? (client.channels.cache.get(GuildConfig.levelChannel) as TextChannel) : message.channel;
     levelChannel.send(
         // @ts-ignore
         `${message.author}, You leveled up to level **${user.level}**! Keep it going!`

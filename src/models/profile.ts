@@ -97,7 +97,7 @@ export const bankSchema = new Schema({
 });
 
 const bank =
-  (models["econ-storage"] as Model<IBank>) ||
-  model<IBank>("econ-storage", bankSchema);
+  (models["econ-storages"] as Model<IBank>) ||
+  model<IBank>("econ-storages", bankSchema);
 
 export default bank;

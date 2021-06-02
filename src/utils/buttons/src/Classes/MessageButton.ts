@@ -1,5 +1,5 @@
 import { resolveStyle, isEmoji } from "../Util";
-import { Util } from "discord.js-light";
+import { Util } from "discord.js";
 import { EventEmitter } from "events";
 
 import type ButtonEvent from "./INTERACTION_CREATE";

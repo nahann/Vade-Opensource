@@ -1,4 +1,4 @@
-import { PermissionString } from "discord.js-light";
+import { PermissionString } from "discord.js";
 import { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, args) => {

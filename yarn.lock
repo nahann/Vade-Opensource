@@ -1565,19 +1565,12 @@ discord-giveaways@4.4.3:
   dependencies:
     deepmerge "^4.2.2"
 
-discord.js-light@^3.5.9:
-  version "3.5.11"
-  resolved "https://registry.yarnpkg.com/discord.js-light/-/discord.js-light-3.5.11.tgz#169058ca38ddb1b58e220a7377352cf51e0f8932"
-  integrity sha512-FaOdReT+8CJsHXnjxlG7oK08uqVtIVaEXsbpS7V1O5DK6WSar29KsewkUcDHnCkU89MRhXsgNXhk7cVg0qYkGA==
-  dependencies:
-    discord.js "12.5.3"
-
 discord.js-pagination@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/discord.js-pagination/-/discord.js-pagination-1.0.3.tgz#b637d9b547f6de0187c58b22ad07dc9e532583f2"
   integrity sha512-n6wuNo3CclZdwRfc5LMInjcrN23iKnKQTtlpX3VXGRtNofawBeQroYhl7xotSmpkIlL2Uqwo13T11+hHdNJ/bQ==
 
-discord.js@12.5.3, discord.js@^12.5.1, discord.js@^12.5.3:
+discord.js@^12.5.1, discord.js@^12.5.3:
   version "12.5.3"
   resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-12.5.3.tgz#56820d473c24320871df9ea0bbc6b462f21cf85c"
   integrity sha512-D3nkOa/pCkNyn6jLZnAiJApw2N9XrIsXUAdThf01i7yrEuqUmDGc7/CexVWwEcgbQR97XQ+mcnqJpmJ/92B4Aw==

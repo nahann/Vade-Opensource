@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import { GuildMember } from "discord.js-light";
+import { GuildMember } from "discord.js";
 
 export const run: RunFunction = async (client, message, args) => {
   const member: GuildMember = await client.utils.getMember(

@@ -1,6 +1,6 @@
 import type { RunFunction } from '../../interfaces/Command';
 import canvacord from 'canvacord';
-import { MessageAttachment } from "discord.js-light";
+import { MessageAttachment } from "discord.js";
 
 export const run: RunFunction = async(client, message, args) => {
 

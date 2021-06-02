@@ -15,7 +15,7 @@ export const run: RunFunction = async (client, button: InteractionCreate) => {
 
 };
 
-declare module "discord.js-light" {
+declare module "discord.js" {
 	interface MessageEditOptions {
 		buttons?: MessageButton[];
 		components?: APIActionRowComponent[];

@@ -1,5 +1,5 @@
 import type {RunFunction} from '../../interfaces/Command';
-import {Util} from "discord.js-light";
+import {Util} from "discord.js";
 
 export const run: RunFunction = async (client, message, args) => {
 

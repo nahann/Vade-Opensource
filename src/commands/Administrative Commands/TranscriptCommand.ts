@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import fs from "fs";
-import { MessageAttachment, Collection, Message } from "discord.js-light";
+import { MessageAttachment, Collection, Message } from "discord.js";
 import officegen from "officegen";
 
 export const run: RunFunction = async (client, message, args) => {

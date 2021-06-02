@@ -1,5 +1,5 @@
 import type { RunFunction } from "../../interfaces/Event";
-import { TextChannel, Util } from "discord.js-light";
+import { TextChannel, Util } from "discord.js";
 import Guild from "../../models/GuildConfig/guild";
 import findStickyRole from "../../models/GuildConfig/stickyroles";
 import inviterSchema from '../../models/Invites/inviter';

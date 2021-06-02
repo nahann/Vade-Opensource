@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Command";
 import MainUser from "../../models/profile";
-import { Util } from "discord.js-light";
+import { Util } from "discord.js";
 import ms from "ms";
 
 export const run: RunFunction = async (client, message, args) => {

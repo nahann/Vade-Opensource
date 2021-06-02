@@ -1,5 +1,5 @@
 import { RunFunction } from "../../interfaces/Command";
-import { version } from "discord.js-light";
+import { version } from "discord.js";
 import { utc } from "moment";
 import os from "os";
 import ms from "ms";
@@ -25,7 +25,7 @@ export const run: RunFunction = async (client, message, args) => {
         "Do MMMM YYYY HH:mm:ss"
       )}**`,
       `**❯** Node.js: **${process.version}**`,
-      `**❯** Discord.js-light: **${version}**`,
+      `**❯** discord.js: **${version}**`,
     ])
     .setBlankField()
     .addField("__System__", [

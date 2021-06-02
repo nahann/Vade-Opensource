@@ -1,5 +1,5 @@
 import { stripIndents } from 'common-tags';
-import { Collection, User } from 'discord.js-light';
+import { Collection, User } from 'discord.js';
 import { promisify } from "util";
 import phin from "phin";
 

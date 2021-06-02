@@ -1,7 +1,7 @@
 import MainSchema from "../../models/GuildConfig/linkedgames";
 import peoplePlaying from "../../models/players";
 
-import type { Presence } from "discord.js-light";
+import type { Presence } from "discord.js";
 import type { RunFunction } from "../../interfaces/Event";
 
 const cooldown: Map<string, string> = new Map();

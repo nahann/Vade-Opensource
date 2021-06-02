@@ -2,7 +2,7 @@ import { RunFunction } from "../../interfaces/Event";
 import GuildSchema from "../../models/GuildConfig/guild";
 import { Types } from "mongoose";
 
-import type { TextChannel } from "discord.js-light";
+import type { TextChannel } from "discord.js";
 import { Guild } from "discord.js";
 import { MessageButton } from "../../utils/buttons/src";
 

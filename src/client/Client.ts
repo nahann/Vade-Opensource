@@ -1,6 +1,6 @@
 import { Logger } from "@dimensional-fun/logger";
 
-import { Client, Intents, Collection, ClientOptions } from "discord.js-light";
+import { Client, Intents, Collection, ClientOptions } from "discord.js";
 import glob from "glob";
 import { promisify } from "util";
 import Constants from "../interfaces/Constants";
@@ -70,12 +70,12 @@ export class Bot extends Client {
       messageEditHistoryMaxSize: 200,
       messageSweepInterval: 180,
       restTimeOffset: 0,
-      cacheGuilds: true,
-      cacheChannels: true,
-      cacheOverwrites: false,
-      cacheRoles: true,
-      cacheEmojis: true,
-      cachePresences: true,
+      // cacheGuilds: true,
+      // cacheChannels: true,
+      // cacheOverwrites: false,
+      // cacheRoles: true,
+      // cacheEmojis: false,
+      // cachePresences: false,
     });
 
     if (Bot.__instance__) throw new Error("Another client was created.");

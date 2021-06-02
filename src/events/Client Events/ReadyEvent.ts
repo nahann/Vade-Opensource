@@ -4,7 +4,7 @@ import Spotify from "erela.js-spotify";
 import Deezer from "erela.js-deezer";
 import Facebook from "erela.js-facebook";
 
-import type { Guild, TextChannel, VoiceChannel } from "discord.js-light";
+import type { Guild, TextChannel, VoiceChannel } from "discord.js";
 import type { RunFunction } from "../../interfaces/Event";
 import {promisify} from "util";
 
@@ -341,7 +341,7 @@ export const run: RunFunction = async (client) => {
     },
     get "2"() {
       return `${nf.format(
-        client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)
+        client.users.cache.size
       )} users!`;
     },
   };

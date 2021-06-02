@@ -1,6 +1,6 @@
 import { RunFunction } from "../../interfaces/Event";
 import Db from "../../models/GuildConfig/ReactionRoles";
-import { GuildMember, MessageReaction, User } from "discord.js-light";
+import { GuildMember, MessageReaction, User } from "discord.js";
 const botCooldown = new Set();
 const reactionCooldown = new Set();
 import GuildDB from "../../models/GuildConfig/guild";

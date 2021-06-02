@@ -1,6 +1,6 @@
 import { SlashCommand, OptionType } from "../Classes/types";
 import moment from "moment";
-import { Guild, GuildMember } from "discord.js-light";
+import { Guild, GuildMember } from "discord.js";
 
 const flags = {
   DISCORD_EMPLOYEE: "Discord Employee",
