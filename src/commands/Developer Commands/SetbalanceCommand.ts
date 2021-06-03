@@ -13,7 +13,7 @@ export const run: RunFunction = async (client, message, args) => {
   const amount = parseInt(args[1]);
   const type = ["bank", "wallet"];
 
-  if (!amount || Number.isNaN(+amount))
+  if (!amount || isNaN(amount))
     return client.utils.sendError(`No amount specified.`, message.channel);
   if (!type.includes(args[2]?.toLowerCase()))
     return client.utils.sendError(
