@@ -13,8 +13,8 @@ export const run: RunFunction = async (client, message, args) => {
     new client.embed()
       .setTitle(`${user.user.tag}'s Balance`)
       .setDescription(
-        `Wallet: ${nf.format((Profile as any)?.Wallet) || 0}\nBank: ${
-          nf.format((Profile as any)?.Bank) || 0
+        `Wallet: ${nf.format((Profile as any)?.Wallet) ?? 0}\nBank: ${
+          nf.format((Profile as any)?.Bank) ?? 0
         }`
       )
       .setMainColor()
