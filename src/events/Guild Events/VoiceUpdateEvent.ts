@@ -79,7 +79,7 @@ export const run: RunFunction = async (
     }
 
     const logChannel = await client.utils.resolveLogChannel(
-        oS?.channel.guild.id,
+        oS?.guild.id,
         "voice"
     );
     if (!logChannel) return;
