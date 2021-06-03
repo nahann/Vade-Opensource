@@ -12,7 +12,7 @@ export interface Config {
   SPOTIFY_CLIENT_ID: string;
   SPOTIFY_SECRET_ID: string;
   DEFAULT_VOLUME: number;
-  validTypes: Array<string>;
-  validGames: Array<string>;
-  supportedLang: Array<string>;
+  validTypes: string[];
+  validGames: string[];
+  supportedLang: string[];
 }

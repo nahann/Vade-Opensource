@@ -171,7 +171,7 @@ async function fetchQuestions() {
     });
 }
 
-function shuffle(array: Array<string>) {
+function shuffle(array: string[]) {
     const arr = array.slice(0);
     for (let i = arr.length - 1; i >= 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

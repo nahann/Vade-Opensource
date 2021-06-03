@@ -14,7 +14,7 @@ export namespace automod {
         return false;
     }
 
-    export function checkMod(member: GuildMember, modRoles: Array<string>): boolean {
+    export function checkMod(member: GuildMember, modRoles: string[]): boolean {
         for (const role of modRoles) {
             if (member.roles.cache.has(role) || member.permissions.has("MANAGE_MESSAGES")) {
                 return true;
@@ -24,7 +24,7 @@ export namespace automod {
         return false;
     }
 
-    export function checkAdmin(member: GuildMember, adminRoles: Array<string>): boolean {
+    export function checkAdmin(member: GuildMember, adminRoles: string[]): boolean {
         for (const role of adminRoles) {
             if (member.roles.cache.has(role) || member.permissions.has("MANAGE_GUILD")) {
                 return true;

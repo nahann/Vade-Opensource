@@ -36,7 +36,7 @@ export const run: RunFunction = async (client, message, args, lang) => {
       message.channel
     );
 
-  const emojis: Array<string> = [
+  const emojis: string[] = [
     "🍋",
     "🍎",
     "🍇",
