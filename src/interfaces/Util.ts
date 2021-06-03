@@ -31,7 +31,7 @@ export default class Util {
 
         const date = this.client.userVotes[user];
         if (!date) {
-            return false;
+            test = true;
         }
 
         if (date + ms("12h") < Date.now()) {
