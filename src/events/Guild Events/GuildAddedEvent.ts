@@ -20,7 +20,7 @@ export const run: RunFunction = async (client, guild: Guild) => {
     await client.guilds.fetch(client.config.MAIN_GUILD)
   ).channels.cache.get("796828146954534973") as TextChannel;
 
-  channel.send(newGuildEmbed) ?? null;
+  channel.send(newGuildEmbed);
 
   const document = await GuildSchema.findOne({ guildID: guild.id });
 
@@ -43,7 +43,7 @@ export const run: RunFunction = async (client, guild: Guild) => {
     guild.systemChannel.permissionsFor(guild.me).has("EMBED_LINKS")
   ) {
     // @ts-ignore
-    guild.systemChannel?.send(sendEmbed, { buttons: [ button ]});
+    guild.systemChannel?.send({ embed: sendEmbed, buttons: [ button ]});
   }
 
   if (document) return; // Maintain old data
