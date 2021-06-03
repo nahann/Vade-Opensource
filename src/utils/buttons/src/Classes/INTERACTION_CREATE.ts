@@ -41,7 +41,17 @@ export default class ButtonEvent {
 
     this.channel = client.channels.cache.get(data.channel_id) as TextChannel;
 
-    this.clicker = {};
+    this.clicker = {
+      user: this.client.users.resolve(data.guild_id ? data.member.user.id : data.user.id),
+      member: this.guild ? this.guild.members.resolve(data.member.user.id) : undefined,
+      fetch: async () => {
+        this.clicker.user = this.client.users.resolve(data.guild_id ? data.member.user.id : data.user.id);
+        if (this.guild) {
+          this.clicker.member = await this.guild.members.fetch(data.member.user.id);
+        }
+        return true;
+      }
+    };
 
     if (this.guild) {
       this.clicker.member = this.guild.members.resolve(data.member.user.id);
