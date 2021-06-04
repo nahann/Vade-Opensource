@@ -28,11 +28,123 @@ export const run: RunFunction = async (client, message: Message) => {
     ? message.content.match(mentionRegexPrefix)[0]
     : mainPrefix;
 
+  if (message.content.toLowerCase().startsWith(prefix)) {
+
+    const checkProfile = await profile.findOne({ User: message.author.id });
+    if (checkProfile?.Blacklisted && !client.owners.includes(message.author.id))
+      return;
+    let lang = checkProfile?.Language ?? "en";
+
+    const args: string[] = message.content
+        .slice(prefix.length)
+        .trim()
+        .split(/\s+/);
+    const cmd: string = args.shift().toLowerCase();
+    const command: Command =
+        client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
+
+    if (command) {
+      try {
+        if (client.cooldowns.has(`${message.author.id}-${command.name}`))
+          return message.channel.send(
+              `You are currently on a cooldown. You can use this Command again in ${ms(
+                  client.cooldowns.get(`${message.author.id}-${command.name}`) -
+                  Date.now(),
+                  {long: true}
+              )}.`
+          );
+        if (command.botPerms) {
+          for (const perm of command.botPerms) {
+            if (!message.guild.me.permissions.has(perm)) {
+              return message.channel.send(
+                  new client.embed()
+                      .setDescription(
+                          `I am missing the ${perm} Permission that is required for this Command.`
+                      )
+                      .setColor(client.constants.colours.error)
+              );
+            }
+          }
+        }
+
+        if (command.userPerms) {
+          for (const perm of command.userPerms) {
+            if (!message.member.permissions.has(perm)) {
+              return message.channel.send(
+                  new client.embed()
+                      .setTitle(`Missing perms!`)
+                      .addField(`Missing permission`, `${perm}`)
+                      .setErrorColor()
+              );
+            }
+          }
+        }
+
+        const checkPremium = await client.utils.checkPremium(
+            message.guild.ownerID
+        );
+        const checkOwner = client.utils.checkOwner(message.author.id);
+        const hasVoted = await client.utils.hasVoted(message.author.id);
+        if (command.premiumOnly && !checkPremium) {
+          return message.channel.send(
+              `The Guild owner must have Vade Premium in order for you to run this Command!`
+          );
+        }
+
+        if (command.devOnly && !checkOwner) {
+          return message.channel.send(
+              `This Command requires you to be a Vade Developer!`
+          );
+        }
+
+        if (command.NSFW && !message.channel.nsfw) {
+          return client.utils.sendError(
+              `This Command can only be ran in an NSFW Channel!`,
+              message.channel
+          );
+        }
+
+        if (command.voteLocked && !hasVoted) {
+          return client.utils.sendError(
+              `This Command requires you to have voted at top.gg! You can vote via \`${prefix}vote\`.`,
+              message.channel
+          );
+        }
+
+        command.run(client, message, args, lang)
+        await client.utils.reactIfAble(message, message.member, verified, ":white_check_mark:");
+        if (
+            GuildConfig?.cleanCommands &&
+            message.guild.me.permissions.has("MANAGE_MESSAGES")
+        ) {
+          await wait(1000);
+          if (!message.channel.deleted && !message.deleted)
+            message.delete({
+              timeout: 4000,
+              reason: "Clean Commands are enabled.",
+            });
+        }
+        if (!client.owners.includes(message.author.id)) {
+          client.cooldowns.set(
+              `${message.author.id}-${command.name}`,
+              Date.now() + command.cooldown
+          );
+          setTimeout(() => {
+            client.cooldowns.delete(`${message.author.id}-${command.name}`);
+          }, command.cooldown);
+        }
+      } catch (e) {
+        message.channel.send(
+            new client.embed()
+                .setTitle(`An error occured!`)
+                .setDescription(`Error: ${e}`)
+                .setErrorColor()
+        );
+      }
+    }
+  }
+
   const suggestionChannelID = GuildConfig?.Suggestion;
-  const checkProfile = await profile.findOne({ User: message.author.id });
-  if (checkProfile?.Blacklisted && !client.owners.includes(message.author.id))
-    return;
-  let lang = checkProfile?.Language ?? "en";
 
   if (suggestionChannelID && message.channel.id === suggestionChannelID) {
     const SuggestionEmbed = new client.embed()
@@ -158,116 +270,6 @@ export const run: RunFunction = async (client, message: Message) => {
           }
         }
       }
-    }
-  }
-
-  if (!message.content.toLowerCase().startsWith(prefix)) return;
-
-  const args: string[] = message.content
-    .slice(prefix.length)
-    .trim()
-    .split(/\s+/);
-  const cmd: string = args.shift().toLowerCase();
-  const command: Command =
-    client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-
-  if (command) {
-    try {
-      if (client.cooldowns.has(`${message.author.id}-${command.name}`))
-        return message.channel.send(
-          `You are currently on a cooldown. You can use this Command again in ${ms(
-            client.cooldowns.get(`${message.author.id}-${command.name}`) -
-              Date.now(),
-            { long: true }
-          )}.`
-        );
-      if (command.botPerms) {
-        for (const perm of command.botPerms) {
-          if (!message.guild.me.permissions.has(perm)) {
-            return message.channel.send(
-              new client.embed()
-                .setDescription(
-                  `I am missing the ${perm} Permission that is required for this Command.`
-                )
-                .setColor(client.constants.colours.error)
-            );
-          }
-        }
-      }
-
-      if (command.userPerms) {
-        for (const perm of command.userPerms) {
-          if (!message.member.permissions.has(perm)) {
-            return message.channel.send(
-              new client.embed()
-                .setTitle(`Missing perms!`)
-                .addField(`Missing permission`, `${perm}`)
-                .setErrorColor()
-            );
-          }
-        }
-      }
-
-      const checkPremium = await client.utils.checkPremium(
-        message.guild.ownerID
-      );
-      const checkOwner = client.utils.checkOwner(message.author.id);
-      const hasVoted = await client.utils.hasVoted(message.author.id);
-      if (command.premiumOnly && !checkPremium) {
-        return message.channel.send(
-          `The Guild owner must have Vade Premium in order for you to run this Command!`
-        );
-      }
-
-      if (command.devOnly && !checkOwner) {
-        return message.channel.send(
-          `This Command requires you to be a Vade Developer!`
-        );
-      }
-
-      if (command.NSFW && !message.channel.nsfw) {
-        return client.utils.sendError(
-          `This Command can only be ran in an NSFW Channel!`,
-          message.channel
-        );
-      }
-
-      if (command.voteLocked && !hasVoted) {
-        return client.utils.sendError(
-          `This Command requires you to have voted at top.gg! You can vote via \`${prefix}vote\`.`,
-          message.channel
-        );
-      }
-
-      command.run(client, message, args, lang)
-      await client.utils.reactIfAble(message, message.member, verified, ":white_check_mark:");
-      if (
-        GuildConfig?.cleanCommands &&
-        message.guild.me.permissions.has("MANAGE_MESSAGES")
-      ) {
-        await wait(1000);
-        if (!message.channel.deleted && !message.deleted)
-          message.delete({
-            timeout: 4000,
-            reason: "Clean Commands are enabled.",
-          });
-      }
-      if (!client.owners.includes(message.author.id)) {
-        client.cooldowns.set(
-          `${message.author.id}-${command.name}`,
-          Date.now() + command.cooldown
-        );
-        setTimeout(() => {
-          client.cooldowns.delete(`${message.author.id}-${command.name}`);
-        }, command.cooldown);
-      }
-    } catch (e) {
-      message.channel.send(
-        new client.embed()
-          .setTitle(`An error occured!`)
-          .setDescription(`Error: ${e}`)
-          .setErrorColor()
-      );
     }
   }
 };
