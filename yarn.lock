@@ -369,11 +369,6 @@
     methods "^1.1.2"
     path-to-regexp "^6.1.0"
 
-"@lavaclient/types@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@lavaclient/types/-/types-1.0.4.tgz#de5c408da76b13263edaed566e12dd49bbfec1f7"
-  integrity sha512-70YKaBOonCml/JUJfqpjRTXBVT0P43++y7Musu7SXSTq8KKih9VlYsUsprup3TmACrsJm18sd+4yUb8ju1iwLA==
-
 "@lavaclient/types@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@lavaclient/types/-/types-2.0.3.tgz#52c1a4d070bf3b982f3a00ca9a4f81c6c80386a1"
@@ -2726,15 +2721,6 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-lavaclient@^3.2.8:
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/lavaclient/-/lavaclient-3.2.8.tgz#9f3c9bd8058e1bf156baf941093939de0fe3d3c8"
-  integrity sha512-4IrdrYegv5CjI3xV55t8qZx+1WmD9aKXsXYaa2uJLqvvuvdl4X6egi0O/D+5YktqBweEPHcnvb6VOb6EMF9KOA==
-  dependencies:
-    "@lavaclient/types" "1.0.4"
-    petitio "^1.2.1"
-    ws "^7.3.1"
-
 lazystream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lazystream/-/lazystream-1.0.0.tgz#f6995fe0f820392f61396be89462407bb77168e4"
@@ -3516,7 +3502,7 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-petitio@^1.1.0, petitio@^1.2.1:
+petitio@^1.1.0:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/petitio/-/petitio-1.3.2.tgz#01590497972a2dbfd3bf4e49d1efa4f3b1fdc693"
   integrity sha512-hbbT+rOvovz39ZneGW+C8B4YsKH20KLXYVDT/IzSUxaY8H7al/TO+vFCm+H5cnYe62gIqF9ak5p8OJktV/I0Ig==

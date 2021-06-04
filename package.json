@@ -48,7 +48,6 @@
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "kurasuta": "^2.2.3",
-    "lavaclient": "^3.2.8",
     "libnpmsearch": "^3.1.0",
     "lyrics-finder": "^21.7.0",
     "mal-scraper": "^2.11.3",
