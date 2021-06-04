@@ -1,15 +1,15 @@
-import { MessageButton, ButtonStyle } from "../../utils/buttons/src/v12/Classes/MessageButton";
+import { MessageButton } from "../../utils/buttons/src/v12/Classes/MessageButton";
 
 import type { RunFunction } from "../../interfaces/Command";
 
 export const run: RunFunction = async (client, message, _args) => {
   let btn = new MessageButton()
-    .setStyle(ButtonStyle.Danger)
+    .setStyle(2)
     .setLabel("Kinda cool")
     .setID("test");
     // @ts-ignore
     
-  message.channel.send(`test`, { buttons: [btn] });
+  message.channel.send(`test`, { buttons: btn });
 
   btn.on("click", (_data) => {
     console.log(client.utils.hasVoted(message.author.id))
