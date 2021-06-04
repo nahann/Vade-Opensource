@@ -1,4 +1,4 @@
-import { MessageButton, ButtonStyle } from "../../utils/buttons/src/Classes/MessageButton";
+import { MessageButton, ButtonStyle } from "../../utils/buttons/src/v12/Classes/MessageButton";
 
 import type { RunFunction } from "../../interfaces/Command";
 

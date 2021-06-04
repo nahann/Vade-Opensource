@@ -3,7 +3,7 @@ import constants from "../../interfaces/Constants";
 import FuzzySearch from "fuse.js";
 import { Paginate } from "@the-nerd-cave/paginate";
 import paginationEmbed from "../../Classes/Pagination";
-import { MessageButton, ButtonStyle } from "../../utils/buttons/src/Classes/MessageButton";
+import { MessageButton, ButtonStyle } from "../../utils/buttons/src/v12/Classes/MessageButton";
 
 export const run: RunFunction = async (client, message, args) => {
   const checkOrCross = (bool) =>

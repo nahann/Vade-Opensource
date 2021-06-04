@@ -14,7 +14,7 @@ import MainManager from "../interfaces/Manager";
 
 import { API } from "../api/API";
 
-import buttons from "../utils/buttons/src/index";
+import buttons from "../utils/buttons/src";
 
 import type { Manager } from "erela.js";
 import type { Config } from "../interfaces/Config";

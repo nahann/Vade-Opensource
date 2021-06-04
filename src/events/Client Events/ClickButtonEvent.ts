@@ -1,7 +1,7 @@
 import type { MessageButton } from "../../utils/buttons/src";
 import type { RunFunction } from "../../interfaces/Event";
 import type InteractionCreate from "../../utils/buttons/typings/Classes/INTERACTION_CREATE";
-import type { APIActionRowComponent } from "../../utils/buttons/src/Classes/MessageButton";
+import type { APIActionRowComponent } from "../../utils/buttons/src/v12/Classes/MessageButton";
 
 export const run: RunFunction = async (client, button: InteractionCreate) => {
   if(button.deferred) return;

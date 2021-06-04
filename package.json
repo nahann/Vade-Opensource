@@ -51,6 +51,7 @@
     "libnpmsearch": "^3.1.0",
     "lyrics-finder": "^21.7.0",
     "mal-scraper": "^2.11.3",
+    "mathjs": "^9.4.1",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
