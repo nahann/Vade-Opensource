@@ -23,3 +23,7 @@ You can invite Vade to your own server [here](https://vade-bot.com/invite).
 # I'd like to support Vade, how can I?
 
 You can support Vade by purchasing Vade Premium [here](https://vade-bot.com) for only $3 per/month.
+
+# Credits
+
+discord-buttons - Using an edited version.
