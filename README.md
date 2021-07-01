@@ -8,7 +8,7 @@ If you'd like support with anything, you can join our Discord Server [here](http
 
 # Contributions
 
-Any contributions towards the project are highly appreciated. If you think you can imporve something/add something, be sure to create a pull request. 
+Any contributions towards the project are highly appreciated. If you think you can improve something/add something, be sure to create a pull request. 
 If you find any problems; open an issue and make sure to describe it as best you can.
 
 # Self-Hosting
